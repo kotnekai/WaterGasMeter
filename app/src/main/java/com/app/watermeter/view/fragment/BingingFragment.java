@@ -3,7 +3,7 @@ package com.app.watermeter.view.fragment;
 import com.app.watermeter.R;
 import com.app.watermeter.view.base.BaseFragment;
 
-public class MeterFragment extends BaseFragment {
+public class BingingFragment extends BaseFragment {
     @Override
     protected void initView() {
 
@@ -21,7 +21,7 @@ public class MeterFragment extends BaseFragment {
 
     @Override
     protected int setFrgContainView() {
-        return R.layout.fragment_meter;
+        return R.layout.fragment_binding;
 
     }
 

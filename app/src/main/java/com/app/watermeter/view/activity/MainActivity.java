@@ -12,7 +12,7 @@ import com.app.watermeter.R;
 import com.app.watermeter.view.adapter.FragmentAdapter;
 import com.app.watermeter.view.base.BaseActivity;
 import com.app.watermeter.view.fragment.HomeFragment;
-import com.app.watermeter.view.fragment.MeterFragment;
+import com.app.watermeter.view.fragment.BingingFragment;
 import com.app.watermeter.view.fragment.MineFragment;
 import com.app.watermeter.view.views.NoScrollViewPager;
 
@@ -63,7 +63,7 @@ public class MainActivity extends BaseActivity {
     private void initData() {
         fragmentList = new ArrayList<>();
         fragmentList.add(new HomeFragment());
-        fragmentList.add(new MeterFragment());
+        fragmentList.add(new BingingFragment());
         fragmentList.add(new MineFragment());
         tvFourthTab.setVisibility(View.GONE);
         adapter = new FragmentAdapter(fragmentList, getSupportFragmentManager());

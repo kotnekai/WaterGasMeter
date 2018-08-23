@@ -15,5 +15,10 @@
     <string name="last_value">上次表值：</string>
     <string name="balance">表余额：</string>
     <string name="yuan">%s 元</string>
+    <string name="scan">扫描二维码</string>
+    <string name="or">- 或 -</string>
+    <string name="add">添加</string>
+    <string name="sn_hints">手动输入表缴费号</string>
+    <string name="binding">绑定</string>
 
 </resources>
