@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.activity.RegisterCodeActivity">
+
+    <TextView
+        android:id="@+id/tvTip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        android:text="已发送验证码短信到"
+        android:textSize="17sp" />
+
+    <TextView
+        android:id="@+id/tvPhone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvTip"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:text="+855-18722323232"
+        android:textColor="@color/register_phone_code_color"
+        android:textSize="24sp" />
+
+    <LinearLayout
+        android:id="@+id/llVeryCode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvPhone"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/edtCodeFirst"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@drawable/com_line_bg_shape"
+            android:gravity="center"
+            android:text="2"
+            android:textSize="25sp" />
+
+        <EditText
+            android:id="@+id/edtCodeSecond"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/com_line_bg_shape"
+            android:gravity="center"
+            android:text="2"
+            android:textSize="25sp" />
+
+        <EditText
+            android:id="@+id/edtCodeThird"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/com_line_bg_shape"
+            android:gravity="center"
+            android:text="2"
+            android:textSize="25sp" />
+
+        <EditText
+            android:id="@+id/edtCodeFourth"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/com_line_bg_shape"
+            android:gravity="center"
+            android:text="2"
+            android:textSize="25sp" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvGoNext"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/llVeryCode"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="70dp"
+        android:background="@mipmap/anniu"
+        android:gravity="center"
+        android:text="20后重新发送"
+        android:textColor="@color/white"
+        android:textSize="17sp" />
+</RelativeLayout>

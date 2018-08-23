@@ -41,8 +41,8 @@
 
         <activity
             android:name=".view.activity.LoginActivity"
-            android:theme="@style/AppTheme.Main"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Main">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -50,6 +50,15 @@
             </intent-filter>
 
         </activity>
+        <activity
+            android:name=".view.activity.RegisterPhoneActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.RegisterCodeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.RegisterInfoActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
