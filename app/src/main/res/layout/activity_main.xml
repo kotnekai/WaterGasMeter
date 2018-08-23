@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:clipChildren="false"
+
+    android:layout_height="match_parent">
+
+
+    <LinearLayout
+        android:id="@+id/llTabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/main_bg_gray"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:paddingTop="5dp">
+
+        <ImageView
+            android:id="@+id/ivHomeTab"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="10dp"
+            android:src="@drawable/main_frag_home_icon_selector"
+            android:tooltipText="首页" />
+
+
+        <ImageView
+            android:id="@+id/ivMeterTab"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="10dp"
+
+            android:src="@drawable/main_frag_meter_icon_selector"
+            android:tooltipText="水表" />
+
+        <ImageView
+            android:id="@+id/ivMineTab"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="10dp"
+
+            android:src="@drawable/main_frag_mine_icon_selector"
+            android:tooltipText="我的" />
+        <TextView
+            android:id="@+id/tvFourthTab"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/main_frag_home_icon_selector"
+            android:gravity="center"
+            android:text="库"
+            android:visibility="gone"
+            android:textColor="@drawable/com_text_blue_gray_selector" />
+
+    </LinearLayout>
+
+    <com.app.watermeter.view.views.NoScrollViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/llTabLayout" />
+</RelativeLayout>

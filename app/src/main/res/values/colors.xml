@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="main_blue_color">#0cb8f4</color>
+    <color name="white">#FFFFFF</color>
+    <color name="zu_choose_right_item_bg">#F3F3F3</color>
+    <color name="text_gray">#AAAAAA</color>
+    <color name="com_text_gray_color">#B2B2B2</color>
+    <color name="main_bg_gray">#F6F6F6</color>
+    <color name="main_page_number_color">#04040F</color>
+    <color name="text_color">#414141</color>
+    <color name="divider_color">#d2d2d2</color>
+
+    <color name="normal_text_color">#414141</color>
+
+    <color name="more_text_color">#b6b6b6</color>
+
+</resources>

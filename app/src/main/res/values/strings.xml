@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">WaterMeter</string>
+
+    <string name="main_home">首页</string>
+    <string name="water_meter">电表</string>
+    <string name="electricity_meter">电表</string>
+    <string name="gas_meter">燃气表</string>
+    <string name="more" formatted="false">查看全部></string>
+
+</resources>
