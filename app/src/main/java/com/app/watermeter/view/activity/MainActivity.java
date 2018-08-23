@@ -1,5 +1,7 @@
 package com.app.watermeter.view.activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.View;
@@ -55,6 +57,9 @@ public class MainActivity extends BaseActivity {
         initData();
     }
 
+    public static Intent makeIntent(Context context){
+        return new Intent(context,MainActivity.class);
+    }
     private void initData() {
         fragmentList = new ArrayList<>();
         fragmentList.add(new HomeFragment());

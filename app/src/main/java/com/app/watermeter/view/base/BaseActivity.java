@@ -318,7 +318,12 @@ public abstract class BaseActivity extends AppCompatActivity implements DrawerLa
         }
 
     }
-
+    protected void setHeaderVisibility(int visibility) {
+        if (rlBaseTitleLayout == null) {
+            return;
+        }
+        rlBaseTitleLayout.setVisibility(visibility);
+    }
 
 
     /**
