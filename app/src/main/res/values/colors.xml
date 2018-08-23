@@ -16,5 +16,5 @@
     <color name="normal_text_color">#414141</color>
 
     <color name="more_text_color">#b6b6b6</color>
-
+<color name="com_title_state_color">#3563BB</color>
 </resources>
