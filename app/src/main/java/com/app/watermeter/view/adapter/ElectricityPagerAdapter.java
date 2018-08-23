@@ -12,14 +12,16 @@ import com.app.watermeter.model.MeterInfoModel;
 import java.util.List;
 
 /**
- * Created by admin on 2018/8/23.
+ *
+ * @author admin
+ * @date 2018/8/23
  */
 
-public class WaterPagerAdapter extends PagerAdapter {
+public class ElectricityPagerAdapter extends PagerAdapter {
     private List<MeterInfoModel> list;
     private Context context;
 
-    public WaterPagerAdapter(Context context, List<MeterInfoModel> list) {
+    public ElectricityPagerAdapter(Context context, List<MeterInfoModel> list) {
         this.context = context;
         this.list = list;
     }
@@ -36,7 +38,7 @@ public class WaterPagerAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_water_meter, null);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_electricity_meter, null);
         container.addView(view);
         return view;
     }

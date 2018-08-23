@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     android:orientation="vertical">
 
     <LinearLayout
@@ -37,9 +36,9 @@
             android:layout_width="match_parent"
             android:clipChildren="false"
             android:layout_marginTop="5dp"
-            android:layout_height="135dp"
-            android:layout_marginLeft="60dp"
-            android:layout_marginRight="60dp"/>
+            android:layout_height="match_parent"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"/>
 
         <View
             android:layout_width="match_parent"
@@ -55,6 +54,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:clipChildren="false"
         android:orientation="vertical">
 
         <RelativeLayout
@@ -80,7 +80,11 @@
         <android.support.v4.view.ViewPager
             android:id="@+id/vpElectricity"
             android:layout_width="match_parent"
-            android:layout_height="135dp" />
+            android:clipChildren="false"
+            android:layout_marginTop="5dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp" />
 
         <View
             android:layout_width="match_parent"
@@ -91,10 +95,11 @@
             android:background="@color/divider_color" />
     </LinearLayout>
 
-    <LinearLayout
+    <LinearLayout android:layout_marginBottom="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:clipChildren="false"
         android:orientation="vertical">
 
         <RelativeLayout
@@ -120,7 +125,11 @@
         <android.support.v4.view.ViewPager
             android:id="@+id/vpGas"
             android:layout_width="match_parent"
-            android:layout_height="135dp" />
+            android:clipChildren="false"
+            android:layout_marginTop="5dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp" />
 
     </LinearLayout>
 </LinearLayout>

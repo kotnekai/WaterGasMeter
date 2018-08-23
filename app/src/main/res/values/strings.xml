@@ -2,9 +2,18 @@
     <string name="app_name">WaterMeter</string>
 
     <string name="main_home">首页</string>
-    <string name="water_meter">电表</string>
+    <string name="water_meter">水表</string>
     <string name="electricity_meter">电表</string>
     <string name="gas_meter">燃气表</string>
     <string name="more" formatted="false">查看全部></string>
+
+    <string name="water_meter2">水表：</string>
+    <string name="electricity_meter2">电表：</string>
+    <string name="gas_meter2">燃气表：</string>
+    <string name="address">地址：</string>
+    <string name="square">（单位：㎡）</string>
+    <string name="last_value">上次表值：</string>
+    <string name="balance">表余额：</string>
+    <string name="yuan">%s 元</string>
 
 </resources>
