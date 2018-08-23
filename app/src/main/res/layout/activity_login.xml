@@ -122,7 +122,8 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@id/tvLoginBtn"
         android:layout_below="@id/tvLoginBtn"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="10dp"
+        android:padding="5dp"
         android:text="立即注册" />
 
     <TextView
@@ -131,6 +132,7 @@
         android:layout_height="wrap_content"
         android:layout_alignRight="@id/tvLoginBtn"
         android:layout_below="@id/tvLoginBtn"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="10dp"
+        android:padding="5dp"
         android:text="忘记密码？" />
 </RelativeLayout>

@@ -16,9 +16,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".view.activity.MainActivity"
-            android:screenOrientation="portrait">
-
-        </activity>
+            android:screenOrientation="portrait"></activity>
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -38,7 +36,6 @@
         <activity
             android:name=".view.activity.MeterListActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".view.activity.LoginActivity"
             android:screenOrientation="portrait"
@@ -48,7 +45,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
         <activity
             android:name=".view.activity.RegisterPhoneActivity"
@@ -59,6 +55,7 @@
         <activity
             android:name=".view.activity.RegisterInfoActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".view.activity.ResetPswActivity"></activity>
     </application>
 
 </manifest>
