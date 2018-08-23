@@ -56,8 +56,10 @@ public class LoginActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.tvGoRegister:
+                startActivity(RegisterPhoneActivity.makeIntent(this));
                 break;
             case R.id.tvForgetPsw:
+                startActivity(ResetPswActivity.makeIntent(this));
                 break;
 
         }

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_bg_gray"
+    tools:context=".view.activity.RegisterPhoneActivity">
+
+    <ImageView
+        android:id="@+id/ivPhoneIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/yanzhenshouji" />
+
+    <RelativeLayout
+        android:id="@+id/rlSelectCode"
+        android:layout_width="300dp"
+        android:layout_height="45dp"
+        android:layout_below="@id/ivPhoneIcon"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="70dp"
+        android:background="@drawable/com_white_20r_shape">
+
+        <TextView
+            android:id="@+id/tvCountryName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:text="中国大陆"
+            android:textSize="15sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="25dp"
+            android:text="+855 >"
+            android:textSize="15sp" />
+    </RelativeLayout>
+
+    <EditText
+        android:id="@+id/edtPhoneNumber"
+        android:layout_width="300dp"
+        android:layout_height="45dp"
+        android:layout_below="@id/rlSelectCode"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:textSize="15sp"
+        android:background="@drawable/com_white_20r_shape"
+        android:hint="手机号"
+        android:paddingLeft="10dp" />
+
+    <TextView
+        android:id="@+id/tvGoNext"
+        android:layout_width="300dp"
+        android:layout_height="45dp"
+        android:layout_below="@id/edtPhoneNumber"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:background="@mipmap/anniu"
+        android:gravity="center"
+        android:text="下一步"
+        android:textColor="@color/white"
+        android:textSize="15sp" />
+</RelativeLayout>

@@ -113,6 +113,12 @@ public abstract class BaseActivity extends AppCompatActivity implements DrawerLa
         translucentStatus(this, mTitleColor);
         drawerLayout.addDrawerListener(this);
         drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        ivGoBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     /**
@@ -205,14 +211,10 @@ public abstract class BaseActivity extends AppCompatActivity implements DrawerLa
     }
 
 
-    @OnClick({R.id.ivGoBack, R.id.ivNext, R.id.tvNext, R.id.llEmptyPage})
+    @OnClick({R.id.ivNext, R.id.tvNext, R.id.llEmptyPage})
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.ivGoBack:
-                ToastUtil.showShort("1");
-                break;
             case R.id.ivNext:
-
                 break;
             case R.id.tvNext:
                 break;
@@ -297,16 +299,6 @@ public abstract class BaseActivity extends AppCompatActivity implements DrawerLa
         }
     }
 
-    /**
-     * 设置左边返回按钮的监听事件，默认是直接返回，如需要添加其他附带操作就可以
-     * 调用这个事件
-     * @param listener
-     */
-    protected void setHeader_LeftClickListener(View.OnClickListener listener) {
-        if (ivGoBack != null) {
-            ivGoBack.setOnClickListener(listener);
-        }
-    }
 
     /**
      * 设置右边文字按钮的点击事件监听

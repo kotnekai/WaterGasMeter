@@ -21,4 +21,8 @@
     <string name="sn_hints">手动输入表缴费号</string>
     <string name="binding">绑定</string>
 
+    <string name="register_phone_title">验证手机</string>
+    <string name="register_info_title">注册信息</string>
+    <string name="reset_psw_title">重设密码</string>
+    <string name="register_info_psw_tip">*密码至少含一位数字与字母，且至少6位\n安全起见，建议密码不能设置过于简单</string>
 </resources>
