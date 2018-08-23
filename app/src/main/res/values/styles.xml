@@ -26,6 +26,10 @@
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">14sp</item>
     </style>
+    <style name="cardViewTextStyle2">
+        <item name="android:textColor">@color/normal_text_color</item>
+        <item name="android:textSize">14sp</item>
+    </style>
     <!-- Base application theme. -->
     <style name="AppTheme2" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->

@@ -36,6 +36,10 @@
             android:exported="false" />
 
         <activity
+            android:name=".view.activity.MeterListActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".view.activity.LoginActivity"
             android:theme="@style/AppTheme.Main"
             android:screenOrientation="portrait">

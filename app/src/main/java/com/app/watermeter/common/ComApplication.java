@@ -59,7 +59,7 @@ public class ComApplication extends Application {
     public void onCreate() {
         super.onCreate();
         ApplicationHolder.getInstance().setAppContext(this);
-         CrashManager.getInstance().init(this); //初始化本地崩溃日志收集
+//         CrashManager.getInstance().init(this); //初始化本地崩溃日志收集
         checkPermission();
         MyOkhttpUtils.initOkhttp(this);
         PickViewUtil.initTimePickOptions(this);

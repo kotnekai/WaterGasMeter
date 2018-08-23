@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import com.app.watermeter.R;
 import com.app.watermeter.model.MeterInfoModel;
+import com.app.watermeter.view.activity.MeterListActivity;
 import com.app.watermeter.view.adapter.ElectricityPagerAdapter;
 import com.app.watermeter.view.adapter.GasPagerAdapter;
 import com.app.watermeter.view.adapter.WaterPagerAdapter;
@@ -19,7 +20,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class HomeFragment extends BaseFragment implements View.OnClickListener {
+public class HomeFragment extends BaseFragment {
 
     @BindView(R.id.tvMoreWater)
     TextView tvMoreWater;
@@ -54,12 +55,10 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     }
 
 
-
     /**
      * 水表数据
      */
-    private void initWaterData()
-    {
+    private void initWaterData() {
         vpWater.setPageMargin(5);
         vpWater.setOffscreenPageLimit(3);
         List<MeterInfoModel> list = new ArrayList<>();
@@ -132,15 +131,17 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     }
 
 
-    @Override
-    @OnClick({R.id.tvMoreWater, R.id.tvMoreElectricity, R.id.tvMoreGas,})
+    @OnClick({R.id.tvMoreWater, R.id.tvMoreElectricity, R.id.tvMoreGas})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tvMoreWater:
+                startActivity(MeterListActivity.makeIntent(getContext(), MeterListActivity.TYPE_WATER));
                 break;
             case R.id.tvMoreElectricity:
+                startActivity(MeterListActivity.makeIntent(getContext(), MeterListActivity.TYPE_ELECT));
                 break;
             case R.id.tvMoreGas:
+                startActivity(MeterListActivity.makeIntent(getContext(), MeterListActivity.TYPE_GAS));
                 break;
 
         }
