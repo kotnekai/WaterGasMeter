@@ -59,7 +59,7 @@
             android:name=".view.activity.ResetPswActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.activity.PersonInfoActivity"
+            android:name=".view.activity.SettingActivity"
             android:screenOrientation="portrait" />
 
     </application>

@@ -12,11 +12,11 @@ import com.app.watermeter.view.base.BaseFragment_ViewBinding;
 import java.lang.Override;
 
 public class HomeFragment_ViewBinding<T extends HomeFragment> extends BaseFragment_ViewBinding<T> {
-  private View view2131230932;
+  private View view2131230938;
 
-  private View view2131230930;
+  private View view2131230936;
 
-  private View view2131230931;
+  private View view2131230937;
 
   @UiThread
   public HomeFragment_ViewBinding(final T target, View source) {
@@ -25,7 +25,7 @@ public class HomeFragment_ViewBinding<T extends HomeFragment> extends BaseFragme
     View view;
     view = Utils.findRequiredView(source, R.id.tvMoreWater, "field 'tvMoreWater' and method 'onClick'");
     target.tvMoreWater = Utils.castView(view, R.id.tvMoreWater, "field 'tvMoreWater'", TextView.class);
-    view2131230932 = view;
+    view2131230938 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -34,7 +34,7 @@ public class HomeFragment_ViewBinding<T extends HomeFragment> extends BaseFragme
     });
     view = Utils.findRequiredView(source, R.id.tvMoreElectricity, "field 'tvMoreElectricity' and method 'onClick'");
     target.tvMoreElectricity = Utils.castView(view, R.id.tvMoreElectricity, "field 'tvMoreElectricity'", TextView.class);
-    view2131230930 = view;
+    view2131230936 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -43,7 +43,7 @@ public class HomeFragment_ViewBinding<T extends HomeFragment> extends BaseFragme
     });
     view = Utils.findRequiredView(source, R.id.tvMoreGas, "field 'tvMoreGas' and method 'onClick'");
     target.tvMoreGas = Utils.castView(view, R.id.tvMoreGas, "field 'tvMoreGas'", TextView.class);
-    view2131230931 = view;
+    view2131230937 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -67,11 +67,11 @@ public class HomeFragment_ViewBinding<T extends HomeFragment> extends BaseFragme
     target.vpElectricity = null;
     target.vpGas = null;
 
-    view2131230932.setOnClickListener(null);
-    view2131230932 = null;
-    view2131230930.setOnClickListener(null);
-    view2131230930 = null;
-    view2131230931.setOnClickListener(null);
-    view2131230931 = null;
+    view2131230938.setOnClickListener(null);
+    view2131230938 = null;
+    view2131230936.setOnClickListener(null);
+    view2131230936 = null;
+    view2131230937.setOnClickListener(null);
+    view2131230937 = null;
   }
 }

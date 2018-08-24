@@ -3,12 +3,9 @@ package com.app.watermeter.view.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.sax.RootElement;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.app.watermeter.R;
 import com.app.watermeter.view.base.BaseActivity;
@@ -19,7 +16,7 @@ import butterknife.OnClick;
 /**
  * @author admin
  */
-public class PersonInfoActivity extends BaseActivity {
+public class SettingActivity extends BaseActivity {
 
     @BindView(R.id.llModifyPwd)
     LinearLayout llModifyPwd;
@@ -30,11 +27,11 @@ public class PersonInfoActivity extends BaseActivity {
 
     @Override
     protected int getCenterView() {
-        return R.layout.activity_persion_info;
+        return R.layout.activity_setting;
     }
 
     public static Intent makeIntent(Context context) {
-        return new Intent(context, PersonInfoActivity.class);
+        return new Intent(context, SettingActivity.class);
     }
 
 
@@ -47,7 +44,7 @@ public class PersonInfoActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mContext = PersonInfoActivity.this;
+        mContext = SettingActivity.this;
 
     }
 
