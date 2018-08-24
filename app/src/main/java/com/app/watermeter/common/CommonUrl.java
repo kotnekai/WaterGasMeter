@@ -1,7 +1,8 @@
 package com.app.watermeter.common;
 
 public class CommonUrl {
-    public static final String URL = "http://192.168.1.14:9010/"; // 14 测试 16开发
-    public static final String GET_APK_VERSION_INFO = URL + "apk/che"  + "ck";
-
+    public static final String BASE_URL = "http://119.23.12.11"; // 14 测试 16开发
+    public static final String GET_APK_VERSION_INFO = BASE_URL + "apk/che"  + "ck";
+    public static final String LOGIN = BASE_URL+"/auth/login";
+    public static final String TEST = BASE_URL+"/api/test";
 }
