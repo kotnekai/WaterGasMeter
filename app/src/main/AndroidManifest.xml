@@ -61,7 +61,9 @@
         <activity
             android:name=".view.activity.SettingActivity"
             android:screenOrientation="portrait" />
-
+        <activity
+            android:name=".view.activity.PersonInfoActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

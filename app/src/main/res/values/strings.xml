@@ -35,5 +35,8 @@
     <string name="mine_pay_list">缴费明细</string>
     <string name="mine_person_info">个人资料</string>
     <string name="mine_other_setting">其它设置</string>
+    <string name="person_name">姓名</string>
+    <string name="person_email">邮箱</string>
+    <string name="person_phone">手机号</string>
 
 </resources>

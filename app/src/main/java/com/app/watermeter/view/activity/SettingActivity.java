@@ -35,10 +35,9 @@ public class SettingActivity extends BaseActivity {
     }
 
 
-
     @Override
     protected void initHeader() {
-
+        setHeaderTitle(getString(R.string.mine_other_setting));
     }
 
     @Override
@@ -48,11 +47,11 @@ public class SettingActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.llModifyPwd,R.id.llChangedLanguage})
+    @OnClick({R.id.llModifyPwd, R.id.llChangedLanguage})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.llModifyPwd:
-                startActivity(ResetPswActivity.makeIntent(mContext,ResetPswActivity.TYPE_MODIFY));
+                startActivity(ResetPswActivity.makeIntent(mContext, ResetPswActivity.TYPE_MODIFY));
                 break;
             case R.id.llChangedLanguage:
                 break;

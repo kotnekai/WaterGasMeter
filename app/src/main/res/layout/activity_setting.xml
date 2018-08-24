@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         android:id="@+id/llModifyPwd"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -22,7 +22,7 @@
         android:id="@+id/llChangedLanguage"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginTop="15dp">
+        android:layout_marginTop="10dp">
 
         <TextView
             style="@style/text_Item_style"

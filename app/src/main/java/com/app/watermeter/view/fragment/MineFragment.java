@@ -4,6 +4,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.app.watermeter.R;
+import com.app.watermeter.view.activity.PersonInfoActivity;
 import com.app.watermeter.view.activity.SettingActivity;
 import com.app.watermeter.view.base.BaseFragment;
 
@@ -53,6 +54,7 @@ public class MineFragment extends BaseFragment {
             case R.id.rlPayDes:
                 break;
             case R.id.rlPersonInfo:
+                startActivity(PersonInfoActivity.makeIntent(getContext()));
                 break;
             case R.id.rlOtherSet:
                 startActivity(SettingActivity.makeIntent(getContext()));
