@@ -4,6 +4,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.app.watermeter.R;
+import com.app.watermeter.view.activity.PersonInfoActivity;
 import com.app.watermeter.view.base.BaseFragment;
 
 import butterknife.BindView;
@@ -54,6 +55,7 @@ public class MineFragment extends BaseFragment {
             case R.id.rlPersonInfo:
                 break;
             case R.id.rlOtherSet:
+                startActivity(PersonInfoActivity.makeIntent(getContext()));
                 break;
 
         }

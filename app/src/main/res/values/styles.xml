@@ -42,4 +42,18 @@
 
     <style name="AppTheme.Main" parent="AppTheme2" />
 
+
+
+    <style name="text_Item_style">
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingStart">15dp</item>
+        <item name="android:paddingEnd">15dp</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:background">@drawable/common_text_white_gray_click</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/normal_text_item_color</item>
+        <item name="android:drawableEnd">@mipmap/inside</item>
+    </style>
+
 </resources>

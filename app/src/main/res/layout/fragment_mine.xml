@@ -8,120 +8,58 @@
     <RelativeLayout
         android:id="@+id/rlPreSave"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:background="@color/white"
-        android:paddingEnd="15dp"
-        android:paddingStart="15dp">
+        android:orientation="vertical">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:drawableLeft="@mipmap/yucun"
+            style="@style/text_Item_style"
             android:drawablePadding="10dp"
-            android:text="预存明显"
-            android:textSize="17sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="15dp"
-            android:text=">"
-            android:textColor="@color/text_gray"
-            android:textSize="25sp" />
-
+            android:drawableStart="@mipmap/yucun"
+            android:text="@string/mine_per_storage_list" />
     </RelativeLayout>
+
 
     <RelativeLayout
         android:id="@+id/rlPayDes"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:background="@color/white"
-        android:paddingEnd="15dp"
-        android:paddingStart="15dp">
+        android:orientation="vertical">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:drawableLeft="@mipmap/jiaofei"
+            style="@style/text_Item_style"
             android:drawablePadding="10dp"
-            android:text="缴费明显"
-            android:textSize="17sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="15dp"
-            android:text=">"
-            android:textColor="@color/text_gray"
-            android:textSize="25sp" />
-
+            android:drawableStart="@mipmap/jiaofei"
+            android:text="@string/mine_pay_list" />
     </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/rlPersonInfo"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:background="@color/white"
-        android:paddingEnd="15dp"
-        android:paddingStart="15dp">
+        android:orientation="vertical">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:drawableLeft="@mipmap/ziliao"
+            style="@style/text_Item_style"
             android:drawablePadding="10dp"
-            android:text="个人资料"
-            android:textSize="17sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="15dp"
-            android:text=">"
-            android:textColor="@color/text_gray"
-            android:textSize="25sp" />
-
+            android:drawableStart="@mipmap/ziliao"
+            android:text="@string/mine_person_info" />
     </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/rlOtherSet"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:background="@color/white"
-        android:paddingEnd="15dp"
-        android:paddingStart="15dp">
+        android:orientation="vertical">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:drawableLeft="@mipmap/shezhi"
+            style="@style/text_Item_style"
             android:drawablePadding="10dp"
-            android:text="其他设置"
-            android:textSize="17sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="15dp"
-            android:text=">"
-            android:textColor="@color/text_gray"
-            android:textSize="25sp" />
-
+            android:drawableStart="@mipmap/shezhi"
+            android:text="@string/mine_other_setting" />
     </RelativeLayout>
+
 </LinearLayout>

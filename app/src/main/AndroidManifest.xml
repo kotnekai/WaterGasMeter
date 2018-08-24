@@ -55,7 +55,13 @@
         <activity
             android:name=".view.activity.RegisterInfoActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".view.activity.ResetPswActivity"></activity>
+        <activity
+            android:name=".view.activity.ResetPswActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.PersonInfoActivity"
+            android:screenOrientation="portrait" />
+
     </application>
 
 </manifest>

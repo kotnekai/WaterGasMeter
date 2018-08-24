@@ -24,5 +24,16 @@
     <string name="register_phone_title">验证手机</string>
     <string name="register_info_title">注册信息</string>
     <string name="reset_psw_title">重设密码</string>
+
+    <string name="reset_modify_title">修改密码</string>
     <string name="register_info_psw_tip">*密码至少含一位数字与字母，且至少6位\n安全起见，建议密码不能设置过于简单</string>
+
+    <string name="modify_password">修改密码</string>
+    <string name="modify_language">切换语言</string>
+
+    <string name="mine_per_storage_list">预存明细</string>
+    <string name="mine_pay_list">缴费明细</string>
+    <string name="mine_person_info">个人资料</string>
+    <string name="mine_other_setting">其它设置</string>
+
 </resources>
