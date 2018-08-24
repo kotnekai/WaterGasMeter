@@ -39,4 +39,7 @@
     <string name="person_email">邮箱</string>
     <string name="person_phone">手机号</string>
 
+    <string name="scan_code">扫码失败，请重试</string>
+    <string name="permission_storage">存储权限</string>
+    <string name="permission_camera">存储权限</string>
 </resources>

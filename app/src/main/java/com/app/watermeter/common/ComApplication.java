@@ -17,6 +17,7 @@ import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.app.watermeter.R;
 import com.app.watermeter.okhttp.MyOkhttpUtils;
 import com.app.watermeter.utils.PickViewUtil;
+import com.uuzuche.lib_zxing.activity.ZXingLibrary;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,6 +64,7 @@ public class ComApplication extends Application {
         checkPermission();
         MyOkhttpUtils.initOkhttp(this);
         PickViewUtil.initTimePickOptions(this);
+        ZXingLibrary.initDisplayOpinion(this);
 
     }
 
@@ -82,7 +84,9 @@ public class ComApplication extends Application {
      */
     private List<PermissionItem> initPermissionList() {
         List<PermissionItem> permissionItems = new ArrayList<>();
-        permissionItems.add(new PermissionItem(Manifest.permission.WRITE_EXTERNAL_STORAGE, "存储权限", R.drawable.permission_ic_storage));
+        permissionItems.add(new PermissionItem(Manifest.permission.WRITE_EXTERNAL_STORAGE, getString(R.string.permission_storage), R.drawable.permission_ic_storage));
+        permissionItems.add(new PermissionItem(Manifest.permission.CAMERA, getString(R.string.permission_camera), R.drawable.permission_ic_camera));
+
         return permissionItems;
     }
 

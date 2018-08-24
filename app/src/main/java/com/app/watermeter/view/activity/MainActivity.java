@@ -67,6 +67,7 @@ public class MainActivity extends BaseActivity {
         fragmentList.add(new MineFragment());
         tvFourthTab.setVisibility(View.GONE);
         adapter = new FragmentAdapter(fragmentList, getSupportFragmentManager());
+        viewPager.setOffscreenPageLimit(2);
         viewPager.setAdapter(adapter);
         ivHomeTab.setSelected(true);
 

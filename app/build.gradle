@@ -39,6 +39,8 @@ dependencies {
     compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-14'
     compile 'com.android.support:recyclerview-v7:26.+'
     compile 'org.jaaksi:pickerview:1.0.1'
+    compile 'cn.yipianfengye.android:zxing-library:2.2'
+
     testCompile 'junit:junit:4.12'
     compile project(':hellocharts-library')
     compile project(path: ':okhttputils')
