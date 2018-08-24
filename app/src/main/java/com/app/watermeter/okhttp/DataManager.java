@@ -63,8 +63,10 @@ public class DataManager {
         if (params != null) {
             getBuilder.params(params);
         }
+        getBuilder.addHeader("Accept", "application/x.watermeter.v1+json");
+
         if (token != null) {
-            getBuilder.addHeader("X-Authorization", "bearer " + token);
+            getBuilder.addHeader("Authorization", "bearer " + token);
         }
         return getBuilder.build();
     }
@@ -79,7 +81,7 @@ public class DataManager {
     public RequestCall sendPostRequestData(String url, JSONObject params, MediaType mediaType) {
         String token = getToken();
         PostStringBuilder postStringBuilder = OkHttpUtils.postString().url(url);
-        postStringBuilder.addHeader("X-Authorization", "bearer " + token);
+        postStringBuilder.addHeader("Authorization", "bearer " + token);
         postStringBuilder.mediaType(mediaType);
         postStringBuilder.content(params.toString());
         return postStringBuilder.build();
@@ -95,7 +97,9 @@ public class DataManager {
         String token = getToken();
         PostStringBuilder postStringBuilder = OkHttpUtils.postString().url(url);
         postStringBuilder.mediaType(MediaType.parse("application/json; charset=utf-8"));
-        postStringBuilder.addHeader("X-Authorization", "bearer " + token);
+        postStringBuilder.addHeader("Authorization", "bearer " + token);
+        postStringBuilder.addHeader("Accept", "application/x.watermeter.v1+json");
+
         postStringBuilder.content(params.toString());
 
         return postStringBuilder.build();
@@ -111,7 +115,7 @@ public class DataManager {
         String token = getToken();
         PostStringBuilder postStringBuilder = OkHttpUtils.postString().url(url);
         postStringBuilder.mediaType(MediaType.parse("application/json; charset=utf-8"));
-        postStringBuilder.addHeader("X-Authorization", "bearer " + token);
+        postStringBuilder.addHeader("Authorization", "bearer " + token);
         postStringBuilder.content(params.toString());
         postStringBuilder.build().execute(new Callback() {
             @Override
@@ -155,7 +159,7 @@ public class DataManager {
         postFileBuilder.isFormSubmitFile = true;
         postFileBuilder.mediaType(MediaType.parse(MULTIPART_FORM_DATA));
         Log.d("xyc", "okHttpUpload: file=" + file);
-        postFileBuilder.addHeader("X-Authorization", "bearer " + token);
+        postFileBuilder.addHeader("Authorization", "bearer " + token);
         postFileBuilder.file(file);
         postFileBuilder.url(url);
         postFileBuilder.build().execute(new Callback() {

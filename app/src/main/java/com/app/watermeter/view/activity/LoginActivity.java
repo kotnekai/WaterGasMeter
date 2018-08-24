@@ -7,6 +7,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.app.watermeter.R;
+import com.app.watermeter.manager.UserManager;
 import com.app.watermeter.view.base.BaseActivity;
 
 import butterknife.BindView;
@@ -53,6 +54,8 @@ public class LoginActivity extends BaseActivity {
                 break;
             case R.id.tvLoginBtn:
                 startActivity(MainActivity.makeIntent(this));
+             // UserManager.getInstance().login("13800138000","123456");
+              //UserManager.getInstance().testIt();
                 finish();
                 break;
             case R.id.tvGoRegister:
