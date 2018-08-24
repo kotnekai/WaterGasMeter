@@ -2,6 +2,7 @@ package com.app.watermeter.view.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.View;
@@ -9,12 +10,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.app.watermeter.R;
+import com.app.watermeter.common.ApplicationHolder;
+import com.app.watermeter.common.ChangeLanguageHelper;
+import com.app.watermeter.eventBus.LanguageChangedEvent;
+import com.app.watermeter.utils.LanguageUtils;
 import com.app.watermeter.view.adapter.FragmentAdapter;
 import com.app.watermeter.view.base.BaseActivity;
 import com.app.watermeter.view.fragment.HomeFragment;
 import com.app.watermeter.view.fragment.BingingFragment;
 import com.app.watermeter.view.fragment.MineFragment;
 import com.app.watermeter.view.views.NoScrollViewPager;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +48,8 @@ public class MainActivity extends BaseActivity {
     private List<Fragment> fragmentList;
     private FragmentAdapter adapter;
 
+    Context mContext;
+
     @Override
     protected int getCenterView() {
         return R.layout.activity_main;
@@ -51,9 +61,27 @@ public class MainActivity extends BaseActivity {
         setLeftIconVisibility(View.GONE);
     }
 
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(LanguageChangedEvent event) {
+        if (mContext instanceof MainActivity) {
+            MainActivity mainActivity = (MainActivity) mContext;
+            mainActivity.finish();
+
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+        }
+
+    }
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ChangeLanguageHelper.init(this);
+        mContext = MainActivity.this;
         initData();
     }
 

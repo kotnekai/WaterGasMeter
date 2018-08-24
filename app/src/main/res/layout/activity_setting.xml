@@ -29,6 +29,7 @@
             android:text="@string/modify_language" />
 
         <TextView
+            android:id="@+id/tvLanguage"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"

@@ -21,7 +21,7 @@ import java.io.Serializable;
 
 public class PreferencesUtils {
 
-    public static String PREFERENCE_NAME = "TrineaAndroidCommon";
+    public static String PREFERENCE_NAME = "WaterMeterCommon";
     private static Context context = ApplicationHolder.getInstance().getAppContext();
 
     public static boolean putString(String key, String value) {
