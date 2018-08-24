@@ -1,0 +1,47 @@
+<resources>
+    <string name="app_name">WaterMeter</string>
+
+    <string name="main_home">Water Meter</string>
+    <string name="water_meter">Water Meter</string>
+    <string name="electricity_meter">Electricity Meter</string>
+    <string name="gas_meter">Gas Meter</string>
+    <string name="more" formatted="false">more></string>
+
+    <string name="water_meter2">Water：</string>
+    <string name="electricity_meter2">Electricity：</string>
+    <string name="gas_meter2">Gas：</string>
+    <string name="address">Address：</string>
+    <string name="square">（unit：㎡）</string>
+    <string name="last_value">上次表值：</string>
+    <string name="balance">表余额：</string>
+    <string name="yuan">%s rmb</string>
+    <string name="scan">Scan</string>
+    <string name="or">- Or -</string>
+    <string name="add">Add</string>
+    <string name="sn_hints">sn</string>
+    <string name="binding">Bind</string>
+
+    <string name="register_phone_title">Verifying the mobile phone</string>
+    <string name="register_info_title">Registration information</string>
+    <string name="reset_psw_title">Reset the password</string>
+
+    <string name="reset_modify_title">Change Password</string>
+    <string name="register_info_psw_tip">*The password contains at least one digit and letter, \nand at least 6 bits.\nFor security reasons, \nthe suggested password should not be set too simple.</string>
+
+    <string name="modify_password">Modify Password</string>
+    <string name="modify_language">Language</string>
+
+    <string name="mine_per_storage_list">Pre storage detail</string>
+    <string name="mine_pay_list">Payment details</string>
+    <string name="mine_person_info">personal data</string>
+    <string name="mine_other_setting">Setting</string>
+    <string name="person_name">Name</string>
+    <string name="person_email">Email</string>
+    <string name="person_phone">Phone</string>
+
+    <string name="language_cn">简体中文</string>
+    <string name="language_en">English</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
+
+</resources>

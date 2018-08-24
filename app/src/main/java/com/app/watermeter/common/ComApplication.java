@@ -1,11 +1,17 @@
 package com.app.watermeter.common;
 
 import android.Manifest;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.content.res.Configuration;
+import android.content.res.Resources;
+import android.os.Build;
+import android.os.LocaleList;
 import android.util.Log;
 
+import com.app.watermeter.utils.LanguageUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.DefaultRefreshFooterCreator;
 import com.scwang.smartrefresh.layout.api.DefaultRefreshHeaderCreator;
@@ -20,6 +26,7 @@ import com.app.watermeter.utils.PickViewUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import me.weyye.hipermission.HiPermission;
@@ -63,8 +70,9 @@ public class ComApplication extends Application {
         checkPermission();
         MyOkhttpUtils.initOkhttp(this);
         PickViewUtil.initTimePickOptions(this);
-
+        LanguageUtils.applyChange(this);
     }
+
 
     /**
      * 获取application实例
