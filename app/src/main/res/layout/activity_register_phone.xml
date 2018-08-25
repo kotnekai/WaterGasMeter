@@ -34,12 +34,15 @@
             android:textSize="15sp" />
 
         <TextView
+            android:id="@+id/tvCountryCode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:drawablePadding="5dp"
+            android:drawableEnd="@mipmap/inside"
             android:layout_marginRight="25dp"
-            android:text="+855 >"
+            android:text="+855"
             android:textSize="15sp" />
     </RelativeLayout>
 
@@ -47,6 +50,7 @@
         android:id="@+id/edtPhoneNumber"
         android:layout_width="300dp"
         android:layout_height="45dp"
+        android:inputType="number"
         android:layout_below="@id/rlSelectCode"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"

@@ -9,7 +9,16 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.app.watermeter.R;
+import com.app.watermeter.common.CommonParams;
+import com.app.watermeter.eventBus.SuccessEvent;
+import com.app.watermeter.manager.UserManager;
+import com.app.watermeter.model.ComResponseModel;
+import com.app.watermeter.utils.EmptyUtil;
+import com.app.watermeter.utils.ToastUtil;
 import com.app.watermeter.view.base.BaseActivity;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -22,6 +31,11 @@ public class RegisterPhoneActivity extends BaseActivity {
     EditText edtPhoneNumber;
     @BindView(R.id.tvGoNext)
     TextView tvGoNext;
+    @BindView(R.id.tvCountryCode)
+    TextView tvCountryCode;
+
+    private String countryCode;
+    private String phoneNumber;
 
     @Override
     protected int getCenterView() {
@@ -38,14 +52,25 @@ public class RegisterPhoneActivity extends BaseActivity {
         setHeaderTitle(getString(R.string.register_phone_title));
     }
 
-    @OnClick({R.id.rlSelectCode,R.id.tvGoNext})
+    @OnClick({R.id.rlSelectCode, R.id.tvGoNext})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.rlSelectCode:
+
                 break;
             case R.id.tvGoNext:
-                startActivity(RegisterCodeActivity.makeIntent(this));
+                phoneNumber = edtPhoneNumber.getText().toString();
+                countryCode = tvCountryCode.getText().toString();
+
+                if (EmptyUtil.isEmpty(phoneNumber) || EmptyUtil.isEmpty(countryCode)) {
+                    ToastUtil.showShort(getString(R.string.phone_number));
+                    return;
+                }
+                startActivity(RegisterCodeActivity.makeIntent(this, countryCode, phoneNumber));
                 break;
         }
     }
+
+
+
 }

@@ -21,7 +21,7 @@
         android:layout_below="@id/tvTip"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:text="+855-18722323232"
+        android:text=""
         android:textColor="@color/register_phone_code_color"
         android:textSize="24sp" />
 
@@ -42,17 +42,19 @@
             android:layout_height="60dp"
             android:background="@drawable/com_line_bg_shape"
             android:gravity="center"
-            android:text="2"
+            android:maxLength="1"
+             android:inputType="number"
             android:textSize="25sp" />
 
         <EditText
             android:id="@+id/edtCodeSecond"
             android:layout_width="60dp"
             android:layout_height="60dp"
+            android:maxLength="1"
+            android:inputType="number"
             android:layout_marginLeft="10dp"
             android:background="@drawable/com_line_bg_shape"
             android:gravity="center"
-            android:text="2"
             android:textSize="25sp" />
 
         <EditText
@@ -62,17 +64,19 @@
             android:layout_marginLeft="10dp"
             android:background="@drawable/com_line_bg_shape"
             android:gravity="center"
-            android:text="2"
+            android:inputType="number"
+            android:maxLength="1"
             android:textSize="25sp" />
 
         <EditText
             android:id="@+id/edtCodeFourth"
             android:layout_width="60dp"
+            android:inputType="number"
             android:layout_height="60dp"
+            android:maxLength="1"
             android:layout_marginLeft="10dp"
             android:background="@drawable/com_line_bg_shape"
             android:gravity="center"
-            android:text="2"
             android:textSize="25sp" />
 
     </LinearLayout>
@@ -86,7 +90,7 @@
         android:layout_marginTop="70dp"
         android:background="@mipmap/anniu"
         android:gravity="center"
-        android:text="20后重新发送"
+        android:text="0后重新发送"
         android:textColor="@color/white"
         android:textSize="17sp" />
 </RelativeLayout>

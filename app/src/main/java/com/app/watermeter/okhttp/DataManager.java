@@ -82,6 +82,8 @@ public class DataManager {
         String token = getToken();
         PostStringBuilder postStringBuilder = OkHttpUtils.postString().url(url);
         postStringBuilder.addHeader("Authorization", "bearer " + token);
+        postStringBuilder.addHeader("Accept", "application/x.watermeter.v1+json");
+
         postStringBuilder.mediaType(mediaType);
         postStringBuilder.content(params.toString());
         return postStringBuilder.build();
@@ -116,6 +118,8 @@ public class DataManager {
         PostStringBuilder postStringBuilder = OkHttpUtils.postString().url(url);
         postStringBuilder.mediaType(MediaType.parse("application/json; charset=utf-8"));
         postStringBuilder.addHeader("Authorization", "bearer " + token);
+        postStringBuilder.addHeader("Accept", "application/x.watermeter.v1+json");
+
         postStringBuilder.content(params.toString());
         postStringBuilder.build().execute(new Callback() {
             @Override
@@ -160,6 +164,8 @@ public class DataManager {
         postFileBuilder.mediaType(MediaType.parse(MULTIPART_FORM_DATA));
         Log.d("xyc", "okHttpUpload: file=" + file);
         postFileBuilder.addHeader("Authorization", "bearer " + token);
+        postFileBuilder.addHeader("Accept", "application/x.watermeter.v1+json");
+
         postFileBuilder.file(file);
         postFileBuilder.url(url);
         postFileBuilder.build().execute(new Callback() {

@@ -54,8 +54,8 @@ public class LoginActivity extends BaseActivity {
                 break;
             case R.id.tvLoginBtn:
                 startActivity(MainActivity.makeIntent(this));
-             // UserManager.getInstance().login("13800138000","123456");
-              //UserManager.getInstance().testIt();
+               // UserManager.getInstance().login("13800138000","123456");
+                //UserManager.getInstance().testIt();
                 finish();
                 break;
             case R.id.tvGoRegister:

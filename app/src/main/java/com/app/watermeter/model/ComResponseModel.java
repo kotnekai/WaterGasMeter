@@ -3,16 +3,16 @@ package com.app.watermeter.model;
 /**
  * Create by Admin on 2018/8/24
  */
-public class TestModel {
-private String status_code;
+public class ComResponseModel {
+private int status_code;
 private String message;
 private int err_code;
 
-    public String getStatus_code() {
+    public int getStatus_code() {
         return status_code;
     }
 
-    public void setStatus_code(String status_code) {
+    public void setStatus_code(int status_code) {
         this.status_code = status_code;
     }
 

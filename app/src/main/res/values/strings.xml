@@ -46,5 +46,13 @@
     <string name="language_en">English</string>
     <string name="confirm">确认</string>
     <string name="cancel">取消</string>
+    <string name="phone_number">请输入您的手机号码</string>
+    <string name="phone_number_error">手机号码为空</string>
+    <string name="register_verify_code">验证码</string>
+    <string name="register_verify_phone">%s-%s</string>
+    <string name="register_next_step">下一步</string>
+    <string name="register_count_time">%ss后重新发送</string>
+    <string name="com_loading_tips">请稍后..</string>
+    <string name="com_input_complete_tips">请填写完整个人信息</string>
 
 </resources>
