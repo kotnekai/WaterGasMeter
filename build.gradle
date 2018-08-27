@@ -2,8 +2,8 @@
 
 buildscript {
     repositories {
-        mavenCentral()
-        jcenter()
+//        mavenCentral()
+//        jcenter()
         maven{ url 'http://maven.aliyun.com/nexus/content/groups/public/'}
 //        maven {
 //            url 'https://maven.google.com/'
@@ -21,8 +21,8 @@ buildscript {
 
 allprojects {
     repositories {
-        mavenCentral()
-        jcenter()
+//        mavenCentral()
+//        jcenter()
         maven{ url 'http://maven.aliyun.com/nexus/content/groups/public/'}
 //        jcenter()
 //        maven { url 'https://jitpack.io' }
@@ -33,7 +33,8 @@ allprojects {
     }
 }
 
-task clean(type: Delete) {        mavenCentral()
+task clean(type: Delete) {
+//    mavenCentral()
 
     delete rootProject.buildDir
 }
