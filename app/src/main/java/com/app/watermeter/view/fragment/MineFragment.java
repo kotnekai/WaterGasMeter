@@ -4,6 +4,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.app.watermeter.R;
+import com.app.watermeter.common.CommonParams;
 import com.app.watermeter.view.activity.PersonInfoActivity;
 import com.app.watermeter.view.activity.PreStorageActivity;
 import com.app.watermeter.view.activity.SettingActivity;
@@ -51,9 +52,11 @@ public class MineFragment extends BaseFragment {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.rlPreSave:
-                startActivity(PreStorageActivity.makeIntent(getContext()));
+                startActivity(PreStorageActivity.makeIntent(getContext(), CommonParams.PAGE_TYPE_PRE));
                 break;
             case R.id.rlPayDes:
+                startActivity(PreStorageActivity.makeIntent(getContext(), CommonParams.PAGE_TYPE_DES));
+
                 break;
             case R.id.rlPersonInfo:
                 startActivity(PersonInfoActivity.makeIntent(getContext()));

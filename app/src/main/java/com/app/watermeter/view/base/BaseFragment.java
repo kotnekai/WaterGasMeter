@@ -42,10 +42,10 @@ public abstract class BaseFragment extends Fragment {
         containView = inflater.inflate(R.layout.frag_base_layout, null);
 
         llCenterView = containView.findViewById(R.id.llCenterView);
-
-        if (setFrgContainView() != 0) {
+        int frgContainView = setFrgContainView();
+        if (frgContainView != 0) {
             llCenterView.removeAllViews();
-            View mAddContentView = LayoutInflater.from(getActivity()).inflate(setFrgContainView(), null);
+            View mAddContentView = LayoutInflater.from(getActivity()).inflate(frgContainView, null);
             llCenterView.addView(mAddContentView);
         }
         bindObj = ButterKnife.bind(this, containView);

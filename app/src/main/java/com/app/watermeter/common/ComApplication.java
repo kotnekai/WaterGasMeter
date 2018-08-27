@@ -93,8 +93,8 @@ public class ComApplication extends Application {
      */
     private List<PermissionItem> initPermissionList() {
         List<PermissionItem> permissionItems = new ArrayList<>();
-        permissionItems.add(new PermissionItem(Manifest.permission.WRITE_EXTERNAL_STORAGE, getString(R.string.permission_storage), R.drawable.permission_ic_storage));
-        permissionItems.add(new PermissionItem(Manifest.permission.CAMERA, getString(R.string.permission_camera), R.drawable.permission_ic_camera));
+        permissionItems.add(new PermissionItem(Manifest.permission.WRITE_EXTERNAL_STORAGE, getResources().getString(R.string.permission_storage), R.drawable.permission_ic_storage));
+        permissionItems.add(new PermissionItem(Manifest.permission.CAMERA,  getResources().getString(R.string.permission_camera), R.drawable.permission_ic_camera));
 
         return permissionItems;
     }
