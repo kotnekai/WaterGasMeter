@@ -10,7 +10,7 @@ import com.app.watermeter.R;
 import com.app.watermeter.common.CommonParams;
 import com.app.watermeter.view.adapter.PerStorageFragmentAdapter;
 import com.app.watermeter.view.base.BaseActivity;
-import com.app.watermeter.view.fragment.PerStorageFragment;
+import com.app.watermeter.view.fragment.PerStorageSaveFragment;
 
 import java.util.ArrayList;
 
@@ -28,7 +28,7 @@ public class PreStorageSaveActivity extends BaseActivity {
 
     private PerStorageFragmentAdapter adapter;
     private String[] mTitles = new String[]{"水表", "电表", "燃气表"};
-    private ArrayList<PerStorageFragment> mViewPagerFragments = new ArrayList<>();
+    private ArrayList<PerStorageSaveFragment> mViewPagerFragments = new ArrayList<>();
 
     private Context mContext;
     int pageType;
@@ -69,7 +69,7 @@ public class PreStorageSaveActivity extends BaseActivity {
         }
 
         for (int i = 0; i < mTitles.length; i++) {
-            mViewPagerFragments.add(PerStorageFragment.newInstance(mTitles[i],pageType));
+            mViewPagerFragments.add(PerStorageSaveFragment.newInstance(mTitles[i],pageType));
         }
         adapter = new PerStorageFragmentAdapter(getSupportFragmentManager(),pageType);
         adapter.setTitles(mTitles);

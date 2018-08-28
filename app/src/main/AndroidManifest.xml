@@ -74,6 +74,12 @@
         <activity
             android:name=".view.activity.MeterDetailActivity"
             android:screenOrientation="portrait" />
+        <activity
+        android:name=".view.activity.PerStorageSaveListActivity"
+        android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.PayActionActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

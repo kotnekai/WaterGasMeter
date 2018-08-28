@@ -1,12 +1,12 @@
-package com.app.watermeter.view.fragment;
+package com.app.watermeter.view.activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 
 import com.app.watermeter.R;
 import com.app.watermeter.common.CommonParams;
@@ -14,7 +14,7 @@ import com.app.watermeter.model.PerSaveModel;
 import com.app.watermeter.model.PerStorageModel;
 import com.app.watermeter.view.adapter.PerSaveAdapter;
 import com.app.watermeter.view.adapter.PerStorageAdapter;
-import com.app.watermeter.view.base.BaseFragment;
+import com.app.watermeter.view.base.BaseActivity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -26,16 +26,22 @@ import java.util.List;
 import butterknife.BindView;
 
 /**
- * 缴费明细
- *
- * @author Tim
+ * @author admin
  */
-public class PerStorageFragment extends BaseFragment {
+public class PerStorageSaveListActivity extends BaseActivity {
 
-    private static final String KEY = "extra";
-    private static final String KEY_PAGE = "page";
-    private String mMessage;
-    private int fromPage = 0;
+    public static final String PAGE_TYPE = "pageType";
+
+    //默认值
+    private int fromPage;
+
+
+    @BindView(R.id.smartRefreshLayout)
+    SmartRefreshLayout smartRefreshLayout;
+    @BindView(R.id.recyclerView)
+    RecyclerView recyclerView;
+
+    Context mContext;
     private PerStorageAdapter perStorageAdapter;
     private PerSaveAdapter perSaveAdapter;
     private LinearLayoutManager mLayoutManager;
@@ -44,63 +50,66 @@ public class PerStorageFragment extends BaseFragment {
     private List<PerSaveModel> perSaveList = new ArrayList<>();
 
 
-    public PerStorageFragment() {
-    }
-
-
-    @BindView(R.id.smartRefreshLayout)
-    SmartRefreshLayout refreshLayout;
-    @BindView(R.id.recyclerView)
-    RecyclerView recyclerView;
-
-
-    public static PerStorageFragment newInstance(String extra, int fromPageType) {
-        Bundle args = new Bundle();
-        args.putString(KEY, extra);
-        args.putInt(KEY_PAGE, fromPageType);
-        PerStorageFragment fragment = new PerStorageFragment();
-        fragment.setArguments(args);
-        return fragment;
+    public static Intent makeIntent(Context context, int type) {
+        Intent intent = new Intent(context, PerStorageSaveListActivity.class);
+        intent.putExtra(PAGE_TYPE, type);
+        return intent;
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    protected int getCenterView() {
+        return R.layout.fragment_per_storage;
+    }
+
+    @Override
+    protected void initHeader() {
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Bundle bundle = getArguments();
-        if (bundle != null) {
-            mMessage = bundle.getString(KEY);
-            fromPage = bundle.getInt(KEY_PAGE, 0);
-        }
-        Log.d("xyc", "onCreate: 1" + mMessage);
-    }
-
-    @Override
-    protected void initView() {
-        Log.d("xyc", "initView: 2" + mMessage);
-    }
-
-
-    @Override
-    protected void initData() {
-
+        mContext = PerStorageSaveListActivity.this;
+        initIntent();
+        initData();
         addListData(fromPage);
+    }
 
-        mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+    /**
+     * 获取类型
+     */
+    private void initIntent() {
+        Intent intent = getIntent();
+        fromPage = intent.getIntExtra(PAGE_TYPE, CommonParams.TYPE_WATER);
+    }
+
+    /**
+     * 加载数据
+     */
+    private void initData() {
+        switch (fromPage) {
+            case CommonParams.PAGE_TYPE_STORAGE:
+                setHeaderTitle(getString(R.string.mine_per_storage_list));
+                break;
+            case CommonParams.PAGE_TYPE_SAVE:
+                setHeaderTitle(getString(R.string.mine_pay_list));
+                break;
+        }
+        mLayoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
         mLayoutManager.setOrientation(GridLayoutManager.VERTICAL);
         mLayoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(mLayoutManager);
 
 
         if (fromPage == CommonParams.PAGE_TYPE_STORAGE) {
-            perStorageAdapter = new PerStorageAdapter(getActivity(), perStorageList);
+            perStorageAdapter = new PerStorageAdapter(mContext, perStorageList);
             recyclerView.setAdapter(perStorageAdapter);
         } else {
-            perSaveAdapter = new PerSaveAdapter(getActivity(), perSaveList);
+            perSaveAdapter = new PerSaveAdapter(mContext, perSaveList);
             recyclerView.setAdapter(perSaveAdapter);
         }
         recyclerView.scrollToPosition(0);
 
-        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+        smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 if (fromPage == CommonParams.PAGE_TYPE_STORAGE) {
@@ -116,7 +125,7 @@ public class PerStorageFragment extends BaseFragment {
                 refreshLayout.finishRefresh();
             }
         });
-        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+        smartRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
 
@@ -131,19 +140,8 @@ public class PerStorageFragment extends BaseFragment {
                 refreshLayout.finishLoadMore();
             }
         });
-
     }
 
-    @Override
-    protected void reLoadData() {
-
-    }
-
-    @Override
-    protected int setFrgContainView() {
-        Log.d("xyc", "setFrgContainView: 3" + mMessage);
-        return R.layout.fragment_per_storage;
-    }
 
     private void addListData(int type) {
         if (type == CommonParams.PAGE_TYPE_STORAGE) {
@@ -156,16 +154,4 @@ public class PerStorageFragment extends BaseFragment {
             }
         }
     }
-
-/*
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Log.d("xyc", "onCreate: 2");
-
-        View view = inflater.inflate(R.layout.fragment_per_storage, container, false);
-        TextView textView = (TextView) view.findViewById(R.id.fragment_text);
-
-        return view;
-    }*/
 }

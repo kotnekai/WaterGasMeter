@@ -1,14 +1,12 @@
 package com.app.watermeter.view.adapter;
 
-import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import com.app.watermeter.R;
-import com.app.watermeter.view.fragment.PerStorageFragment;
+
+import com.app.watermeter.view.fragment.PerStorageSaveFragment;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
@@ -19,7 +17,7 @@ import java.util.List;
 public class PerStorageFragmentAdapter extends FragmentStatePagerAdapter {
 
     private String[] titles;
-    private ArrayList<PerStorageFragment> viewPagerFragments;
+    private ArrayList<PerStorageSaveFragment> viewPagerFragments;
     private int pageType;
 
     public PerStorageFragmentAdapter(FragmentManager fm, int type) {
@@ -31,7 +29,7 @@ public class PerStorageFragmentAdapter extends FragmentStatePagerAdapter {
         this.titles = titles;
     }
 
-    public void setFragments(ArrayList<PerStorageFragment> viewPagerFragments) {
+    public void setFragments(ArrayList<PerStorageSaveFragment> viewPagerFragments) {
         this.viewPagerFragments = viewPagerFragments;
     }
 

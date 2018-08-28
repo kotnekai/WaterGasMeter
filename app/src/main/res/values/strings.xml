@@ -94,4 +94,10 @@
     <string name="payed">已扣除</string>
     <string name="no_pay" formatted="false">表余额不足\n待扣除%s元</string>
 
+    <string name="payment_money_title">预存金额</string>
+    <string name="pay_action">支付</string>
+    <string name="pay_hints">*请输入整数，预存金额支付成功后，不给予退款</string>
+    <string name="pay_success">支付成功！</string>
+    <string name="completed">完成</string>
+
 </resources>
