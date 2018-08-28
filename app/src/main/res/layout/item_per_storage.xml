@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="80dp"
+    android:layout_marginBottom="10dp"
+    android:background="@color/white">
+
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="10dp"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="10dp">
 
@@ -13,22 +17,22 @@
             android:id="@+id/tvWaterType"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="水表编码" />
+            android:text="@string/water_sn" />
 
         <TextView
-            android:id="@+id/tvSaveTime"
+            android:id="@+id/tvSaveDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/tvWaterType"
             android:layout_marginTop="10dp"
-            android:text="水表编码" />
+            android:text="@string/storage_time" />
 
         <TextView
             android:id="@+id/tvSaveMoney"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
+            android:layout_centerInParent="true"
             android:layout_marginRight="15dp"
             android:text="2323" />
     </RelativeLayout>

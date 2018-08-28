@@ -8,7 +8,7 @@ import android.support.v4.view.ViewPager;
 
 import com.app.watermeter.R;
 import com.app.watermeter.common.CommonParams;
-import com.app.watermeter.view.adapter.PerStorageAdapter;
+import com.app.watermeter.view.adapter.PerStorageFragmentAdapter;
 import com.app.watermeter.view.base.BaseActivity;
 import com.app.watermeter.view.fragment.PerStorageFragment;
 
@@ -19,28 +19,28 @@ import butterknife.BindView;
 /**
  * @author admin
  */
-public class PreStorageActivity extends BaseActivity {
+public class PreStorageSaveActivity extends BaseActivity {
 
     @BindView(R.id.tabLayout)
     TabLayout tabLayout;
     @BindView(R.id.viewPager)
     ViewPager viewPager;
 
-    private PerStorageAdapter adapter;
+    private PerStorageFragmentAdapter adapter;
     private String[] mTitles = new String[]{"水表", "电表", "燃气表"};
     private ArrayList<PerStorageFragment> mViewPagerFragments = new ArrayList<>();
 
     private Context mContext;
-
+    int pageType;
 
 
     @Override
     protected int getCenterView() {
-        return R.layout.activity_pre_storage;
+        return R.layout.activity_per_storage_save;
     }
 
     public static Intent makeIntent(Context context,int pageType) {
-        Intent intent = new Intent(context, PreStorageActivity.class);
+        Intent intent = new Intent(context, PreStorageSaveActivity.class);
         intent.putExtra("pageType",pageType);
         return intent;
     }
@@ -54,15 +54,15 @@ public class PreStorageActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mContext = PreStorageActivity.this;
+        mContext = PreStorageSaveActivity.this;
         initView();
         initData();
     }
 
     private void initData() {
         Intent intent = getIntent();
-        int pageType = intent.getIntExtra("pageType", 1);
-        if(pageType == CommonParams.PAGE_TYPE_PRE){
+         pageType = intent.getIntExtra("pageType", 1);
+        if(pageType == CommonParams.PAGE_TYPE_STORAGE){
             setHeaderTitle(getString(R.string.mine_per_storage_list));
         }else {
             setHeaderTitle(getString(R.string.mine_pay_list));
@@ -71,7 +71,7 @@ public class PreStorageActivity extends BaseActivity {
         for (int i = 0; i < mTitles.length; i++) {
             mViewPagerFragments.add(PerStorageFragment.newInstance(mTitles[i],pageType));
         }
-        adapter = new PerStorageAdapter(getSupportFragmentManager());
+        adapter = new PerStorageFragmentAdapter(getSupportFragmentManager(),pageType);
         adapter.setTitles(mTitles);
         adapter.setFragments(mViewPagerFragments);
 

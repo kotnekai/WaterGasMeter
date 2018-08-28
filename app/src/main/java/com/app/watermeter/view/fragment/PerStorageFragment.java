@@ -1,23 +1,24 @@
 package com.app.watermeter.view.fragment;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.app.watermeter.R;
 import com.app.watermeter.common.CommonParams;
-import com.app.watermeter.model.PreSaveModel;
-import com.app.watermeter.view.adapter.PreSaveAdapter;
+import com.app.watermeter.model.PerSaveModel;
+import com.app.watermeter.model.PerStorageModel;
+import com.app.watermeter.view.adapter.PerSaveAdapter;
+import com.app.watermeter.view.adapter.PerStorageAdapter;
 import com.app.watermeter.view.base.BaseFragment;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,15 +36,20 @@ public class PerStorageFragment extends BaseFragment {
     private static final String KEY_PAGE = "page";
     private String mMessage;
     private int fromPage = 0;
-    private PreSaveAdapter preSaveAdapter;
+    private PerStorageAdapter perStorageAdapter;
+    private PerSaveAdapter perSaveAdapter;
     private LinearLayoutManager mLayoutManager;
+
+    private List<PerStorageModel> perStorageList = new ArrayList<>();
+    private List<PerSaveModel> perSaveList = new ArrayList<>();
+
 
     public PerStorageFragment() {
     }
 
 
-    @BindView(R.id.smartFresh)
-    SmartRefreshLayout smartFresh;
+    @BindView(R.id.smartRefreshLayout)
+    SmartRefreshLayout refreshLayout;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
 
@@ -72,19 +78,60 @@ public class PerStorageFragment extends BaseFragment {
     protected void initView() {
         Log.d("xyc", "initView: 2" + mMessage);
     }
-   private List<PreSaveModel> preSaveModels;
+
+
     @Override
     protected void initData() {
-        preSaveModels  = new ArrayList<>();
-        for(int i=0;i<20;i++){
-            preSaveModels.add(new PreSaveModel("水表编码：21"+i,"2019/02/23",23+i));
-        }
+
+        addListData(fromPage);
+
         mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         mLayoutManager.setOrientation(GridLayoutManager.VERTICAL);
         mLayoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(mLayoutManager);
-        preSaveAdapter = new PreSaveAdapter(getActivity(),preSaveModels);
-        recyclerView.setAdapter(preSaveAdapter);
+
+
+        if (fromPage == CommonParams.PAGE_TYPE_STORAGE) {
+            perStorageAdapter = new PerStorageAdapter(getActivity(), perStorageList);
+            recyclerView.setAdapter(perStorageAdapter);
+        } else {
+            perSaveAdapter = new PerSaveAdapter(getActivity(), perSaveList);
+            recyclerView.setAdapter(perSaveAdapter);
+        }
+        recyclerView.scrollToPosition(0);
+
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                if (fromPage == CommonParams.PAGE_TYPE_STORAGE) {
+                    perStorageList.clear();
+                    addListData(fromPage);
+                    perStorageAdapter.notifyDataSetChanged();
+                } else {
+                    perSaveList.clear();
+                    addListData(fromPage);
+                    perSaveAdapter.notifyDataSetChanged();
+                }
+
+                refreshLayout.finishRefresh();
+            }
+        });
+        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+
+
+                if (fromPage == CommonParams.PAGE_TYPE_STORAGE) {
+                    addListData(fromPage);
+                    perStorageAdapter.notifyDataSetChanged();
+                } else {
+                    addListData(fromPage);
+                    perSaveAdapter.notifyDataSetChanged();
+                }
+                refreshLayout.finishLoadMore();
+            }
+        });
+
     }
 
     @Override
@@ -95,8 +142,21 @@ public class PerStorageFragment extends BaseFragment {
     @Override
     protected int setFrgContainView() {
         Log.d("xyc", "setFrgContainView: 3" + mMessage);
-            return R.layout.fragment_per_storage;
+        return R.layout.fragment_per_storage;
     }
+
+    private void addListData(int type) {
+        if (type == CommonParams.PAGE_TYPE_STORAGE) {
+            for (int i = 0; i < 10; i++) {
+                perStorageList.add(new PerStorageModel("水表编码：21" + i, "2019/02/23", 23 + i));
+            }
+        } else {
+            for (int i = 0; i < 10; i++) {
+                perSaveList.add(new PerSaveModel("水表编码：21" + i, "2019/02/23", 23 + i));
+            }
+        }
+    }
+
 /*
     @Nullable
     @Override

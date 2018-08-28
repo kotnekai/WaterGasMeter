@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.app.watermeter.R;
+import com.app.watermeter.common.CommonParams;
 import com.app.watermeter.model.MeterInfoModel;
 import com.app.watermeter.view.activity.MeterDetailActivity;
 
@@ -44,7 +45,7 @@ public class ElectricityPagerAdapter extends PagerAdapter {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                context.startActivity(MeterDetailActivity.makeIntent(context, MeterDetailActivity.TYPE_ELECT));
+                context.startActivity(MeterDetailActivity.makeIntent(context, CommonParams.TYPE_ELECT));
             }
         });
         return view;

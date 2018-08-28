@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="100dp" android:layout_marginBottom="10dp">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="15dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:id="@+id/tvWaterType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/water_sn" />
+
+        <TextView
+            android:id="@+id/tvSaveMeasure"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvWaterType"
+            android:layout_marginTop="10dp"
+            android:text="@string/measurement" />
+        <TextView
+            android:id="@+id/tvSaveDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvSaveMeasure"
+            android:layout_marginTop="10dp"
+            android:text="@string/payment_time" />
+
+        <TextView
+            android:id="@+id/tvSaveMoney"
+            android:layout_marginTop="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:text="2323" />
+        <TextView
+            android:id="@+id/tvSaveHints"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/tvSaveMoney"
+            android:layout_marginRight="15dp"
+            android:text="@string/payed" />
+    </RelativeLayout>
+</LinearLayout>

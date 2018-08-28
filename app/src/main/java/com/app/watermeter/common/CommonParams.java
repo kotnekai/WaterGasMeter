@@ -8,7 +8,11 @@ public class CommonParams {
 
     public static final String BUSS_REGISTER_TYPE = "register";
 
-    public static final int PAGE_TYPE_PRE =1;//预存明细
-    public static final int PAGE_TYPE_DES =2;//缴费明细
+    public static final int TYPE_WATER = 97;
+    public static final int TYPE_ELECT = 98;
+    public static final int TYPE_GAS = 99;
+
+    public static final int PAGE_TYPE_STORAGE =1;//预存明细
+    public static final int PAGE_TYPE_SAVE =2;//缴费明细
 
 }

@@ -2,24 +2,25 @@ package com.app.watermeter.model;
 
 /**
  * Create by Admin on 2018/8/27
+ * @author Admin
  */
-public class PreSaveModel {
-    private String waterMeterCode;
+public class PerSaveModel {
+    private String meterSn;
     private String saveTime;
     private int saveMoney;
 
-    public PreSaveModel(String waterMeterCode, String saveTime, int saveMoney) {
-        this.waterMeterCode = waterMeterCode;
+    public PerSaveModel(String meterSn, String saveTime, int saveMoney) {
+        this.meterSn = meterSn;
         this.saveTime = saveTime;
         this.saveMoney = saveMoney;
     }
 
-    public String getWaterMeterCode() {
-        return waterMeterCode;
+    public String getMeterSn() {
+        return meterSn;
     }
 
-    public void setWaterMeterCode(String waterMeterCode) {
-        this.waterMeterCode = waterMeterCode;
+    public void setMeterSn(String meterSn) {
+        this.meterSn = meterSn;
     }
 
     public String getSaveTime() {

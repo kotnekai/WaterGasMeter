@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.app.watermeter.R;
+import com.app.watermeter.common.CommonParams;
 import com.app.watermeter.model.MeterInfoModel;
 import com.app.watermeter.view.adapter.MeterRecyclerAdapter;
 import com.app.watermeter.view.base.BaseActivity;
@@ -29,9 +30,7 @@ import butterknife.BindView;
 public class MeterListActivity extends BaseActivity {
 
     public static final String METER_TYPE = "meterType";
-    public static final int TYPE_WATER = 97;
-    public static final int TYPE_ELECT = 98;
-    public static final int TYPE_GAS = 99;
+
     //默认值
     private int typeValue;
 
@@ -77,7 +76,7 @@ public class MeterListActivity extends BaseActivity {
      */
     private void initIntent() {
         Intent intent = getIntent();
-        typeValue = intent.getIntExtra(METER_TYPE, TYPE_WATER);
+        typeValue = intent.getIntExtra(METER_TYPE, CommonParams.TYPE_WATER);
     }
 
     /**
@@ -85,13 +84,13 @@ public class MeterListActivity extends BaseActivity {
      */
     private void initData() {
         switch (typeValue) {
-            case TYPE_WATER:
+            case CommonParams.TYPE_WATER:
                 setHeaderTitle(getString(R.string.water_meter));
                 break;
-            case TYPE_ELECT:
+            case CommonParams.TYPE_ELECT:
                 setHeaderTitle(getString(R.string.electricity_meter));
                 break;
-            case TYPE_GAS:
+            case CommonParams.TYPE_GAS:
                 setHeaderTitle(getString(R.string.gas_meter));
                 break;
         }

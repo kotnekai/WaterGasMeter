@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.app.watermeter.R;
+import com.app.watermeter.common.CommonParams;
 import com.app.watermeter.model.MeterInfoModel;
 import com.app.watermeter.view.activity.MeterListActivity;
 import com.app.watermeter.view.adapter.ElectricityPagerAdapter;
@@ -135,13 +136,13 @@ public class HomeFragment extends BaseFragment {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tvMoreWater:
-                startActivity(MeterListActivity.makeIntent(getContext(), MeterListActivity.TYPE_WATER));
+                startActivity(MeterListActivity.makeIntent(getContext(), CommonParams.TYPE_WATER));
                 break;
             case R.id.tvMoreElectricity:
-                startActivity(MeterListActivity.makeIntent(getContext(), MeterListActivity.TYPE_ELECT));
+                startActivity(MeterListActivity.makeIntent(getContext(), CommonParams.TYPE_ELECT));
                 break;
             case R.id.tvMoreGas:
-                startActivity(MeterListActivity.makeIntent(getContext(), MeterListActivity.TYPE_GAS));
+                startActivity(MeterListActivity.makeIntent(getContext(), CommonParams.TYPE_GAS));
                 break;
 
         }

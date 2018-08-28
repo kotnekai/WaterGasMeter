@@ -81,4 +81,17 @@
 
     <string name="cancel_binding">取消绑定</string>
 
+
+    <string name="water_sn" formatted="false">水表编码：%s</string>
+    <string name="electricity_sn" formatted="false">电表编码：%s</string>
+    <string name="gas_sn" formatted="false">燃气表编码：%s</string>
+
+    <string name="measurement"> 缴费计量：%s</string>
+    <string name="payment_time">缴费时间：%s</string>
+    <string name="storage_time">预存时间：%s</string>
+
+
+    <string name="payed">已扣除</string>
+    <string name="no_pay" formatted="false">表余额不足\n待扣除%s元</string>
+
 </resources>

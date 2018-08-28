@@ -9,21 +9,20 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.app.watermeter.R;
+import com.app.watermeter.model.PerSaveModel;
 import com.app.watermeter.model.PerStorageModel;
 
 import java.util.List;
 
 /**
  * Create by Admin on 2018/8/27
- *
- * @author Tim
  */
-public class PerStorageAdapter extends Adapter<PerStorageAdapter.MyViewHolder> {
-    private List<PerStorageModel> preSaveModelList;
+public class PerSaveAdapter extends Adapter<PerSaveAdapter.MyViewHolder> {
+    private List<PerSaveModel> preSaveModelList;
     private Context context;
     private LayoutInflater inflater;
 
-    public PerStorageAdapter(Context context, List<PerStorageModel> preSaveModelList) {
+    public PerSaveAdapter(Context context, List<PerSaveModel> preSaveModelList) {
         this.context = context;
         this.preSaveModelList = preSaveModelList;
         inflater = LayoutInflater.from(context);
@@ -31,17 +30,18 @@ public class PerStorageAdapter extends Adapter<PerStorageAdapter.MyViewHolder> {
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View views = inflater.inflate(R.layout.item_per_storage, parent, false);
+        View views = inflater.inflate(R.layout.item_pre_save, parent, false);
         return new MyViewHolder(views);
     }
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        PerStorageModel preSaveModel = preSaveModelList.get(position);
+        PerSaveModel preSaveModel = preSaveModelList.get(position);
         if (preSaveModel == null) {
             return;
         }
         holder.tvWaterType.setText(preSaveModel.getMeterSn());
+        holder.tvSaveMeasure.setText("50m3");
         holder.tvSaveDate.setText(preSaveModel.getSaveTime());
         holder.tvSaveMoney.setText(preSaveModel.getSaveMoney() + "");
     }
@@ -54,15 +54,19 @@ public class PerStorageAdapter extends Adapter<PerStorageAdapter.MyViewHolder> {
 
     class MyViewHolder extends RecyclerView.ViewHolder {
         TextView tvWaterType;
+        TextView tvSaveMeasure;
         TextView tvSaveDate;
 
+        TextView tvSaveHints;
 
         TextView tvSaveMoney;
 
         public MyViewHolder(View view) {
             super(view);
             tvWaterType = view.findViewById(R.id.tvWaterType);
+            tvSaveMeasure = view.findViewById(R.id.tvSaveMeasure);
             tvSaveDate = view.findViewById(R.id.tvSaveDate);
+            tvSaveHints = view.findViewById(R.id.tvSaveHints);
             tvSaveMoney = view.findViewById(R.id.tvSaveMoney);
         }
 

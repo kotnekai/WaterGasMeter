@@ -8,6 +8,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.app.watermeter.R;
+import com.app.watermeter.common.CommonParams;
 import com.app.watermeter.utils.ToastUtil;
 import com.app.watermeter.view.base.BaseActivity;
 
@@ -32,9 +33,6 @@ import lecho.lib.hellocharts.view.LineChartView;
 public class MeterDetailActivity extends BaseActivity {
 
     public static final String METER_TYPE = "meterType";
-    public static final int TYPE_WATER = 97;
-    public static final int TYPE_ELECT = 98;
-    public static final int TYPE_GAS = 99;
 
     Context mContext;
     @BindView(R.id.tvSn)
@@ -119,7 +117,7 @@ public class MeterDetailActivity extends BaseActivity {
      */
     private void initIntent() {
         Intent intent = getIntent();
-        typeValue = intent.getIntExtra(METER_TYPE, TYPE_WATER);
+        typeValue = intent.getIntExtra(METER_TYPE, CommonParams.TYPE_WATER);
     }
 
     /**
@@ -127,13 +125,13 @@ public class MeterDetailActivity extends BaseActivity {
      */
     private void initData() {
         switch (typeValue) {
-            case TYPE_WATER:
+            case CommonParams.TYPE_WATER:
                 setHeaderTitle(getString(R.string.water_meter_detail_title));
                 break;
-            case TYPE_ELECT:
+            case CommonParams.TYPE_ELECT:
                 setHeaderTitle(getString(R.string.elect_meter_detail_title));
                 break;
-            case TYPE_GAS:
+            case CommonParams.TYPE_GAS:
                 setHeaderTitle(getString(R.string.gas_meter_detail_title));
                 break;
         }

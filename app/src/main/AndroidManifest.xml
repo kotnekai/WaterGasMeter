@@ -68,7 +68,7 @@
             android:name=".view.activity.PersonInfoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.activity.PreStorageActivity"
+            android:name=".view.activity.PreStorageSaveActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".view.activity.PayBillActivity" />
         <activity

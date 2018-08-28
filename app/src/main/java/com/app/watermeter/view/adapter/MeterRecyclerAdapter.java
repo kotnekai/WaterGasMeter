@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.app.watermeter.R;
+import com.app.watermeter.common.CommonParams;
 import com.app.watermeter.model.MeterInfoModel;
 import com.app.watermeter.view.activity.MeterDetailActivity;
 import com.app.watermeter.view.activity.MeterListActivity;
@@ -62,13 +63,13 @@ public class MeterRecyclerAdapter extends RecyclerView.Adapter<MeterRecyclerAdap
 
         View view = null;
         switch (type) {
-            case MeterListActivity.TYPE_WATER:
+            case CommonParams.TYPE_WATER:
                 view = inflater.inflate(R.layout.item_meter_list, parent, false);
                 break;
-            case MeterListActivity.TYPE_ELECT:
+            case CommonParams.TYPE_ELECT:
                 view = inflater.inflate(R.layout.item_meter_list, parent, false);
                 break;
-            case MeterListActivity.TYPE_GAS:
+            case CommonParams.TYPE_GAS:
                 view = inflater.inflate(R.layout.item_meter_list, parent, false);
                 break;
             default:
