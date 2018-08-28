@@ -7,6 +7,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 
 import com.app.watermeter.R;
+import com.app.watermeter.common.CommonParams;
 import com.app.watermeter.view.adapter.PerStorageAdapter;
 import com.app.watermeter.view.base.BaseActivity;
 import com.app.watermeter.view.fragment.PerStorageFragment;
@@ -38,14 +39,16 @@ public class PreStorageActivity extends BaseActivity {
         return R.layout.activity_pre_storage;
     }
 
-    public static Intent makeIntent(Context context) {
-        return new Intent(context, PreStorageActivity.class);
+    public static Intent makeIntent(Context context,int pageType) {
+        Intent intent = new Intent(context, PreStorageActivity.class);
+        intent.putExtra("pageType",pageType);
+        return intent;
     }
 
 
     @Override
     protected void initHeader() {
-        setHeaderTitle(getString(R.string.mine_per_storage_list));
+
     }
 
     @Override
@@ -57,8 +60,16 @@ public class PreStorageActivity extends BaseActivity {
     }
 
     private void initData() {
+        Intent intent = getIntent();
+        int pageType = intent.getIntExtra("pageType", 1);
+        if(pageType == CommonParams.PAGE_TYPE_PRE){
+            setHeaderTitle(getString(R.string.mine_per_storage_list));
+        }else {
+            setHeaderTitle(getString(R.string.mine_pay_list));
+        }
+
         for (int i = 0; i < mTitles.length; i++) {
-            mViewPagerFragments.add(PerStorageFragment.newInstance(mTitles[i]));
+            mViewPagerFragments.add(PerStorageFragment.newInstance(mTitles[i],pageType));
         }
         adapter = new PerStorageAdapter(getSupportFragmentManager());
         adapter.setTitles(mTitles);

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:id="@+id/tvWaterType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="水表编码" />
+
+        <TextView
+            android:id="@+id/tvSaveTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvWaterType"
+            android:layout_marginTop="10dp"
+            android:text="水表编码" />
+
+        <TextView
+            android:id="@+id/tvSaveMoney"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:text="2323" />
+    </RelativeLayout>
+</LinearLayout>

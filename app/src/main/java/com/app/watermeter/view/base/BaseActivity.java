@@ -102,8 +102,9 @@ public abstract class BaseActivity extends AppCompatActivity implements DrawerLa
     private View getVew() {
         View mContainView = LayoutInflater.from(this).inflate(R.layout.activity_base, null);
         LayoutInflater inflater = getLayoutInflater();
-        if (getCenterView() != 0) {
-            View mAddView = inflater.inflate(getCenterView(), null);
+        int centerView = getCenterView();
+        if (centerView!= 0) {
+            View mAddView = inflater.inflate(centerView, null);
             LinearLayout llCenterView = mContainView.findViewById(R.id.llCenterView);
             llCenterView.addView(mAddView, new ViewGroup.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.FILL_PARENT));
         }
