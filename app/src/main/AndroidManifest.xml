@@ -70,7 +70,10 @@
         <activity
             android:name=".view.activity.PreStorageActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".view.activity.PayBillActivity"></activity>
+        <activity android:name=".view.activity.PayBillActivity" />
+        <activity
+            android:name=".view.activity.MeterDetailActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

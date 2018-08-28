@@ -69,4 +69,11 @@
         <item name="android:windowBackground">@android:color/transparent</item>
         <!-- 还可以加入一些弹出和退出的动画 (lan)-->
     </style>
+
+    <style name="detail_normal_text">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/normal_text_color</item>
+    </style>
 </resources>

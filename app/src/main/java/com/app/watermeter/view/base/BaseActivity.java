@@ -285,6 +285,7 @@ public abstract class BaseActivity extends AppCompatActivity implements DrawerLa
         if (tvNext == null) {
             return;
         }
+        tvNext.setVisibility(View.VISIBLE);
         tvNext.setText(rightText);
     }
 

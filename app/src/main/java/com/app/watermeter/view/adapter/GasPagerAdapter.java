@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 
 import com.app.watermeter.R;
 import com.app.watermeter.model.MeterInfoModel;
+import com.app.watermeter.view.activity.MeterDetailActivity;
+import com.app.watermeter.view.activity.MeterListActivity;
 
 import java.util.List;
 
@@ -40,6 +42,12 @@ public class GasPagerAdapter extends PagerAdapter {
     public Object instantiateItem(ViewGroup container, int position) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_gas_meter, null);
         container.addView(view);
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                context.startActivity(MeterDetailActivity.makeIntent(context, MeterDetailActivity.TYPE_GAS));
+            }
+        });
         return view;
     }
 

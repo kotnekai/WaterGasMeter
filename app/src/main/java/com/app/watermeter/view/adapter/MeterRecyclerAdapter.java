@@ -1,33 +1,36 @@
 package com.app.watermeter.view.adapter;
 
 import android.content.Context;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.app.watermeter.R;
 import com.app.watermeter.model.MeterInfoModel;
-import com.app.watermeter.utils.UIUtils;
+import com.app.watermeter.view.activity.MeterDetailActivity;
 import com.app.watermeter.view.activity.MeterListActivity;
 
 import java.util.List;
 
 
+/**
+ * @author admin
+ */
 public class MeterRecyclerAdapter extends RecyclerView.Adapter<MeterRecyclerAdapter.MyViewHolder> {
 
     private View mHeaderView;
     private List<MeterInfoModel> mDatas;
-    private Context mContext;
+    private Context context;
     private LayoutInflater inflater;
     private int type;
 
-    public MeterRecyclerAdapter(Context context, List<MeterInfoModel> datas,int type) {
-        this.mContext = context;
+    public MeterRecyclerAdapter(Context context, List<MeterInfoModel> datas, int type) {
+        this.context = context;
         this.mDatas = datas;
-        inflater = LayoutInflater.from(mContext);
+        inflater = LayoutInflater.from(this.context);
         this.type = type;
     }
 
@@ -45,9 +48,12 @@ public class MeterRecyclerAdapter extends RecyclerView.Adapter<MeterRecyclerAdap
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
         MeterInfoModel model = mDatas.get(getRealPosition(holder));
-//        holder.tvNewsTitle.setText(model.getTitle());
-//        holder.tvNewsDate.setText(model.getDate());
-//        holder.tvNewsDesc.setText(model.getDesc());
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                context.startActivity(MeterDetailActivity.makeIntent(context, type));
+            }
+        });
 
     }
 
@@ -78,10 +84,18 @@ public class MeterRecyclerAdapter extends RecyclerView.Adapter<MeterRecyclerAdap
 
     class MyViewHolder extends RecyclerView.ViewHolder {
 
-
+        CardView cardView;
+        TextView tvMeterTitle, tvMeterAddress, tvSquare, tvLastValue, tvBalanceValue;
 
         public MyViewHolder(View view) {
             super(view);
+            cardView = view.findViewById(R.id.cardView);
+            tvMeterTitle = view.findViewById(R.id.tvMeterTitle);
+            tvMeterAddress = view.findViewById(R.id.tvMeterAddress);
+            tvSquare = view.findViewById(R.id.tvSquare);
+            tvLastValue = view.findViewById(R.id.tvLastValue);
+            tvBalanceValue = view.findViewById(R.id.tvBalanceValue);
+
 
         }
 

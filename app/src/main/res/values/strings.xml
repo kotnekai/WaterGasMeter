@@ -58,6 +58,11 @@
 
     <string name="pay_sn">缴费号：</string>
     <string name="square_detail">单位：m³</string>
+
+    <string name="water_meter_detail_title">水表详情</string>
+    <string name="elect_meter_detail_title">电表详情</string>
+    <string name="gas_meter_detail_title">燃气表详情</string>
+
     <string name="water_meter_reading">水表读数</string>
     <string name="elect_meter_reading">电表读数</string>
     <string name="gas_meter_reading">燃气表读数</string>
@@ -72,6 +77,8 @@
     <string name="immediately_save">立即预存</string>
     <string name="storage_detail" formatted="true">预存明细>></string>
     <string name="payment_detail" formatted="true">缴费明细>></string>
+    <string name="unit_yuan">元</string>
 
+    <string name="cancel_binding">取消绑定</string>
 
 </resources>
