@@ -56,6 +56,22 @@
     <string name="com_input_complete_tips">请填写完整个人信息</string>
 
 
+    <string name="pay_sn">缴费号：</string>
+    <string name="square_detail">单位：m³</string>
+    <string name="water_meter_reading">水表读数</string>
+    <string name="elect_meter_reading">电表读数</string>
+    <string name="gas_meter_reading">燃气表读数</string>
+
+    <string name="last_meter_value">上次表值</string>
+    <string name="current_meter_value">即时表值</string>
+
+    <string name="water_meter_balance">水表余额</string>
+    <string name="elect_meter_balance">电表余额</string>
+    <string name="gas_meter_balance">燃气表余额</string>
+
+    <string name="immediately_save">立即预存</string>
+    <string name="storage_detail" formatted="true">预存明细>></string>
+    <string name="payment_detail" formatted="true">缴费明细>></string>
 
 
 </resources>
