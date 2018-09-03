@@ -8,7 +8,6 @@ import android.os.Build;
 import android.os.LocaleList;
 import android.util.DisplayMetrics;
 
-import com.app.watermeter.common.ApplicationHolder;
 import com.app.watermeter.common.Constants;
 
 import java.util.Locale;
@@ -55,6 +54,9 @@ public class LanguageUtils {
                 return Locale.CHINA;
             case Constants.LANGUAGE_ENGLISH:
                 return Locale.ENGLISH;
+            case Constants.LANGUAGE_KP:
+                Locale locale = new Locale("kp", "KP");
+                return locale;
             default:
                 return Locale.ENGLISH;
         }

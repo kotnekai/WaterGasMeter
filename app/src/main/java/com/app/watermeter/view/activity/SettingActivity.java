@@ -2,8 +2,6 @@ package com.app.watermeter.view.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,13 +13,10 @@ import com.app.watermeter.R;
 import com.app.watermeter.common.Constants;
 import com.app.watermeter.eventBus.LanguageChangedEvent;
 import com.app.watermeter.utils.LanguageUtils;
-import com.app.watermeter.utils.ToastUtil;
 import com.app.watermeter.view.base.BaseActivity;
 import com.app.watermeter.view.views.BottomDialogView;
 
 import org.greenrobot.eventbus.EventBus;
-
-import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -81,6 +76,9 @@ public class SettingActivity extends BaseActivity {
             case Constants.LANGUAGE_ENGLISH:
                 tvLanguage.setText(getString(R.string.language_en));
                 break;
+            case Constants.LANGUAGE_KP:
+                tvLanguage.setText(getString(R.string.language_km));
+                break;
             default:
                 break;
         }
@@ -106,6 +104,7 @@ public class SettingActivity extends BaseActivity {
 
         TextView tvChinese = view.findViewById(R.id.tvChinese);
         TextView tvEnglish = view.findViewById(R.id.tvEnglish);
+        TextView tvKm = view.findViewById(R.id.tvKm);
         TextView tvCancel = view.findViewById(R.id.tvCancel);
 
         //切换中文
@@ -133,6 +132,21 @@ public class SettingActivity extends BaseActivity {
                 if (currentLanguage!=Constants.LANGUAGE_DEFAULT && currentLanguage != Constants.LANGUAGE_ENGLISH) {
                     tvLanguage.setText(getString(R.string.language_en));
                     LanguageUtils.setAppLanguage(Constants.LANGUAGE_ENGLISH);
+                    LanguageUtils.applyChange(mContext);
+                    EventBus.getDefault().post(new LanguageChangedEvent());
+                }
+            }
+        });
+        //切换柬埔寨
+        tvKm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (bottomDialog.isShowing()) {
+                    bottomDialog.dismiss();
+                }
+                if (currentLanguage!=Constants.LANGUAGE_DEFAULT && currentLanguage != Constants.LANGUAGE_KP) {
+                    tvLanguage.setText(getString(R.string.language_km));
+                    LanguageUtils.setAppLanguage(Constants.LANGUAGE_KP);
                     LanguageUtils.applyChange(mContext);
                     EventBus.getDefault().post(new LanguageChangedEvent());
                 }

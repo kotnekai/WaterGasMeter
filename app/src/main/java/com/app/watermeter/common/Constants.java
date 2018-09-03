@@ -11,5 +11,6 @@ public class Constants {
 
     public static final int LANGUAGE_CHINA = 1;
     public static final int LANGUAGE_ENGLISH = 2;
+    public static final int LANGUAGE_KP = 3;
     public static final int LANGUAGE_DEFAULT = 0;
 }
