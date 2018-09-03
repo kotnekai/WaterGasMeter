@@ -1,12 +1,14 @@
 package com.app.okhttputils.callback;
 
+import android.util.Log;
+
 import java.io.IOException;
 import java.lang.reflect.ParameterizedType;
 
 import okhttp3.Response;
 
 /**
- * Created by JimGong on 2016/6/23.
+ * Created by admin on 2018/8/23.
  */
 
 public abstract class GenericsCallback<T> extends Callback<T> {
@@ -19,6 +21,7 @@ public abstract class GenericsCallback<T> extends Callback<T> {
     @Override
     public T parseNetworkResponse(Response response, int id) throws IOException {
         String string = response.body().string();
+        Log.i("okhttp==", string);
         Class<T> entityClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
         if (entityClass == String.class) {
             return (T) string;
