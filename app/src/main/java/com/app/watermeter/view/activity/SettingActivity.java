@@ -10,9 +10,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.app.watermeter.R;
+import com.app.watermeter.common.ComApplication;
+import com.app.watermeter.common.CommonParams;
 import com.app.watermeter.common.Constants;
 import com.app.watermeter.eventBus.LanguageChangedEvent;
+import com.app.watermeter.manager.UserManager;
 import com.app.watermeter.utils.LanguageUtils;
+import com.app.watermeter.utils.PreferencesUtils;
 import com.app.watermeter.view.base.BaseActivity;
 import com.app.watermeter.view.views.BottomDialogView;
 
@@ -32,7 +36,8 @@ public class SettingActivity extends BaseActivity {
     RelativeLayout llChangedLanguage;
     @BindView(R.id.tvLanguage)
     TextView tvLanguage;
-
+    @BindView(R.id.tvLoginOut)
+    TextView tvLoginOut;
 
     private Context mContext;
     private int currentLanguage;
@@ -64,7 +69,7 @@ public class SettingActivity extends BaseActivity {
      */
     private void initLanguage() {
 
-         currentLanguage = LanguageUtils.getAppLanguage();
+        currentLanguage = LanguageUtils.getAppLanguage();
 
         switch (currentLanguage) {
             case Constants.LANGUAGE_DEFAULT:
@@ -84,7 +89,7 @@ public class SettingActivity extends BaseActivity {
         }
     }
 
-    @OnClick({R.id.llModifyPwd, R.id.llChangedLanguage,})
+    @OnClick({R.id.llModifyPwd, R.id.llChangedLanguage, R.id.tvLoginOut})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.llModifyPwd:
@@ -93,7 +98,12 @@ public class SettingActivity extends BaseActivity {
             case R.id.llChangedLanguage:
                 showLanguageSelectDialog();
                 break;
-
+            case R.id.tvLoginOut:
+                UserManager.getInstance().loginOut();
+                PreferencesUtils.putString(CommonParams.USER_TOKEN, null);
+                startActivity(LoginActivity.makeIntent(this));
+                ComApplication.getApp().removeAllActivity();
+                break;
         }
     }
 
@@ -114,7 +124,7 @@ public class SettingActivity extends BaseActivity {
                 if (bottomDialog.isShowing()) {
                     bottomDialog.dismiss();
                 }
-                if (currentLanguage!=Constants.LANGUAGE_DEFAULT && currentLanguage != Constants.LANGUAGE_CHINA) {
+                if (currentLanguage != Constants.LANGUAGE_DEFAULT && currentLanguage != Constants.LANGUAGE_CHINA) {
                     tvLanguage.setText(getString(R.string.language_cn));
                     LanguageUtils.setAppLanguage(Constants.LANGUAGE_CHINA);
                     LanguageUtils.applyChange(mContext);
@@ -129,7 +139,7 @@ public class SettingActivity extends BaseActivity {
                 if (bottomDialog.isShowing()) {
                     bottomDialog.dismiss();
                 }
-                if (currentLanguage!=Constants.LANGUAGE_DEFAULT && currentLanguage != Constants.LANGUAGE_ENGLISH) {
+                if (currentLanguage != Constants.LANGUAGE_DEFAULT && currentLanguage != Constants.LANGUAGE_ENGLISH) {
                     tvLanguage.setText(getString(R.string.language_en));
                     LanguageUtils.setAppLanguage(Constants.LANGUAGE_ENGLISH);
                     LanguageUtils.applyChange(mContext);
@@ -144,7 +154,7 @@ public class SettingActivity extends BaseActivity {
                 if (bottomDialog.isShowing()) {
                     bottomDialog.dismiss();
                 }
-                if (currentLanguage!=Constants.LANGUAGE_DEFAULT && currentLanguage != Constants.LANGUAGE_KH) {
+                if (currentLanguage != Constants.LANGUAGE_DEFAULT && currentLanguage != Constants.LANGUAGE_KH) {
                     tvLanguage.setText(getString(R.string.language_km));
                     LanguageUtils.setAppLanguage(Constants.LANGUAGE_KH);
                     LanguageUtils.applyChange(mContext);

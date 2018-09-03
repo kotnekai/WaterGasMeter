@@ -116,5 +116,6 @@
     <string name="password_no_valid">密码不合法，请重新输入</string>
     <string name="password_no_match">前后密码不一致，请重新输入</string>
     <string name="login_invalid_tip">登录失效，请重新登录</string>
+    <string name="login_out">退出登录</string>
 
 </resources>

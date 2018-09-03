@@ -1,9 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/main_bg_gray"
     android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tvLoginOut"
+        android:layout_width="300dp"
+        android:layout_centerInParent="true"
+        android:background="@mipmap/anniu"
+        android:text="@string/login_out"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:layout_height="45dp" />
 
     <LinearLayout
         android:layout_marginTop="15dp"
@@ -19,6 +29,7 @@
     </LinearLayout>
 
     <RelativeLayout
+        android:layout_below="@id/llModifyPwd"
         android:id="@+id/llChangedLanguage"
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -38,4 +49,6 @@
             android:text="简体中文"
             android:textColor="@color/text_color" />
     </RelativeLayout>
-</LinearLayout>
+
+
+</RelativeLayout>
