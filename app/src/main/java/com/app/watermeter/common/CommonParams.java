@@ -3,6 +3,7 @@ package com.app.watermeter.common;
 public class CommonParams {
     public static boolean IS_WRITE_LOG = true;//是否写日志
     public static final String USER_TOKEN = "token";
+    public static final String TOKEN_PERIOD = "expires_in";
     //apk的路径
     public static String APK_PATH = "/apk";
 

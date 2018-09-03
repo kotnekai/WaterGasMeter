@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.app.watermeter.R;
 import com.app.watermeter.common.CommonParams;
+import com.app.watermeter.eventBus.CheckSmsCodeEvent;
 import com.app.watermeter.eventBus.SuccessEvent;
 import com.app.watermeter.manager.UserManager;
 import com.app.watermeter.model.ComResponseModel;
@@ -85,8 +86,8 @@ public class RegisterCodeActivity extends BaseActivity implements TextWatcher {
         edtCodeThird.addTextChangedListener(this);
         edtCodeFourth.addTextChangedListener(this);
 
+        UserManager.getInstance().sendSmsToCheck(phoneNumber, CommonParams.BUSS_REGISTER_TYPE);
 
-        // UserManager.getInstance().sendSmsToCheck(phoneNumber, CommonParams.BUSS_TYPE);
     }
 
     @Override
@@ -128,7 +129,7 @@ public class RegisterCodeActivity extends BaseActivity implements TextWatcher {
     }
 
     /**
-     * 接口返回
+     * 发送验证码结果接口返回
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onSuccessEvent(SuccessEvent event) {
@@ -136,14 +137,27 @@ public class RegisterCodeActivity extends BaseActivity implements TextWatcher {
         ComResponseModel successModel = event.getSuccessModel();
         int status_code = successModel.getStatus_code();
         String message = successModel.getMessage();
-        if (EmptyUtil.isEmpty(message)) {
-            return;
-        }
-        if (status_code == 200) {
-            startActivity(RegisterInfoActivity.makeIntent(this,phoneNumber));
-        }
+        int errCode = successModel.getErr_code();//业务码
         ToastUtil.showShort(message);
     }
+
+    /**
+     * 校验验证码结果接口返回
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onCheckSmsCodeEvent(CheckSmsCodeEvent event) {
+        ProgressUtils.getIntance().dismissProgress();
+        ComResponseModel successModel = event.getSuccessModel();
+        int status_code = successModel.getStatus_code();
+        String message = successModel.getMessage();
+        int errCode = successModel.getErr_code();//业务码
+        ToastUtil.showShort(message);
+        if (status_code == 200&&errCode==0) {
+            startActivity(RegisterInfoActivity.makeIntent(this,phoneNumber));
+        }
+
+    }
+
 
     @Override
     protected void initHeader() {

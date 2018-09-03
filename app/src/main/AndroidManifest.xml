@@ -42,11 +42,7 @@
             android:name=".view.activity.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Main">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".view.activity.RegisterPhoneActivity"
@@ -70,16 +66,27 @@
         <activity
             android:name=".view.activity.PreStorageSaveActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".view.activity.PayBillActivity" />
+
+        <activity android:name=".view.activity.PayBillActivity"
+            android:screenOrientation="portrait"/>
+
         <activity
             android:name=".view.activity.MeterDetailActivity"
             android:screenOrientation="portrait" />
         <activity
-        android:name=".view.activity.PerStorageSaveListActivity"
-        android:screenOrientation="portrait" />
+            android:name=".view.activity.PerStorageSaveListActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.PayActionActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".view.activity.LaunchActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

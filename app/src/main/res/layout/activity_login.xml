@@ -70,7 +70,7 @@
             android:layout_marginLeft="10dp"
             android:background="@color/white"
             android:gravity="center_vertical"
-            android:hint="手机号"
+            android:hint="@string/person_phone"
             android:inputType="number"
             android:textSize="17sp" />
     </LinearLayout>
@@ -101,7 +101,7 @@
             android:layout_marginLeft="10dp"
             android:inputType="textPassword"
             android:background="@color/white"
-            android:hint="密码"
+            android:hint="@string/person_password"
             android:textSize="17sp" />
     </LinearLayout>
 
@@ -114,7 +114,7 @@
         android:layout_marginTop="20dp"
         android:background="@mipmap/anniu"
         android:gravity="center"
-        android:text="登录"
+        android:text="@string/login"
         android:textColor="@color/white" />
 
     <TextView
@@ -125,7 +125,7 @@
         android:layout_below="@id/tvLoginBtn"
         android:layout_marginTop="10dp"
         android:padding="5dp"
-        android:text="立即注册" />
+        android:text="@string/to_register" />
 
     <TextView
         android:id="@+id/tvForgetPsw"
@@ -135,5 +135,5 @@
         android:layout_below="@id/tvLoginBtn"
         android:layout_marginTop="10dp"
         android:padding="5dp"
-        android:text="忘记密码？" />
+        android:text="@string/forget_psw" />
 </RelativeLayout>

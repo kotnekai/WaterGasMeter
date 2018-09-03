@@ -1,12 +1,14 @@
 package com.app.watermeter.model;
 
+
 /**
- * Create by Admin on 2018/8/24
+ * Create by Admin on 2018/9/3
  */
-public class ComResponseModel {
+public class LoginInfoModel {
     private int status_code;
     private String message;
     private int err_code;
+    private UserInfoModel data;
 
     public int getStatus_code() {
         return status_code;
@@ -30,5 +32,13 @@ public class ComResponseModel {
 
     public void setErr_code(int err_code) {
         this.err_code = err_code;
+    }
+
+    public UserInfoModel getData() {
+        return data;
+    }
+
+    public void setData(UserInfoModel data) {
+        this.data = data;
     }
 }

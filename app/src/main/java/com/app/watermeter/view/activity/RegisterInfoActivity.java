@@ -2,15 +2,20 @@ package com.app.watermeter.view.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.app.watermeter.R;
-import com.app.watermeter.eventBus.SuccessEvent;
+import com.app.watermeter.common.CommonParams;
+import com.app.watermeter.eventBus.RegisterInfoEvent;
 import com.app.watermeter.manager.UserManager;
-import com.app.watermeter.model.ComResponseModel;
+import com.app.watermeter.model.LoginInfoModel;
+import com.app.watermeter.model.UserInfoModel;
 import com.app.watermeter.model.UserInfoParam;
+import com.app.watermeter.utils.AccountValidatorUtil;
 import com.app.watermeter.utils.EmptyUtil;
+import com.app.watermeter.utils.PreferencesUtils;
 import com.app.watermeter.utils.ProgressUtils;
 import com.app.watermeter.utils.ToastUtil;
 import com.app.watermeter.view.base.BaseActivity;
@@ -54,18 +59,24 @@ public class RegisterInfoActivity extends BaseActivity {
      * 接口返回
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onSuccessEvent(SuccessEvent event) {
+    public void onRegisterInfoEvent(RegisterInfoEvent event) {
         ProgressUtils.getIntance().dismissProgress();
-        ComResponseModel successModel = event.getSuccessModel();
-        int status_code = successModel.getStatus_code();
-        String message = successModel.getMessage();
-        if (EmptyUtil.isEmpty(message)) {
-            return;
-        }
-        if (status_code == 200) {
-            startActivity(MainActivity.makeIntent(this));
-        }
+        LoginInfoModel infoModel = event.getInfoModel();
+        int status_code = infoModel.getStatus_code();
+        String message = infoModel.getMessage();
+        int err_code = infoModel.getErr_code();
         ToastUtil.showShort(message);
+
+        if (status_code == 200&&err_code==0) {
+            UserInfoModel data = infoModel.getData();
+            if(data!=null){
+                Log.d("admin", "onRegisterInfoEvent: data="+data);
+                PreferencesUtils.putString(CommonParams.USER_TOKEN,data.getAccess_token());
+                PreferencesUtils.putInt(CommonParams.TOKEN_PERIOD,data.getExpires_in());
+            }
+            startActivity(MainActivity.makeIntent(this));
+            finish();
+        }
     }
 
     @OnClick({R.id.TvSubmitInfo})
@@ -76,8 +87,8 @@ public class RegisterInfoActivity extends BaseActivity {
         String emails = edtEmails.getText().toString();
         String password = edtPassword.getText().toString();
         String confirmPsw = edtConfirmPsw.getText().toString();
-        if (EmptyUtil.isEmpty(phoneNumber)) {
-            ToastUtil.showShort(getString(R.string.phone_number_error));
+        if (!AccountValidatorUtil.isMobile(phoneNumber)) {
+            ToastUtil.showShort(getString(R.string.phone_number));
             return;
         }
         if (EmptyUtil.isEmpty(userName) || EmptyUtil.isEmpty(emails) || EmptyUtil.isEmpty(password) || EmptyUtil.isEmpty(confirmPsw)) {
