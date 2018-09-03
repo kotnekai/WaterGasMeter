@@ -76,7 +76,7 @@ public class SettingActivity extends BaseActivity {
             case Constants.LANGUAGE_ENGLISH:
                 tvLanguage.setText(getString(R.string.language_en));
                 break;
-            case Constants.LANGUAGE_KP:
+            case Constants.LANGUAGE_KH:
                 tvLanguage.setText(getString(R.string.language_km));
                 break;
             default:
@@ -144,9 +144,9 @@ public class SettingActivity extends BaseActivity {
                 if (bottomDialog.isShowing()) {
                     bottomDialog.dismiss();
                 }
-                if (currentLanguage!=Constants.LANGUAGE_DEFAULT && currentLanguage != Constants.LANGUAGE_KP) {
+                if (currentLanguage!=Constants.LANGUAGE_DEFAULT && currentLanguage != Constants.LANGUAGE_KH) {
                     tvLanguage.setText(getString(R.string.language_km));
-                    LanguageUtils.setAppLanguage(Constants.LANGUAGE_KP);
+                    LanguageUtils.setAppLanguage(Constants.LANGUAGE_KH);
                     LanguageUtils.applyChange(mContext);
                     EventBus.getDefault().post(new LanguageChangedEvent());
                 }

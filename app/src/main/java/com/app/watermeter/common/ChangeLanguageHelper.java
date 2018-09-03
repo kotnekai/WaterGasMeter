@@ -48,9 +48,9 @@ public class ChangeLanguageHelper {
                 country = "US";
                 mLanguage = "en";
                 break;
-            case Constants.LANGUAGE_KP:
-                country = "KP";
-                mLanguage = "kp";
+            case Constants.LANGUAGE_KH:
+                country = "KH";
+                mLanguage = "km";
                 break;
             default:
                 country = context.getResources().getConfiguration().locale.getCountry();

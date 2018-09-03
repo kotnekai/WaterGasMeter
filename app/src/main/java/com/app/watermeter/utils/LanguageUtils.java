@@ -54,8 +54,8 @@ public class LanguageUtils {
                 return Locale.CHINA;
             case Constants.LANGUAGE_ENGLISH:
                 return Locale.ENGLISH;
-            case Constants.LANGUAGE_KP:
-                Locale locale = new Locale("kp", "KP");
+            case Constants.LANGUAGE_KH:
+                Locale locale = new Locale("km", "KH");
                 return locale;
             default:
                 return Locale.ENGLISH;
