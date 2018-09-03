@@ -3,6 +3,7 @@ package com.app.watermeter.view.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
@@ -13,6 +14,7 @@ import com.app.watermeter.common.CommonParams;
 import com.app.watermeter.eventBus.SuccessEvent;
 import com.app.watermeter.manager.UserManager;
 import com.app.watermeter.model.ComResponseModel;
+import com.app.watermeter.utils.AccountValidatorUtil;
 import com.app.watermeter.utils.EmptyUtil;
 import com.app.watermeter.utils.ToastUtil;
 import com.app.watermeter.view.base.BaseActivity;
@@ -61,12 +63,13 @@ public class RegisterPhoneActivity extends BaseActivity {
             case R.id.tvGoNext:
                 phoneNumber = edtPhoneNumber.getText().toString();
                 countryCode = tvCountryCode.getText().toString();
-
-                if (EmptyUtil.isEmpty(phoneNumber) || EmptyUtil.isEmpty(countryCode)) {
+                boolean mobile = AccountValidatorUtil.isMobile(phoneNumber);
+                if (!mobile || EmptyUtil.isEmpty(countryCode)) {
                     ToastUtil.showShort(getString(R.string.phone_number));
                     return;
                 }
                 startActivity(RegisterCodeActivity.makeIntent(this, countryCode, phoneNumber));
+
                 break;
         }
     }

@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="100dp"
-        android:text="已发送验证码短信到"
+        android:text="@string/send_code_finish"
         android:textSize="17sp" />
 
     <TextView
@@ -90,7 +90,7 @@
         android:layout_marginTop="70dp"
         android:background="@mipmap/anniu"
         android:gravity="center"
-        android:text="0后重新发送"
+        android:text="@string/register_count_time"
         android:textColor="@color/white"
         android:textSize="17sp" />
 </RelativeLayout>

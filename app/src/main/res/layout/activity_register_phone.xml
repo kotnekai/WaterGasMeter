@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
-            android:text="中国大陆"
+            android:text="@string/china_local"
             android:textSize="15sp" />
 
         <TextView
@@ -56,7 +56,7 @@
         android:layout_marginTop="20dp"
         android:textSize="15sp"
         android:background="@drawable/com_white_20r_shape"
-        android:hint="手机号"
+        android:hint="@string/phone_tip"
         android:paddingLeft="10dp" />
 
     <TextView
@@ -68,7 +68,7 @@
         android:layout_marginTop="20dp"
         android:background="@mipmap/anniu"
         android:gravity="center"
-        android:text="下一步"
+        android:text="@string/register_next_step"
         android:textColor="@color/white"
         android:textSize="15sp" />
 </RelativeLayout>

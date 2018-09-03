@@ -5,11 +5,17 @@ import android.util.Log;
 import com.app.okhttputils.callback.GenericsCallback;
 import com.app.okhttputils.request.JsonGenericsSerializator;
 import com.app.watermeter.common.CommonUrl;
+import com.app.watermeter.eventBus.CheckSmsCodeEvent;
+import com.app.watermeter.eventBus.LoginEvent;
+import com.app.watermeter.eventBus.RegisterInfoEvent;
+import com.app.watermeter.eventBus.SuccessEvent;
 import com.app.watermeter.model.ComResponseModel;
+import com.app.watermeter.model.LoginInfoModel;
 import com.app.watermeter.model.UserInfoModel;
 import com.app.watermeter.model.UserInfoParam;
 import com.app.watermeter.okhttp.DataManager;
 
+import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -51,19 +57,17 @@ public class UserManager {
             e.printStackTrace();
         }
         dataInstance.sendPostRequestData(CommonUrl.LOGIN, params)
-                .execute(new GenericsCallback<UserInfoModel>(new JsonGenericsSerializator()) {
+                .execute(new GenericsCallback<LoginInfoModel>(new JsonGenericsSerializator()) {
                     @Override
                     public void onError(Response response, Call call, Exception e, int id) {
                         String message = e.getMessage();
                       /*  String errorMsg = JsonUtils.getErrorMsg(response);
                         EventBus.getDefault().post(new ErrorResponseEvent(errorMsg, CommonPageState.login_page));*/
-                        Log.d("xyc", "onError: message="+message);
                     }
 
                     @Override
-                    public void onResponse(UserInfoModel response, int id) {
-                        // EventBus.getDefault().post(new LoginEvent(response));
-                        Log.d("xyc", "onResponse: response="+response);
+                    public void onResponse(LoginInfoModel response, int id) {
+                         EventBus.getDefault().post(new LoginEvent(response));
                     }
                 });
     }
@@ -88,13 +92,13 @@ public class UserManager {
                         String message = e.getMessage();
                       /*  String errorMsg = JsonUtils.getErrorMsg(response);
                         EventBus.getDefault().post(new ErrorResponseEvent(errorMsg, CommonPageState.login_page));*/
-                        Log.d("xyc", "onError: message="+message);
+
                     }
 
                     @Override
                     public void onResponse(ComResponseModel response, int id) {
-                        // EventBus.getDefault().post(new LoginEvent(response));
-                        Log.d("xyc", "onResponse: response="+response);
+                         EventBus.getDefault().post(new SuccessEvent(response));
+
                     }
                 });
     }
@@ -121,16 +125,20 @@ public class UserManager {
                         String message = e.getMessage();
                       /*  String errorMsg = JsonUtils.getErrorMsg(response);
                         EventBus.getDefault().post(new ErrorResponseEvent(errorMsg, CommonPageState.login_page));*/
-                        Log.d("xyc", "onError: message="+message);
+                        Log.d("admin", "onError: message="+message);
                     }
 
                     @Override
                     public void onResponse(ComResponseModel response, int id) {
-                        // EventBus.getDefault().post(new LoginEvent(response));
-                        Log.d("xyc", "onResponse: response="+response);
+                         EventBus.getDefault().post(new CheckSmsCodeEvent(response));
                     }
                 });
     }
+
+    /**
+     * 注册个人信息
+     * @param userInfoParam
+     */
   public void register(UserInfoParam userInfoParam){
       JSONObject params = new JSONObject();
       try {
@@ -143,19 +151,20 @@ public class UserManager {
           e.printStackTrace();
       }
       dataInstance.sendPostRequestData(CommonUrl.REGISTER, params)
-              .execute(new GenericsCallback<ComResponseModel>(new JsonGenericsSerializator()) {
+              .execute(new GenericsCallback<LoginInfoModel>(new JsonGenericsSerializator()) {
                   @Override
                   public void onError(Response response, Call call, Exception e, int id) {
                       String message = e.getMessage();
                       /*  String errorMsg = JsonUtils.getErrorMsg(response);
                         EventBus.getDefault().post(new ErrorResponseEvent(errorMsg, CommonPageState.login_page));*/
-                      Log.d("xyc", "onError: message="+message);
+                      Log.d("admin", "onError: message="+message);
                   }
 
                   @Override
-                  public void onResponse(ComResponseModel response, int id) {
-                      // EventBus.getDefault().post(new LoginEvent(response));
-                      Log.d("xyc", "onResponse: response="+response);
+                  public void onResponse(LoginInfoModel response, int id) {
+
+                       EventBus.getDefault().post(new RegisterInfoEvent(response));
+                      Log.d("admin", "onResponse: response="+response);
                   }
               });
   }
@@ -174,7 +183,6 @@ public class UserManager {
                     @Override
                     public void onResponse(ComResponseModel response, int id) {
                         // EventBus.getDefault().post(new LoginEvent(response));
-                        Log.d("xyc", "onResponse: response="+response);
                     }
                 });
     }
