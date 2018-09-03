@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import com.app.watermeter.R;
 import com.app.watermeter.common.CommonParams;
+import com.app.watermeter.manager.MeterManager;
 import com.app.watermeter.model.MeterInfoModel;
 import com.app.watermeter.view.activity.MeterListActivity;
 import com.app.watermeter.view.adapter.ElectricityPagerAdapter;
@@ -50,6 +51,8 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     protected void initData() {
+        MeterManager.getInstance().getMeterType();
+
         initWaterData();
         initElectricityData();
         initGasData();
