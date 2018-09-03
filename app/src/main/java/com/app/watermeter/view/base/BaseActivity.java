@@ -101,7 +101,7 @@ public abstract class BaseActivity extends AppCompatActivity implements DrawerLa
     public void onLoginOutEvent(InterceptCodeEvent event) {
         isShow = true;
         Log.d("xyc", "onLoginOutEvent: event.getCode()=" + event.getCode());
-        if (event.getCode() == 403) {
+        if (event.getCode() == 401) {
             if (preSystemTime == 0) {
                 preSystemTime = DateUtils.getSystemTime();
             } else {
