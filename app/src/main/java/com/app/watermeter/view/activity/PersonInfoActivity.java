@@ -9,7 +9,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.app.watermeter.R;
+import com.app.watermeter.eventBus.PersonInfoEvent;
+import com.app.watermeter.manager.UserManager;
+import com.app.watermeter.model.UserInfoModel;
+import com.app.watermeter.utils.ToastUtil;
 import com.app.watermeter.view.base.BaseActivity;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -47,7 +54,22 @@ public class PersonInfoActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = PersonInfoActivity.this;
-
+        UserManager.getInstance().getPersonInfo();
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onPersonInfoEvent(PersonInfoEvent event) {
+        UserInfoModel userInfoModel = event.getUserInfoModel();
+        if (userInfoModel == null) {
+            ToastUtil.showShort(getString(R.string.request_data_error));
+            return;
+        }
+        updateUI(userInfoModel);
+    }
+
+    private void updateUI(UserInfoModel userInfoModel) {
+        tvUserName.setText(userInfoModel.getReal_name());
+        tvMail.setText(userInfoModel.getEmail());
+        tvPhone.setText(userInfoModel.getContact());
+    }
 }

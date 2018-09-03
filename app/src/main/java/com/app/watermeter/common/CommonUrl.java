@@ -7,5 +7,7 @@ public class CommonUrl {
     public static final String SEND_SMS = BASE_URL+"/sms/send";
     public static final String CHECK_SMS_CODE = BASE_URL+"/sms/check";
     public static final String REGISTER = BASE_URL+"/auth/register";
-    public static final String TEST = BASE_URL+"/api/test";
+    public static final String GET_PERSON_INFO = BASE_URL+"/me";
+    public static final String RESET_PASSWORD = BASE_URL+"/passwd/reset";
+
 }

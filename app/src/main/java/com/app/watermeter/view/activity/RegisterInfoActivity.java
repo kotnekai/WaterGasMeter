@@ -11,7 +11,7 @@ import com.app.watermeter.common.CommonParams;
 import com.app.watermeter.eventBus.RegisterInfoEvent;
 import com.app.watermeter.manager.UserManager;
 import com.app.watermeter.model.LoginInfoModel;
-import com.app.watermeter.model.UserInfoModel;
+import com.app.watermeter.model.AccountExtraModel;
 import com.app.watermeter.model.UserInfoParam;
 import com.app.watermeter.utils.AccountValidatorUtil;
 import com.app.watermeter.utils.EmptyUtil;
@@ -68,7 +68,7 @@ public class RegisterInfoActivity extends BaseActivity {
         ToastUtil.showShort(message);
 
         if (status_code == 200&&err_code==0) {
-            UserInfoModel data = infoModel.getData();
+            AccountExtraModel data = infoModel.getData();
             if(data!=null){
                 Log.d("admin", "onRegisterInfoEvent: data="+data);
                 PreferencesUtils.putString(CommonParams.USER_TOKEN,data.getAccess_token());

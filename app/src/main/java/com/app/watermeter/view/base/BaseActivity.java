@@ -1,10 +1,12 @@
 package com.app.watermeter.view.base;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Build;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,12 +16,18 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.app.okhttputils.eventbus.InterceptCodeEvent;
 import com.app.watermeter.R;
+import com.app.watermeter.common.ComApplication;
+import com.app.watermeter.common.CommonParams;
 import com.app.watermeter.eventBus.DefaultEvent;
 import com.app.watermeter.eventBus.SuccessEvent;
 import com.app.watermeter.model.ComResponseModel;
+import com.app.watermeter.utils.DateUtils;
 import com.app.watermeter.utils.EmptyUtil;
+import com.app.watermeter.utils.PreferencesUtils;
 import com.app.watermeter.utils.ToastUtil;
+import com.app.watermeter.view.activity.LoginActivity;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -72,14 +80,46 @@ public abstract class BaseActivity extends AppCompatActivity implements DrawerLa
         super.onCreate(savedInstanceState);
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(getVew());
+
         // 全部绑定ButterKnife
         ButterKnife.bind(this);
         // 全局注册EventBus ，，EventBus貌似不能重复注册，这里判断一下
         if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this);
         }
+        ComApplication.getApp().addActivity(this);
+
         updateBaseData();
 
+    }
+
+    boolean isShow = false;
+    private long preSystemTime = 0;
+    private long curTime = 0;
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onLoginOutEvent(InterceptCodeEvent event) {
+        isShow = true;
+        Log.d("xyc", "onLoginOutEvent: event.getCode()=" + event.getCode());
+        if (event.getCode() == 403) {
+            if (preSystemTime == 0) {
+                preSystemTime = DateUtils.getSystemTime();
+            } else {
+                curTime = DateUtils.getSystemTime();
+                long time = curTime - preSystemTime;
+
+                if (time > 0) {
+                    preSystemTime = 0;
+                    return;
+                }
+            }
+            loginOutOnLine(this);
+        }
+
+    }
+    public void loginOutOnLine(Context appContext) {
+        PreferencesUtils.putString(CommonParams.USER_TOKEN, null);
+        appContext.startActivity(LoginActivity.makeIntent(appContext, true));
     }
 
     /**

@@ -8,7 +8,7 @@ public class LoginInfoModel {
     private int status_code;
     private String message;
     private int err_code;
-    private UserInfoModel data;
+    private AccountExtraModel data;
 
     public int getStatus_code() {
         return status_code;
@@ -34,11 +34,11 @@ public class LoginInfoModel {
         this.err_code = err_code;
     }
 
-    public UserInfoModel getData() {
+    public AccountExtraModel getData() {
         return data;
     }
 
-    public void setData(UserInfoModel data) {
+    public void setData(AccountExtraModel data) {
         this.data = data;
     }
 }

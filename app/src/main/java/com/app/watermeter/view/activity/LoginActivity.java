@@ -8,17 +8,19 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.app.watermeter.R;
+import com.app.watermeter.common.ComApplication;
 import com.app.watermeter.common.CommonParams;
 import com.app.watermeter.eventBus.LoginEvent;
-import com.app.watermeter.eventBus.RegisterInfoEvent;
 import com.app.watermeter.manager.UserManager;
 import com.app.watermeter.model.LoginInfoModel;
-import com.app.watermeter.model.UserInfoModel;
+import com.app.watermeter.model.AccountExtraModel;
 import com.app.watermeter.utils.PreferencesUtils;
 import com.app.watermeter.utils.ProgressUtils;
 import com.app.watermeter.utils.ToastUtil;
+import com.app.watermeter.utils.UIUtils;
 import com.app.watermeter.view.base.BaseActivity;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -57,6 +59,24 @@ public class LoginActivity extends BaseActivity {
     public static Intent makeIntent(Context context){
         return new Intent(context,LoginActivity.class);
     }
+    public static Intent makeIntent(Context context, boolean isExit) {
+
+        Intent intent = new Intent(context, LoginActivity.class);
+        intent.putExtra(CommonParams.isExit, isExit);
+        return intent;
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Intent intent = getIntent();
+        boolean isExit = intent.getBooleanExtra(CommonParams.isExit, false);
+        if (isExit) {
+            ComApplication.getApp().removeAllActivity(ComApplication.getApp().getCurrentActivity());
+            Toast.makeText(LoginActivity.this, UIUtils.getValueString(R.string.login_invalid_tip), Toast.LENGTH_SHORT).show();
+        }
+    }
+
     /**
      * 接口返回
      */
@@ -70,7 +90,7 @@ public class LoginActivity extends BaseActivity {
         ToastUtil.showShort(message);
 
         if (status_code == 200&&err_code==0) {
-            UserInfoModel data = infoModel.getData();
+            AccountExtraModel data = infoModel.getData();
             if(data!=null){
                 Log.d("admin", "onRegisterInfoEvent: data="+data);
                 PreferencesUtils.putString(CommonParams.USER_TOKEN,data.getAccess_token());
@@ -89,11 +109,7 @@ public class LoginActivity extends BaseActivity {
             case R.id.tvLoginBtn:
                 String phoneNumber = edtPhoneNumber.getText().toString();
                 String password = edtPassword.getText().toString();
-
-                //startActivity(MainActivity.makeIntent(this));
                 UserManager.getInstance().login(phoneNumber,password);
-                //UserManager.getInstance().testIt();
-              //  finish();
                 break;
             case R.id.tvGoRegister:
                 startActivity(RegisterPhoneActivity.makeIntent(this));

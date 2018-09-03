@@ -4,8 +4,11 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.app.okhttputils.eventbus.InterceptCodeEvent;
 import com.app.okhttputils.log.model.NetLogModel;
 
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
 
@@ -61,7 +64,8 @@ public class LoggerInterceptor implements Interceptor {
             Log.i(tag, "protocol : " + clone.protocol());
             if (!TextUtils.isEmpty(clone.message()))
                 Log.i(tag, "message : " + clone.message());
-           //EventBus.getDefault().post(new InterceptCodeEvent(clone.code()));
+           EventBus.getDefault().post(new InterceptCodeEvent(clone.code()));
+
             if (showResponse) {
                 NetLogModel netLogModel = new NetLogModel();
                 netLogModel.setUrl(clone.request().url().toString());

@@ -112,5 +112,9 @@
     <string name="send_code_finish">已发送验证码短信到</string>
     <string name="confirm_password">确认密码</string>
     <string name="submit">提交</string>
+    <string name="request_data_error">数据请求出错</string>
+    <string name="password_no_valid">密码不合法，请重新输入</string>
+    <string name="password_no_match">前后密码不一致，请重新输入</string>
+    <string name="login_invalid_tip">登录失效，请重新登录</string>
 
 </resources>
