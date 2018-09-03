@@ -198,6 +198,7 @@ public class UserManager {
 
     /**
      * 重置密码
+     *
      * @param password
      * @param confirmPassword
      */
@@ -220,6 +221,25 @@ public class UserManager {
                     public void onResponse(ComResponseModel response, int id) {
 
                         EventBus.getDefault().post(new SuccessEvent(response));
+                    }
+                });
+    }
+
+    /**
+     * 退出登录
+     */
+    public void loginOut() {
+        dataInstance.sendPostRequestData(CommonUrl.LOGIN_OUT, null)
+                .execute(new GenericsCallback<ComResponseModel>(new JsonGenericsSerializator()) {
+                    @Override
+                    public void onError(Response response, Call call, Exception e, int id) {
+
+                    }
+
+                    @Override
+                    public void onResponse(ComResponseModel response, int id) {
+
+                       // EventBus.getDefault().post(new SuccessEvent(response));
                     }
                 });
     }

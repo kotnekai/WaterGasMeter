@@ -11,5 +11,6 @@ public class CommonUrl {
     public static final String RESET_PASSWORD = BASE_URL+"/passwd/reset";
     public static final String TEST = BASE_URL+"/api/test";
     public static final String METER_TYPE_URL = BASE_URL+"/machine/types";
+    public static final String LOGIN_OUT = BASE_URL+"/auth/logout";
 
 }

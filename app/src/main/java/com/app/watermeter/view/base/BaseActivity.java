@@ -22,6 +22,7 @@ import com.app.watermeter.common.ComApplication;
 import com.app.watermeter.common.CommonParams;
 import com.app.watermeter.eventBus.DefaultEvent;
 import com.app.watermeter.eventBus.SuccessEvent;
+import com.app.watermeter.manager.UserManager;
 import com.app.watermeter.model.ComResponseModel;
 import com.app.watermeter.utils.DateUtils;
 import com.app.watermeter.utils.EmptyUtil;
@@ -118,6 +119,7 @@ public abstract class BaseActivity extends AppCompatActivity implements DrawerLa
 
     }
     public void loginOutOnLine(Context appContext) {
+        UserManager.getInstance().loginOut();
         PreferencesUtils.putString(CommonParams.USER_TOKEN, null);
         appContext.startActivity(LoginActivity.makeIntent(appContext, true));
     }

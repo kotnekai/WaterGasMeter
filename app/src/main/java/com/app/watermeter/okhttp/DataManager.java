@@ -101,9 +101,11 @@ public class DataManager {
         postStringBuilder.mediaType(MediaType.parse("application/json; charset=utf-8"));
         postStringBuilder.addHeader("Authorization", "bearer " + token);
         postStringBuilder.addHeader("Accept", "application/x.watermeter.v1+json");
-
-        postStringBuilder.content(params.toString());
-
+        if(params!=null){
+            postStringBuilder.content(params.toString());
+        }else {
+            postStringBuilder.content(new JSONObject().toString());
+        }
         return postStringBuilder.build();
     }
 
@@ -119,8 +121,11 @@ public class DataManager {
         postStringBuilder.mediaType(MediaType.parse("application/json; charset=utf-8"));
         postStringBuilder.addHeader("Authorization", "bearer " + token);
         postStringBuilder.addHeader("Accept", "application/x.watermeter.v1+json");
-
-        postStringBuilder.content(params.toString());
+        if(params!=null){
+            postStringBuilder.content(params.toString());
+        }else {
+            postStringBuilder.content(new JSONObject().toString());
+        }
         postStringBuilder.build().execute(new Callback() {
             @Override
             public Object parseNetworkResponse(final Response response, final int i) throws Exception {
