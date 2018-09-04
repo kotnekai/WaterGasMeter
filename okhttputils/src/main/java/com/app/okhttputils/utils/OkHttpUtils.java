@@ -167,7 +167,7 @@ public class OkHttpUtils {
                 String errMessage="";
                 switch (result.getStatus_code())
                 {
-                    case Result.TOKEN_FAILE:
+                    case Result.TOKEN_FAILD:
                         errMessage = "token过期，请重新登录";
                 }
 
