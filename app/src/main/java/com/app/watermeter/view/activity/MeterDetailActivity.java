@@ -2,7 +2,12 @@ package com.app.watermeter.view.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.DashPathEffect;
+import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -11,6 +16,21 @@ import com.app.watermeter.R;
 import com.app.watermeter.common.CommonParams;
 import com.app.watermeter.utils.ToastUtil;
 import com.app.watermeter.view.base.BaseActivity;
+import com.app.watermeter.view.marker.MeterChartMarkerView;
+import com.github.mikephil.charting.animation.Easing;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.LimitLine;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.github.mikephil.charting.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,25 +80,12 @@ public class MeterDetailActivity extends BaseActivity {
     TextView tvGotoPerStorage;
     @BindView(R.id.tvGotoPayment)
     TextView tvGotoPayment;
-    @BindView(R.id.lineChartView)
-    LineChartView lineChartView;
+    @BindView(R.id.lineChart)
+    LineChart mChart;
 
     private int typeValue;
 
     private LineChartData data;
-    private int numberOfLines = 1;
-    private int maxNumberOfLines = 4;
-    private int numberOfPoints = 12;
-
-    float[][] randomNumbersTab = new float[maxNumberOfLines][numberOfPoints];
-
-    private boolean hasAxes = true;
-    private boolean hasAxesNames = true;
-
-    String[] date = {"2", "4", "6", "8", "10", "12", "14", "16", "18", "20","22","24"};//X轴的标注
-    int[] score = {50, 42, 90, 33, 10, 74, 22, 18, 79, 20,45,65};//图表的数据点
-    private List<PointValue> mPointValues = new ArrayList<PointValue>();
-    private List<AxisValue> mAxisXValues = new ArrayList<AxisValue>();
 
 
     public static Intent makeIntent(Context context, int type) {
@@ -110,8 +117,166 @@ public class MeterDetailActivity extends BaseActivity {
         mContext = MeterDetailActivity.this;
         initIntent();
         initData();
-        initChart();
+        initMPAndroidChart();
+
     }
+
+    private void initMPAndroidChart() {
+//        mChart.setIsDrag(true);
+        //设置是否显示表格背景
+        mChart.setDrawGridBackground(true);
+//        mChart.setDrawHighlightCenter(true);
+        // no description text
+        Description description = new Description();
+        description.setText("");
+        mChart.setDescription(description);
+//        mChart.setNoDataTextDescription("");
+//        mChart.setNoDataText(getContext().getString(R.string.history_unrecorded));
+//        mChart.setNoDataTextSize(13);
+        mChart.setNoDataTextColor(0x85FFFFFF);
+        //设置是否可以触摸
+        mChart.setTouchEnabled(true);
+        //设置是否可以拖拽
+        mChart.setDragEnabled(true);
+        //设置是否可以缩放
+        mChart.setScaleEnabled(false);
+        mChart.setPinchZoom(true);
+        mChart.setDragDecelerationEnabled(false);
+        mChart.setDoubleTapToZoomEnabled(false);
+        mChart.setMinOffset(0);
+
+        mChart.setExtraOffsets(10f,10f,10f,10f);
+        mChart.getAxisRight().setEnabled(false);
+        // 拖拽时能否高亮（十字瞄准触摸到的点），默认true
+        mChart.setHighlightPerDragEnabled(true);
+        mChart.setHighlightPerTapEnabled(false);
+        //设置悬浮
+        MeterChartMarkerView mv = new MeterChartMarkerView(this,R.layout.custom_marker_view);
+        mChart.setMarker(mv);
+
+
+
+        //获取图例对象
+        Legend legend = mChart.getLegend();
+        legend.setPosition(Legend.LegendPosition.LEFT_OF_CHART);
+        legend.setForm(Legend.LegendForm.LINE);
+        //设置图例不显示
+        legend.setEnabled(false);
+        mChart.setMarkerView(null);
+//        mChart.setOnChartValueSelectedListener(this);
+
+
+        //X轴
+        XAxis xAxis = mChart.getXAxis();
+        //设置显示X轴
+        xAxis.setDrawAxisLine(false);
+        xAxis.setTextSize(12);
+        xAxis.setYOffset(20f);
+        //设置线为虚线
+        xAxis.enableGridDashedLine(5f, 5f, 0f);
+        //设置X轴显示的位置
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        //设置从X轴发出横线
+        xAxis.setDrawGridLines(true);
+        xAxis.setAxisLineColor(getResources().getColor(R.color.gridlinehorizoncolor));
+        //设置为true当一个页面显示条目过多，X轴值隔一个显示一个
+        xAxis.setGranularityEnabled(true);
+
+
+        //Y轴
+        YAxis leftAxis = mChart.getAxisLeft();
+        leftAxis.removeAllLimitLines();
+        leftAxis.setAxisMaximum(50f);
+        leftAxis.setAxisMinimum(0f);
+        //leftAxis.setYOffset(20f);
+//        leftAxis.enableGridDashedLine(5f, 5f, 0f);
+        leftAxis.setDrawZeroLine(false);
+
+        leftAxis.setDrawLimitLinesBehindData(true);
+        leftAxis.setTextSize(11);
+        //如果沿着轴线的线应该被绘制，则将其设置为true,隐藏Y轴
+        leftAxis.setDrawAxisLine(false);
+        leftAxis.setEnabled(true);
+        leftAxis.setGridColor(getResources().getColor(R.color.gridlinehorizoncolor));
+
+
+        LimitLine llXAxis = new LimitLine(10f, "Index 10");
+        llXAxis.setLineWidth(4f);
+        llXAxis.enableDashedLine(10f, 10f, 0f);
+        llXAxis.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_BOTTOM);
+        llXAxis.setTextSize(10f);
+
+
+        // add data
+        setData(24, 24);
+    }
+
+    private void setData(int count, float range) {
+
+        ArrayList<Entry> values = new ArrayList<Entry>();
+
+        for (int i = 0; i < count; i++) {
+
+            float val = (float) (Math.random() * range) + 3;
+            values.add(new Entry(i, val, getResources().getDrawable(R.drawable.star)));
+        }
+
+        LineDataSet lineSet;
+
+        if (mChart.getData() != null && mChart.getData().getDataSetCount() > 0) {
+            lineSet = (LineDataSet)mChart.getData().getDataSetByIndex(0);
+            lineSet.setValues(values);
+            mChart.getData().notifyDataChanged();
+            mChart.notifyDataSetChanged();
+        } else {
+            lineSet = new LineDataSet(values, "DataSet 1");
+            //设置图标不显示
+            lineSet.setDrawIcons(false);
+            //设置Y值使用左边Y轴的坐标值
+            lineSet.setAxisDependency(YAxis.AxisDependency.LEFT);
+            //画虚线
+//            set1.enableDashedLine(10f, 5f, 0f);
+//            set1.enableDashedHighlightLine(10f, 5f, 0f);
+            //设置线的颜色
+            lineSet.setColor(getResources().getColor(R.color.main_blue_color));
+            //设置数据点圆形的颜色
+            lineSet.setCircleColor(getResources().getColor(R.color.colorAccent));
+            //设置折线宽度
+            lineSet.setLineWidth(2f);
+            //设置折现点圆点半径
+            lineSet.setCircleRadius(4f);
+            //设置是否在数据点中间显示一个孔
+            lineSet.setDrawCircleHole(false);
+            lineSet.setValueTextSize(13f);
+            //设置允许填充
+            lineSet.setDrawFilled(false);
+            lineSet.setFormLineWidth(1f);
+            lineSet.setFormLineDashEffect(new DashPathEffect(new float[]{10f, 5f}, 0f));
+            lineSet.setFormSize(15.f);
+            lineSet.setHighlightEnabled(true);
+            lineSet.setDrawHorizontalHighlightIndicator(false);
+            lineSet.setDrawVerticalHighlightIndicator(true);
+
+            ArrayList<ILineDataSet> dataSets = new ArrayList<ILineDataSet>();
+            dataSets.add(lineSet);
+
+            // create a data object with the datasets
+            LineData data = new LineData(dataSets);
+
+            //设置一页最大显示个数为6，超出部分就滑动
+            float ratio = (float) count/(float) 6;
+            //显示的时候是按照多大的比率缩放显示,1f表示不放大缩小
+            mChart.zoom(ratio,1f,0,0);
+            //设置从X轴出来的动画时间
+//            mChart.animateX(1500);
+            //设置XY轴动画
+            mChart.animateXY(1500,1500, Easing.EasingOption.EaseInSine, Easing.EasingOption.EaseInSine);
+            // set data
+            mChart.setData(data);
+            mChart.invalidate();
+        }
+    }
+
 
     /**
      * 获取类型
@@ -138,119 +303,5 @@ public class MeterDetailActivity extends BaseActivity {
         }
     }
 
-    /**
-     * 图表
-     */
-    private void initChart() {
-        lineChartView.setOnValueTouchListener(new ValueTouchListener());
-        //缩放平移
-        lineChartView.setInteractive(true);
-        //放大
-        lineChartView.setZoomEnabled(false);
-        //横向滚动
-        lineChartView.setContainerScrollEnabled(true, ContainerScrollType.HORIZONTAL);
-
-        generateValues();
-
-        generateData();
-    }
-
-    private class ValueTouchListener implements LineChartOnValueSelectListener {
-
-        @Override
-        public void onValueSelected(int lineIndex, int pointIndex, PointValue value) {
-            Toast.makeText(mContext, "Selected: " + value, Toast.LENGTH_SHORT).show();
-        }
-
-        @Override
-        public void onValueDeselected() {
-            // TODO Auto-generated method stub
-
-        }
-
-    }
-
-    private void generateValues() {
-        for (int i = 0; i < maxNumberOfLines; ++i) {
-            for (int j = 0; j < numberOfPoints; ++j) {
-                randomNumbersTab[i][j] = (float) Math.random() * 100f;
-            }
-        }
-
-        for (int i = 0; i < date.length; i++) {
-            mAxisXValues.add(new AxisValue(i).setLabel(date[i]));
-        }
-
-        for (int i = 0; i < score.length; i++) {
-            mPointValues.add(new PointValue(i, score[i]));
-
-        }
-
-    }
-
-    private void generateData() {
-
-        List<Line> lines = new ArrayList<Line>();
-        for (int i = 0; i < numberOfLines; ++i) {
-
-            List<PointValue> values = new ArrayList<PointValue>();
-            for (int j = 0; j < numberOfPoints; ++j) {
-                values.add(new PointValue(j, randomNumbersTab[i][j]));
-            }
-
-            Line line = new Line(mPointValues);
-            line.setColor(ChartUtils.COLORS[i]);
-            line.setShape(ValueShape.CIRCLE);
-            line.setCubic(false);
-            line.setFilled(false);
-            line.setHasLabels(true);
-            line.setHasLabelsOnlyForSelected(false);
-            line.setHasLines(true);
-            line.setHasPoints(true);
-            line.setHasGradientToTransparent(false);
-            line.setStrokeWidth(2);
-            line.setPointRadius(4);
-            lines.add(line);
-        }
-
-        data = new LineChartData(lines);
-
-        if (hasAxes) {
-            Axis axisX = new Axis();
-            Axis axisY = new Axis().setHasLines(true);
-//            if (hasAxesNames) {
-//                axisX.setName("时间");
-//                axisY.setName("数值");
-//            }
-
-            axisX.setValues(mAxisXValues);
-
-            data.setAxisXBottom(axisX);
-            data.setAxisYLeft(axisY);
-        } else {
-            data.setAxisXBottom(null);
-            data.setAxisYLeft(null);
-        }
-
-        data.setBaseValue(Float.NEGATIVE_INFINITY);
-        lineChartView.setLineChartData(data);
-
-    }
-
-    @OnClick({R.id.tvGotoPerStorage, R.id.tvGotoPayment,R.id.tvCharge})
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.tvGotoPerStorage:
-                startActivity(PerStorageSaveListActivity.makeIntent(mContext, CommonParams.PAGE_TYPE_STORAGE));
-                break;
-            case R.id.tvGotoPayment:
-                startActivity(PerStorageSaveListActivity.makeIntent(mContext, CommonParams.PAGE_TYPE_SAVE));
-                break;
-            case R.id.tvCharge:
-                startActivity(PayActionActivity.makeIntent(mContext));
-                break;
-
-        }
-    }
 
 }

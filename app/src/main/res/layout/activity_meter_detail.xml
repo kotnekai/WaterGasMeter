@@ -128,22 +128,21 @@
             </LinearLayout>
         </LinearLayout>
 
-        <lecho.lib.hellocharts.view.LineChartView
-            android:id="@+id/lineChartView"
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/lineChart"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="170dp"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
-            android:paddingTop="10dp"
-            android:layout_marginBottom="10dp"
-            />
+            android:paddingTop="10dp" />
+
 
         <TextView
             android:id="@+id/tvBalance"
             style="@style/detail_normal_text"
             android:layout_marginBottom="10dp"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:text="@string/water_meter_balance"
             android:textSize="16sp" />
 

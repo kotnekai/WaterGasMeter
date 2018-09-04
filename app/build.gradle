@@ -41,9 +41,8 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:26.+'
     compile 'org.jaaksi:pickerview:1.0.1'
     compile 'cn.yipianfengye.android:zxing-library:2.2'
-
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
     testCompile 'junit:junit:4.12'
-    compile project(':hellocharts-library')
     compile project(path: ':okhttputils')
     compile project(':okhttputils')
 

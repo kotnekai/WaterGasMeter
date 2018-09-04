@@ -1,1 +1,1 @@
-include ':app', ':okhttplibrary', ':okhttputils', ':hellocharts-library'
+include ':app', ':okhttplibrary', ':okhttputils'
