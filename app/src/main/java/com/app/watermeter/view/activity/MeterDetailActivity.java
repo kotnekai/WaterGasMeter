@@ -206,7 +206,7 @@ public class MeterDetailActivity extends BaseActivity {
         for (int i = 0; i < count; i++) {
 
             float val = (float) (Math.random() * range) + 3;
-//            values.add(new Entry(i, val, getResources().getDrawable(R.drawable.star)));
+            values.add(new Entry(i, val));
         }
 
         LineDataSet lineSet;
