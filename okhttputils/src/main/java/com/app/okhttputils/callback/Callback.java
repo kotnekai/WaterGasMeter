@@ -54,7 +54,10 @@ public abstract class Callback<T>
 
     public abstract void onError(Response response, Call call, Exception e, int id);
 
-    public abstract void onResponse(T response, int id);
+    public abstract void onNetWorkError(Response response, String errorMsg, int NetWorkCode);
+
+
+    public abstract void onResponse(T result, int id);
 
     public static Callback CALLBACK_DEFAULT = new Callback()
     {
@@ -73,7 +76,13 @@ public abstract class Callback<T>
         }
 
         @Override
-        public void onResponse(Object response, int id)
+        public void onNetWorkError(Response response, String errorMsg, int NetWorkCode) {
+
+        }
+
+
+        @Override
+        public void onResponse(Object result, int id)
         {
 
         }

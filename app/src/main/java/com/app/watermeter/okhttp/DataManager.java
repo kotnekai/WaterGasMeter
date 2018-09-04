@@ -45,6 +45,7 @@ public class DataManager {
 
     /**
      * 登录成功设置token，这里拿
+     *
      * @return
      */
     private String getToken() {
@@ -53,6 +54,7 @@ public class DataManager {
 
     /**
      * 一般的发送get网络请求
+     *
      * @param url
      * @param params
      * @return
@@ -73,6 +75,7 @@ public class DataManager {
 
     /**
      * 指定MediaType 的网络请求，
+     *
      * @param url
      * @param params
      * @param mediaType
@@ -91,6 +94,7 @@ public class DataManager {
 
     /**
      * 默认的post请求
+     *
      * @param url
      * @param params
      * @return
@@ -101,9 +105,9 @@ public class DataManager {
         postStringBuilder.mediaType(MediaType.parse("application/json; charset=utf-8"));
         postStringBuilder.addHeader("Authorization", "bearer " + token);
         postStringBuilder.addHeader("Accept", "application/x.watermeter.v1+json");
-        if(params!=null){
+        if (params != null) {
             postStringBuilder.content(params.toString());
-        }else {
+        } else {
             postStringBuilder.content(new JSONObject().toString());
         }
         return postStringBuilder.build();
@@ -111,6 +115,7 @@ public class DataManager {
 
     /**
      * 只返回code的表单请求。在主线程中返回出去
+     *
      * @param url
      * @param params
      * @param listener
@@ -121,9 +126,9 @@ public class DataManager {
         postStringBuilder.mediaType(MediaType.parse("application/json; charset=utf-8"));
         postStringBuilder.addHeader("Authorization", "bearer " + token);
         postStringBuilder.addHeader("Accept", "application/x.watermeter.v1+json");
-        if(params!=null){
+        if (params != null) {
             postStringBuilder.content(params.toString());
-        }else {
+        } else {
             postStringBuilder.content(new JSONObject().toString());
         }
         postStringBuilder.build().execute(new Callback() {
@@ -134,8 +139,8 @@ public class DataManager {
                 ApplicationHolder.getInstance().postMainRunnable(new Runnable() {
                     @Override
                     public void run() {
-                        if(listener!=null){
-                            listener.onSuccessResponse(code,string);
+                        if (listener != null) {
+                            listener.onSuccessResponse(code, string);
                         }
                     }
                 });
@@ -144,8 +149,15 @@ public class DataManager {
 
             @Override
             public void onError(Response response, Call call, Exception e, int i) {
-                if(listener!=null){
-                    listener.onFailedResponse(response,e.getMessage());
+                if (listener != null) {
+                    listener.onFailedResponse(response, e.getMessage());
+                }
+            }
+
+            @Override
+            public void onNetWorkError(Response response, String errorMsg, int NetWorkCode) {
+                if (listener != null) {
+                    listener.onFailedResponse(response, errorMsg);
                 }
             }
 
@@ -158,11 +170,12 @@ public class DataManager {
 
     /**
      * 图片等文件上传
+     *
      * @param url
      * @param file
      * @param listener
      */
-    public void sendPostFileData(String url,File file, final IGetResponseCodeListener listener) {
+    public void sendPostFileData(String url, File file, final IGetResponseCodeListener listener) {
         String token = getToken();
         PostFileBuilder postFileBuilder = OkHttpUtils.postFile();
         postFileBuilder.isFormSubmitFile = true;
@@ -181,8 +194,8 @@ public class DataManager {
                 ApplicationHolder.getInstance().postMainRunnable(new Runnable() {
                     @Override
                     public void run() {
-                        if(listener!=null){
-                            listener.onSuccessResponse(code,string);
+                        if (listener != null) {
+                            listener.onSuccessResponse(code, string);
                         }
                     }
                 });
@@ -191,10 +204,17 @@ public class DataManager {
             }
 
             @Override
-            public void onError(Response response,Call call, Exception e, int i) {
-               if(listener!=null){
-                   listener.onFailedResponse(response,e.getMessage());
-               }
+            public void onError(Response response, Call call, Exception e, int i) {
+                if (listener != null) {
+                    listener.onFailedResponse(response, e.getMessage());
+                }
+            }
+
+            @Override
+            public void onNetWorkError(Response response, String errorMsg, int NetWorkCode) {
+                if (listener != null) {
+                    listener.onFailedResponse(response, errorMsg);
+                }
             }
 
             @Override

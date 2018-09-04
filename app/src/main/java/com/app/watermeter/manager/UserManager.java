@@ -2,6 +2,7 @@ package com.app.watermeter.manager;
 
 import android.util.Log;
 
+import com.app.okhttputils.Model.Result;
 import com.app.okhttputils.callback.GenericsCallback;
 import com.app.okhttputils.request.JsonGenericsSerializator;
 import com.app.watermeter.common.CommonUrl;
@@ -60,7 +61,7 @@ public class UserManager {
             e.printStackTrace();
         }
         dataInstance.sendPostRequestData(CommonUrl.LOGIN, params)
-                .execute(new GenericsCallback<LoginInfoModel>(new JsonGenericsSerializator()) {
+                .execute(new GenericsCallback<Result>(new JsonGenericsSerializator()) {
                     @Override
                     public void onError(Response response, Call call, Exception e, int id) {
                         String message = e.getMessage();
@@ -69,8 +70,14 @@ public class UserManager {
                     }
 
                     @Override
-                    public void onResponse(LoginInfoModel response, int id) {
-                        EventBus.getDefault().post(new LoginEvent(response));
+                    public void onNetWorkError(Response response, String errorMsg, int NetWorkCode) {
+
+                    }
+
+                    @Override
+                    public void onResponse(Result result, int id) {
+                        LoginInfoModel model = (LoginInfoModel)result.getData();
+                        EventBus.getDefault().post(new LoginEvent(model));
                     }
                 });
     }
@@ -90,7 +97,7 @@ public class UserManager {
             e.printStackTrace();
         }
         dataInstance.sendPostRequestData(CommonUrl.SEND_SMS, params)
-                .execute(new GenericsCallback<ComResponseModel>(new JsonGenericsSerializator()) {
+                .execute(new GenericsCallback<Result>(new JsonGenericsSerializator()) {
                     @Override
                     public void onError(Response response, Call call, Exception e, int id) {
                         String message = e.getMessage();
@@ -100,8 +107,14 @@ public class UserManager {
                     }
 
                     @Override
-                    public void onResponse(ComResponseModel response, int id) {
-                        EventBus.getDefault().post(new SuccessEvent(response));
+                    public void onNetWorkError(Response response, String errorMsg, int NetWorkCode) {
+
+                    }
+
+                    @Override
+                    public void onResponse(Result result, int id) {
+                        ComResponseModel model =(ComResponseModel) result.getData();
+                        EventBus.getDefault().post(new SuccessEvent(model));
 
                     }
                 });
@@ -124,7 +137,7 @@ public class UserManager {
             e.printStackTrace();
         }
         dataInstance.sendPostRequestData(CommonUrl.CHECK_SMS_CODE, params)
-                .execute(new GenericsCallback<ComResponseModel>(new JsonGenericsSerializator()) {
+                .execute(new GenericsCallback<Result>(new JsonGenericsSerializator()) {
                     @Override
                     public void onError(Response response, Call call, Exception e, int id) {
                         String message = e.getMessage();
@@ -134,9 +147,17 @@ public class UserManager {
                     }
 
                     @Override
-                    public void onResponse(ComResponseModel response, int id) {
-                        EventBus.getDefault().post(new CheckSmsCodeEvent(response));
+                    public void onNetWorkError(Response response, String errorMsg, int NetWorkCode) {
+
                     }
+
+                    @Override
+                    public void onResponse(Result result, int id) {
+                        ComResponseModel model =(ComResponseModel) result.getData();
+                        EventBus.getDefault().post(new CheckSmsCodeEvent(model));
+                    }
+
+
                 });
     }
 
@@ -157,7 +178,7 @@ public class UserManager {
             e.printStackTrace();
         }
         dataInstance.sendPostRequestData(CommonUrl.REGISTER, params)
-                .execute(new GenericsCallback<LoginInfoModel>(new JsonGenericsSerializator()) {
+                .execute(new GenericsCallback<Result>(new JsonGenericsSerializator()) {
                     @Override
                     public void onError(Response response, Call call, Exception e, int id) {
                         String message = e.getMessage();
@@ -167,10 +188,15 @@ public class UserManager {
                     }
 
                     @Override
-                    public void onResponse(LoginInfoModel response, int id) {
+                    public void onNetWorkError(Response response, String errorMsg, int NetWorkCode) {
 
-                        EventBus.getDefault().post(new RegisterInfoEvent(response));
-                        Log.d("admin", "onResponse: response=" + response);
+                    }
+
+                    @Override
+                    public void onResponse(Result result, int id) {
+                        LoginInfoModel model = (LoginInfoModel) result.getData();
+                        EventBus.getDefault().post(new RegisterInfoEvent(model));
+                        Log.d("admin", "onResponse: response=" + model);
                     }
                 });
     }
@@ -180,7 +206,7 @@ public class UserManager {
      */
     public void getPersonInfo() {
         dataInstance.sendGetRequestData(CommonUrl.GET_PERSON_INFO, null)
-                .execute(new GenericsCallback<UserInfoModel>(new JsonGenericsSerializator()) {
+                .execute(new GenericsCallback<Result>(new JsonGenericsSerializator()) {
                     @Override
                     public void onError(Response response, Call call, Exception e, int id) {
                         String message = e.getMessage();
@@ -189,9 +215,14 @@ public class UserManager {
                     }
 
                     @Override
-                    public void onResponse(UserInfoModel response, int id) {
+                    public void onNetWorkError(Response response, String errorMsg, int NetWorkCode) {
 
-                        EventBus.getDefault().post(new PersonInfoEvent(response));
+                    }
+
+                    @Override
+                    public void onResponse(Result result, int id) {
+                        UserInfoModel model = (UserInfoModel) result.getData();
+                        EventBus.getDefault().post(new PersonInfoEvent(model));
                     }
                 });
     }
@@ -211,16 +242,22 @@ public class UserManager {
             e.printStackTrace();
         }
         dataInstance.sendPostRequestData(CommonUrl.RESET_PASSWORD, params)
-                .execute(new GenericsCallback<ComResponseModel>(new JsonGenericsSerializator()) {
+                .execute(new GenericsCallback<Result>(new JsonGenericsSerializator()) {
                     @Override
                     public void onError(Response response, Call call, Exception e, int id) {
 
                     }
 
                     @Override
-                    public void onResponse(ComResponseModel response, int id) {
+                    public void onNetWorkError(Response response, String errorMsg, int NetWorkCode) {
 
-                        EventBus.getDefault().post(new SuccessEvent(response));
+                    }
+
+                    @Override
+                    public void onResponse(Result result, int id) {
+
+                        ComResponseModel model = (ComResponseModel) result.getData();
+                        EventBus.getDefault().post(new SuccessEvent(model));
                     }
                 });
     }
@@ -230,16 +267,21 @@ public class UserManager {
      */
     public void loginOut() {
         dataInstance.sendPostRequestData(CommonUrl.LOGIN_OUT, null)
-                .execute(new GenericsCallback<ComResponseModel>(new JsonGenericsSerializator()) {
+                .execute(new GenericsCallback<Result>(new JsonGenericsSerializator()) {
                     @Override
                     public void onError(Response response, Call call, Exception e, int id) {
 
                     }
 
                     @Override
-                    public void onResponse(ComResponseModel response, int id) {
+                    public void onNetWorkError(Response response, String errorMsg, int NetWorkCode) {
 
-                       // EventBus.getDefault().post(new SuccessEvent(response));
+                    }
+
+                    @Override
+                    public void onResponse(Result result, int id) {
+
+                        // EventBus.getDefault().post(new SuccessEvent(response));
                     }
                 });
     }

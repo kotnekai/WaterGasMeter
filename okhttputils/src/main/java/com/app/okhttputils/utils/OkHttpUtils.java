@@ -1,5 +1,6 @@
 package com.app.okhttputils.utils;
 
+import com.app.okhttputils.Model.Result;
 import com.app.okhttputils.builder.GetBuilder;
 import com.app.okhttputils.builder.HeadBuilder;
 import com.app.okhttputils.builder.OtherRequestBuilder;
@@ -147,17 +148,40 @@ public class OkHttpUtils {
         try {
             Object o = null;
             o = callback.parseNetworkResponse(response, id);
-            final Object finalO = o;
-            mPlatform.execute(new Runnable() {
-                @Override
-                public void run() {
-                    if (finalO != null) {
-                        callback.onResponse(finalO, id);
-                        callback.onAfter(id);
-                    }
-                }
-            });
+            final Result result = (Result) o;
 
+            //判断网络返回200即成功
+            if (result.isSuccess()) {
+                mPlatform.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (result != null) {
+                            callback.onResponse(result, id);
+                            callback.onAfter(id);
+                        }
+                    }
+                });
+            }
+            else {
+
+                String errMessage="";
+                switch (result.getStatus_code())
+                {
+                    case Result.TOKEN_FAILE:
+                        errMessage = "token过期，请重新登录";
+                }
+
+                final String finalErrMessage = errMessage;
+                mPlatform.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (result != null) {
+                            callback.onNetWorkError(response, finalErrMessage, result.getErr_code());
+                            callback.onAfter(id);
+                        }
+                    }
+                });
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

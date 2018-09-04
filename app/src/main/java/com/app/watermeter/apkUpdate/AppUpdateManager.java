@@ -6,6 +6,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.support.v4.content.FileProvider;
 import android.util.Log;
+
+import com.app.okhttputils.Model.Result;
 import com.app.watermeter.common.ApplicationHolder;
 import com.app.watermeter.common.CommonUrl;
 import com.app.watermeter.eventBus.ApkInfoEvent;
@@ -67,7 +69,7 @@ public class AppUpdateManager {
 
     public void getApkVersionInfo(final boolean isSelfCheck) {
         dataInstance.sendGetRequestData(CommonUrl.GET_APK_VERSION_INFO,null)
-                .execute(new GenericsCallback<ApkInfoModel>(new JsonGenericsSerializator()) {
+                .execute(new GenericsCallback<Result>(new JsonGenericsSerializator()) {
                     @Override
                     public void onError(Response response,Call call, Exception e, int i) {
 
@@ -75,8 +77,14 @@ public class AppUpdateManager {
                     }
 
                     @Override
-                    public void onResponse(ApkInfoModel apkInfoModel, int i) {
-                        EventBus.getDefault().post(new ApkInfoEvent(apkInfoModel, isSelfCheck));
+                    public void onNetWorkError(Response response, String errorMsg, int NetWorkCode) {
+
+                    }
+
+                    @Override
+                    public void onResponse(Result result, int i) {
+                        ApkInfoModel model = (ApkInfoModel)result.getData();
+                        EventBus.getDefault().post(new ApkInfoEvent(model, isSelfCheck));
                     }
                 });
     }

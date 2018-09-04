@@ -2,12 +2,12 @@ package com.app.watermeter.manager;
 
 import android.util.Log;
 
+import com.app.okhttputils.Model.Result;
 import com.app.okhttputils.callback.GenericsCallback;
 import com.app.okhttputils.request.JsonGenericsSerializator;
 import com.app.watermeter.common.CommonUrl;
 import com.app.watermeter.model.ComResponseModel;
 import com.app.watermeter.model.MeterTypeModel;
-import com.app.watermeter.model.UserInfoModel;
 import com.app.watermeter.model.UserInfoParam;
 import com.app.watermeter.okhttp.DataManager;
 
@@ -15,6 +15,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import okhttp3.Call;
@@ -47,7 +48,7 @@ public class MeterManager {
     public void getMeterType() {
         Map<String, String> params = new HashMap<>();
         dataInstance.sendGetRequestData(CommonUrl.METER_TYPE_URL, params)
-                .execute(new GenericsCallback<MeterTypeModel>(new JsonGenericsSerializator()) {
+                .execute(new GenericsCallback<Result>(new JsonGenericsSerializator()) {
                     @Override
                     public void onError(Response response, Call call, Exception e, int id) {
                         String message = e.getMessage();
@@ -57,9 +58,16 @@ public class MeterManager {
                     }
 
                     @Override
-                    public void onResponse(MeterTypeModel response, int id) {
+                    public void onNetWorkError(Response response, String errorMsg, int NetWorkCode) {
+                        Log.d("xyc", "onError: errorMsg="+errorMsg);
+                    }
+
+                    @Override
+                    public void onResponse(Result response, int id) {
                         // EventBus.getDefault().post(new LoginEvent(response));
                         Log.d("xyc", "onResponse: response="+response);
+                        List<MeterTypeModel> list =(List<MeterTypeModel>) response.getData();
+                        Log.d("xyc", "onResponse: response="+list);
                     }
                 });
     }
@@ -85,6 +93,11 @@ public class MeterManager {
                       /*  String errorMsg = JsonUtils.getErrorMsg(response);
                         EventBus.getDefault().post(new ErrorResponseEvent(errorMsg, CommonPageState.login_page));*/
                         Log.d("xyc", "onError: message="+message);
+                    }
+
+                    @Override
+                    public void onNetWorkError(Response response, String errorMsg, int NetWorkCode) {
+
                     }
 
                     @Override
@@ -121,6 +134,11 @@ public class MeterManager {
                     }
 
                     @Override
+                    public void onNetWorkError(Response response, String errorMsg, int NetWorkCode) {
+
+                    }
+
+                    @Override
                     public void onResponse(ComResponseModel response, int id) {
                         // EventBus.getDefault().post(new LoginEvent(response));
                         Log.d("xyc", "onResponse: response="+response);
@@ -149,6 +167,11 @@ public class MeterManager {
                   }
 
                   @Override
+                  public void onNetWorkError(Response response, String errorMsg, int NetWorkCode) {
+
+                  }
+
+                  @Override
                   public void onResponse(ComResponseModel response, int id) {
                       // EventBus.getDefault().post(new LoginEvent(response));
                       Log.d("xyc", "onResponse: response="+response);
@@ -164,6 +187,11 @@ public class MeterManager {
                         String message = e.getMessage();
                       /*  String errorMsg = JsonUtils.getErrorMsg(response);
                         EventBus.getDefault().post(new ErrorResponseEvent(errorMsg, CommonPageState.login_page));*/
+
+                    }
+
+                    @Override
+                    public void onNetWorkError(Response response, String errorMsg, int NetWorkCode) {
 
                     }
 

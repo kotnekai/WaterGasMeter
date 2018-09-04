@@ -4,6 +4,7 @@ import android.util.Log;
 
 import java.io.IOException;
 import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 
 import okhttp3.Response;
 
@@ -22,6 +23,7 @@ public abstract class GenericsCallback<T> extends Callback<T> {
     public T parseNetworkResponse(Response response, int id) throws IOException {
         String string = response.body().string();
         Log.i("okhttp==", string);
+
         Class<T> entityClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
         if (entityClass == String.class) {
             return (T) string;
