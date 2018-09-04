@@ -36,17 +36,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.OnClick;
-import lecho.lib.hellocharts.gesture.ContainerScrollType;
-import lecho.lib.hellocharts.listener.LineChartOnValueSelectListener;
-import lecho.lib.hellocharts.model.Axis;
-import lecho.lib.hellocharts.model.AxisValue;
-import lecho.lib.hellocharts.model.Line;
-import lecho.lib.hellocharts.model.LineChartData;
-import lecho.lib.hellocharts.model.PointValue;
-import lecho.lib.hellocharts.model.ValueShape;
-import lecho.lib.hellocharts.util.ChartUtils;
-import lecho.lib.hellocharts.view.LineChartView;
 
 /**
  * @author admin
@@ -85,7 +74,6 @@ public class MeterDetailActivity extends BaseActivity {
 
     private int typeValue;
 
-    private LineChartData data;
 
 
     public static Intent makeIntent(Context context, int type) {
@@ -218,7 +206,7 @@ public class MeterDetailActivity extends BaseActivity {
         for (int i = 0; i < count; i++) {
 
             float val = (float) (Math.random() * range) + 3;
-            values.add(new Entry(i, val, getResources().getDrawable(R.drawable.star)));
+//            values.add(new Entry(i, val, getResources().getDrawable(R.drawable.star)));
         }
 
         LineDataSet lineSet;
