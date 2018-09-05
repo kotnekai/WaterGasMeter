@@ -11,13 +11,18 @@ import com.app.watermeter.eventBus.LoginEvent;
 import com.app.watermeter.eventBus.PersonInfoEvent;
 import com.app.watermeter.eventBus.RegisterInfoEvent;
 import com.app.watermeter.eventBus.SuccessEvent;
+import com.app.watermeter.model.AccountExtraModel;
 import com.app.watermeter.model.UserInfoModel;
 import com.app.watermeter.model.UserInfoParam;
 import com.app.watermeter.okhttp.DataManager;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Response;
@@ -217,7 +222,12 @@ public class UserManager {
 
                     @Override
                     public void onResponse(Result result, int id) {
-                        UserInfoModel model = (UserInfoModel) result.getData();
+                        Gson gson = new Gson();
+                        String jsonString = gson.toJson(result.getData());
+//                        UserInfoModel model =   new Gson().fromJson(jsonString,
+//                                new TypeToken<List<UserInfoModel>>() {
+//                                }.getType());
+                        UserInfoModel model = gson.fromJson(jsonString,UserInfoModel.class);
                         EventBus.getDefault().post(new PersonInfoEvent(model));
                     }
                 });

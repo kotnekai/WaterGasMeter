@@ -1,50 +1,121 @@
 <resources>
-
     <string name="app_name">WaterMeter</string>
 
-    <string name="main_home">67465435</string>
-    <string name="water_meter">23432432</string>
-    <string name="electricity_meter">235452</string>
-    <string name="gas_meter">vfddv</string>
-    <string name="more" formatted="false">more></string>
+    <string name="main_home">ទំព័រដើម</string>
+    <string name="water_meter">ទឹក</string>
+    <string name="electricity_meter">ម៉ែត្រអគ្គិសនី</string>
+    <string name="gas_meter">ម៉ែត្រឧស្ម័ន</string>
+    <string name="more" formatted="false">មើលទាំងអស់></string>
 
-    <string name="water_meter2">Water：</string>
-    <string name="electricity_meter2">Electricity：</string>
-    <string name="gas_meter2">Gas：</string>
-    <string name="address">Address：</string>
-    <string name="square">（unit：㎡）</string>
-    <string name="last_value">上次表值：</string>
-    <string name="balance">表余额：</string>
-    <string name="yuan">%s rmb</string>
-    <string name="scan">Scan</string>
-    <string name="or">- Or -</string>
-    <string name="add">Add</string>
-    <string name="sn_hints">sn</string>
-    <string name="binding">Bind</string>
+    <string name="water_meter2">ទឹក：</string>
+    <string name="electricity_meter2">ម៉ែត្រអគ្គិសនី：</string>
+    <string name="gas_meter2">ម៉ែត្រឧស្ម័ន：</string>
+    <string name="address">អាសយដ្ឋាន：</string>
+    <string name="square">（ឯកតា：㎡）</string>
+    <string name="last_value">តម្លៃចុងក្រោយ：</string>
+    <string name="balance">តុល្យភាព：</string>
+    <string name="yuan">%s យាន</string>
+    <string name="scan">វិភាគកូដ QR</string>
+    <string name="or">- ឬ -</string>
+    <string name="add">បន្ថែម</string>
+    <string name="sn_hints">បញ្ចូលលេខបង់បែបបទដោយដៃ</string>
+    <string name="binding">ការចង</string>
 
-    <string name="register_phone_title">Verifying the mobile phone</string>
-    <string name="register_info_title">Registration information</string>
-    <string name="reset_psw_title">Reset the password</string>
+    <string name="register_phone_title">បញ្ជាក់ទូរស័ព្ទ</string>
+    <string name="register_info_title">ព័ត៌មានចុះឈ្មោះ</string>
+    <string name="reset_psw_title">កំណត់ពាក្យសម្ងាត់ឡើងវិញ</string>
 
-    <string name="reset_modify_title">Change Password</string>
-    <string name="register_info_psw_tip">*The password contains at least one digit and letter, \nand at least 6 bits.\nFor security reasons, \nthe suggested password should not be set too simple.</string>
+    <string name="reset_modify_title">ផ្លាស់ប្តូរពាក្យសម្ងាត់</string>
+    <string name="register_info_psw_tip">* ពាក្យសម្ងាត់ត្រូវតែមានលេខយ៉ាងហោចណាស់ខ្ទង់មួយនិងលេខយ៉ាងហោចណាស់ 6 ខ្ទង់ \ n ។ ដោយហេតុផលសុវត្ថិភាពវាត្រូវបានគេណែនាំថាពាក្យសម្ងាត់មិនអាចកំណត់បានស្រួលពេក។</string>
 
-    <string name="modify_password">Modify Password</string>
-    <string name="modify_language">Language</string>
+    <string name="modify_password">ផ្លាស់ប្តូរពាក្យសម្ងាត់</string>
+    <string name="modify_language">ប្តូរភាសា</string>
 
-    <string name="mine_per_storage_list">Pre storage detail</string>
-    <string name="mine_pay_list">Payment details</string>
-    <string name="mine_person_info">personal data</string>
-    <string name="mine_other_setting">Setting</string>
-    <string name="person_name">Name</string>
-    <string name="person_email">Email</string>
-    <string name="person_phone">Phone</string>
+    <string name="mine_per_storage_list">ពត៌មានលំអិតទុកជាមុន</string>
+        <string name="mine_pay_list">ព័ត៌មានលម្អិតនៃការទូទាត់</string>
+    <string name="mine_person_info">ព័ត៌មានផ្ទាល់ខ្លួន</string>
+    <string name="mine_other_setting">ការកំណត់ផ្សេងៗ</string>
+    <string name="person_name">ឈ្មោះ</string>
+    <string name="person_email">ប្រអប់សំបុត្រ</string>
+    <string name="person_phone">លេខទូរស័ព្ទដៃ</string>
 
+    <string name="scan_code">កូដស្កេនបានបរាជ័យសូមព្យាយាមម្តងទៀត</string>
+    <string name="permission_storage">សិទ្ធិផ្ទុក</string>
+    <string name="permission_camera">សិទ្ធិកាមេរ៉ា</string>
     <string name="language_cn">简体中文</string>
     <string name="language_en">English</string>
-    <string name="language_km">柬埔寨</string>
+    <string name="language_km">កម្ពុជា</string>
 
-    <string name="confirm">Confirm</string>
-    <string name="cancel">Cancel</string>
+    <string name="confirm">អះអាង</string>
+    <string name="cancel">បោះបង់</string>
+    <string name="phone_number">សូមបញ្ចូលលេខទូរស័ព្ទត្រឹមត្រូវ</string>
+    <string name="phone_number_error">លេខទូរស័ព្ទគឺទទេ</string>
+    <string name="register_verify_code">កូដផ្ទៀងផ្ទាត់</string>
+    <string name="register_verify_phone">%s-%s</string>
+    <string name="register_next_step">ជំហានបន្ទាប់</string>
+    <string name="register_count_time">%ssបញ្ជូនបន្ត</string>
+    <string name="com_loading_tips">សូមរង់ចាំ..</string>
+    <string name="com_input_complete_tips">សូមបំពេញព័ត៌មានផ្ទាល់ខ្លួនរបស់អ្នក</string>
+
+
+    <string name="pay_sn">លេខទូទាត់：</string>
+    <string name="square_detail">ឯកតា：m³</string>
+
+    <string name="water_meter_detail_title">ព័ត៌មានលម្អិតអំពីទឹក</string>
+    <string name="elect_meter_detail_title">ព័ត៌មានលម្អិតម៉ែត្រ</string>
+    <string name="gas_meter_detail_title">ព័ត៌មានលម្អិតពីម៉ែត្រឧស្ម័ន</string>
+
+    <string name="water_meter_reading">ការអានម៉ែត្រទឹក</string>
+    <string name="elect_meter_reading">ការអានម៉ែត្រ</string>
+    <string name="gas_meter_reading">ការអានម៉ែត្រឧស្ម័ន</string>
+
+    <string name="last_meter_value">តម្លៃតារាងចុងក្រោយ</string>
+    <string name="current_meter_value">តម្លៃតារាងបន្ទាន់</string>
+
+    <string name="water_meter_balance">តុល្យភាពម៉ែត្រទឹក</string>
+    <string name="elect_meter_balance">តុល្យភាពម៉ែត្រ</string>
+    <string name="gas_meter_balance">តុល្យភាពម៉ែត្រឧស្ម័ន</string>
+
+    <string name="immediately_save">ទុកជាមុនទុកជាមុន</string>
+    <string name="storage_detail" formatted="true">ពត៌មានលំអិតទុកជាមុន>></string>
+    <string name="payment_detail" formatted="true">ព័ត៌មានលម្អិតនៃការទូទាត់>></string>
+    <string name="unit_yuan">យាន</string>
+
+    <string name="cancel_binding">មិនភ្ជាប់</string>
+
+
+    <string name="water_sn" formatted="false">ម៉ែត្រទឹកសរសេរកូដ：%s</string>
+    <string name="electricity_sn" formatted="false">តារាងកូដ：%s</string>
+    <string name="gas_sn" formatted="false">ម៉ាស់ឧស្ម័នសរសេរកូដ：%s</string>
+
+    <string name="measurement"> ការវាស់វែងនៃការទូទាត់：%s</string>
+    <string name="payment_time">ពេលវេលាបង់ប្រាក់：%s</string>
+    <string name="storage_time">ពេលវេលាទុកជាមុន：%s</string>
+
+
+    <string name="payed">ដកចេញ</string>
+    <string name="no_pay" formatted="false">តុល្យភាពមិនគ្រប់គ្រាន់នៃតារាង \ n នឹងត្រូវកាត់% s យន់</string>
+
+    <string name="payment_money_title">ចំនួនទឹកប្រាក់ដែលទុកជាមុន</string>
+    <string name="pay_action">បង់</string>
+    <string name="pay_hints">*សូមបញ្ចូលចំនួនគត់។ បន្ទាប់ពីចំនួនទឹកប្រាក់បង់ប្រាក់មុនត្រូវបានទូទាត់ដោយជោគជ័យការមិនបានសងនឹងត្រូវបានផ្តល់ជូន។</string>
+    <string name="pay_success">ការទូទាត់ជោគជ័យ！</string>
+
+    <!--2018.9.3-->
+    <string name="completed">បញ្ចប់</string>
+    <string name="person_password">ពាក្យសម្ងាត់</string>
+    <string name="login">ចូល</string>
+    <string name="to_register">ចុះឈ្មោះឥឡូវ</string>
+    <string name="forget_psw">ភ្លេចពាក្យសម្ងាត់របស់អ្នក?</string>
+    <string name="china_local">ចិនដីគោក</string>
+    <string name="phone_tip">លេខទូរស័ព្ទចល័ត</string>
+    <string name="send_code_finish">បានផ្ញើសារ SMS ផ្ទៀងផ្ទាត់ទៅ</string>
+    <string name="confirm_password">បញ្ជាក់ពាក្យសម្ងាត់</string>
+    <string name="submit">ដាក់ស្នើ</string>
+    <string name="request_data_error">កំហុសឆ្គងលើទិន្នន័យ</string>
+    <string name="password_no_valid">ពាក្យសម្ងាត់មិនត្រឹមត្រូវសូមបញ្ចូលម្តងទៀត</string>
+    <string name="password_no_match">ពាក្យសម្ងាត់មិនស៊ីគ្នាទេសូមបញ្ចូលម្តងទៀត</string>
+    <string name="login_invalid_tip">ការចូលមិនត្រឹមត្រូវទេសូមចូលម្តងទៀត</string>
+    <string name="login_out">ចេញ</string>
 
 </resources>

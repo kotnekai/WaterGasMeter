@@ -12,8 +12,8 @@
     <string name="gas_meter2">Gas：</string>
     <string name="address">Address：</string>
     <string name="square">（unit：㎡）</string>
-    <string name="last_value">上次表值：</string>
-    <string name="balance">表余额：</string>
+    <string name="last_value">Last value：</string>
+    <string name="balance">balance：</string>
     <string name="yuan">%s rmb</string>
     <string name="scan">Scan</string>
     <string name="or">- Or -</string>
@@ -41,9 +41,80 @@
 
     <string name="language_cn">简体中文</string>
     <string name="language_en">English</string>
-    <string name="language_km">柬埔寨</string>
+    <string name="language_km">កម្ពុជា</string>
 
     <string name="confirm">Confirm</string>
     <string name="cancel">Cancel</string>
+
+
+    <string name="phone_number">Please enter the correct phone number</string>
+    <string name="phone_number_error">Mobile number is empty</string>
+    <string name="register_verify_code">Verification code</string>
+    <string name="register_verify_phone">%s-%s</string>
+    <string name="register_next_step">Next step</string>
+    <string name="register_count_time">%ssResend</string>
+    <string name="com_loading_tips">please wait..</string>
+    <string name="com_input_complete_tips">Please complete your personal information</string>
+
+
+    <string name="pay_sn">Payment number：</string>
+    <string name="square_detail">unit：m³</string>
+
+    <string name="water_meter_detail_title">Water meter details</string>
+    <string name="elect_meter_detail_title">Meter details</string>
+    <string name="gas_meter_detail_title">Gas meter details</string>
+
+    <string name="water_meter_reading">Water meter reading</string>
+    <string name="elect_meter_reading">Meter reading</string>
+    <string name="gas_meter_reading">Gas meter reading</string>
+
+    <string name="last_meter_value">Last value</string>
+    <string name="current_meter_value">Instant value</string>
+
+    <string name="water_meter_balance">Water meter balance</string>
+    <string name="elect_meter_balance">Meter balance</string>
+    <string name="gas_meter_balance">Gas meter balance</string>
+
+    <string name="immediately_save">Pre-stored immediately</string>
+    <string name="storage_detail" formatted="true">Pre-stored details>></string>
+    <string name="payment_detail" formatted="true">Payment details>></string>
+    <string name="unit_yuan">元</string>
+
+    <string name="cancel_binding">Unbind</string>
+
+
+    <string name="water_sn" formatted="false">Water meter coding：%s</string>
+    <string name="electricity_sn" formatted="false">Meter coding：%s</string>
+    <string name="gas_sn" formatted="false">Gas meter coding：%s</string>
+
+    <string name="measurement"> Payment measurement：%s</string>
+    <string name="payment_time">Payment time：%s</string>
+    <string name="storage_time">Pre-stored time：%s</string>
+
+
+    <string name="payed">Deducted</string>
+    <string name="no_pay" formatted="false">Insufficient balance of the table \n to be deducted %s yuan</string>
+
+    <string name="payment_money_title">Pre-stored amount</string>
+    <string name="pay_action">Pay</string>
+    <string name="pay_hints">*Please enter an integer, after the prepaid amount is successfully paid, no refund will be given</string>
+    <string name="pay_success">payment successful！</string>
+
+    <!--2018.9.3-->
+    <string name="completed">finished</string>
+    <string name="person_password">password</string>
+    <string name="login">login</string>
+    <string name="to_register">Sign up</string>
+    <string name="forget_psw">forget password?</string>
+    <string name="china_local">China Mainland</string>
+    <string name="phone_tip">phone number</string>
+    <string name="send_code_finish">A verification code SMS has been sent to</string>
+    <string name="confirm_password">confirm password</string>
+    <string name="submit">submit</string>
+    <string name="request_data_error">Data request error</string>
+    <string name="password_no_valid">The password is invalid, please re-enter</string>
+    <string name="password_no_match">The passwords are inconsistent, please re-enter</string>
+    <string name="login_invalid_tip">Login is invalid, please log in again</string>
+    <string name="login_out">sign out</string>
 
 </resources>

@@ -36,6 +36,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * @author admin
@@ -291,5 +292,20 @@ public class MeterDetailActivity extends BaseActivity {
         }
     }
 
+    @OnClick({R.id.tvGotoPayment, R.id.tvGotoPerStorage,R.id.tvCharge})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.tvGotoPayment:
+                startActivity(PerStorageSaveListActivity.makeIntent(mContext,CommonParams.PAGE_TYPE_SAVE));
+                break;
+            case R.id.tvGotoPerStorage:
+                startActivity(PerStorageSaveListActivity.makeIntent(mContext,CommonParams.PAGE_TYPE_STORAGE));
+                break;
+            case R.id.tvCharge:
+                startActivity(PayActionActivity.makeIntent(mContext));
+                break;
+
+        }
+    }
 
 }
