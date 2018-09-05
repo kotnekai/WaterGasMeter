@@ -6,10 +6,14 @@ import com.app.okhttputils.Model.Result;
 import com.app.okhttputils.callback.GenericsCallback;
 import com.app.okhttputils.request.JsonGenericsSerializator;
 import com.app.watermeter.common.CommonUrl;
+import com.app.watermeter.eventBus.GetMeterTypeEvent;
 import com.app.watermeter.model.MeterTypeModel;
 import com.app.watermeter.model.UserInfoParam;
 import com.app.watermeter.okhttp.DataManager;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -26,6 +30,8 @@ import okhttp3.Response;
 public class MeterManager {
     public static MeterManager instance = null;
     public static DataManager dataInstance = null;
+
+    public Gson gson = new Gson();
 
     private MeterManager() {
 
@@ -53,34 +59,37 @@ public class MeterManager {
                         String message = e.getMessage();
                       /*  String errorMsg = JsonUtils.getErrorMsg(response);
                         EventBus.getDefault().post(new ErrorResponseEvent(errorMsg, CommonPageState.login_page));*/
-                        Log.d("xyc", "onError: message="+message);
+                        Log.d("admin", "onError: message=" + message);
                     }
 
                     @Override
                     public void onNetWorkError(Response response, String errorMsg, int NetWorkCode) {
-                        Log.d("xyc", "onError: errorMsg="+errorMsg);
+                        Log.d("admin", "onError: errorMsg=" + errorMsg);
                     }
 
                     @Override
-                    public void onResponse(Result response, int id) {
-                        // EventBus.getDefault().post(new LoginEvent(response));
-                        Log.d("xyc", "onResponse: response="+response);
-                        List<MeterTypeModel> list =(List<MeterTypeModel>) response.getData();
-                        Log.d("xyc", "onResponse: response="+list);
+                    public void onResponse(Result result, int id) {
+                        Log.d("admin", "onResponse: response=" + result);
+                        String jsonString = gson.toJson(result.getData());
+                        List<MeterTypeModel> list = gson.fromJson(jsonString.toString(), new TypeToken<List<MeterTypeModel>>() {
+                        }.getType());
+
+                        EventBus.getDefault().post(new GetMeterTypeEvent(list));
                     }
                 });
     }
 
     /**
      * 发送短信验证码
+     *
      * @param contact
      * @param type
      */
-    public void sendSmsToCheck(String contact ,String type){
+    public void sendSmsToCheck(String contact, String type) {
         JSONObject params = new JSONObject();
         try {
             params.put("contact", contact);
-            params.put("type",type);
+            params.put("type", type);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -91,7 +100,7 @@ public class MeterManager {
                         String message = e.getMessage();
                       /*  String errorMsg = JsonUtils.getErrorMsg(response);
                         EventBus.getDefault().post(new ErrorResponseEvent(errorMsg, CommonPageState.login_page));*/
-                        Log.d("xyc", "onError: message="+message);
+                        Log.d("xyc", "onError: message=" + message);
                     }
 
                     @Override
@@ -102,23 +111,24 @@ public class MeterManager {
                     @Override
                     public void onResponse(Result response, int id) {
                         // EventBus.getDefault().post(new LoginEvent(response));
-                        Log.d("xyc", "onResponse: response="+response);
+                        Log.d("xyc", "onResponse: response=" + response);
                     }
                 });
     }
 
     /**
      * 校验短信验证码
+     *
      * @param contact
      * @param type
      * @param vcode
      */
-    public void checkSmsCode(String contact,String type,String vcode){
+    public void checkSmsCode(String contact, String type, String vcode) {
         JSONObject params = new JSONObject();
         try {
             params.put("contact", contact);
-            params.put("type",type);
-            params.put("vcode",vcode);
+            params.put("type", type);
+            params.put("vcode", vcode);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -129,7 +139,7 @@ public class MeterManager {
                         String message = e.getMessage();
                       /*  String errorMsg = JsonUtils.getErrorMsg(response);
                         EventBus.getDefault().post(new ErrorResponseEvent(errorMsg, CommonPageState.login_page));*/
-                        Log.d("xyc", "onError: message="+message);
+                        Log.d("xyc", "onError: message=" + message);
                     }
 
                     @Override
@@ -140,45 +150,46 @@ public class MeterManager {
                     @Override
                     public void onResponse(Result response, int id) {
                         // EventBus.getDefault().post(new LoginEvent(response));
-                        Log.d("xyc", "onResponse: response="+response);
+                        Log.d("xyc", "onResponse: response=" + response);
                     }
                 });
     }
-  public void register(UserInfoParam userInfoParam){
-      JSONObject params = new JSONObject();
-      try {
-          params.put("contact", userInfoParam.getContact());
-          params.put("passwd",userInfoParam.getPassword());
-          params.put("passwd_confirmation",userInfoParam.getConfirmPsw());
-          params.put("email",userInfoParam.getEmail());
-          params.put("real_name",userInfoParam.getRealName());
-      } catch (JSONException e) {
-          e.printStackTrace();
-      }
-      dataInstance.sendPostRequestData(CommonUrl.REGISTER, params)
-              .execute(new GenericsCallback<Result>(new JsonGenericsSerializator()) {
-                  @Override
-                  public void onError(Response response, Call call, Exception e, int id) {
-                      String message = e.getMessage();
+
+    public void register(UserInfoParam userInfoParam) {
+        JSONObject params = new JSONObject();
+        try {
+            params.put("contact", userInfoParam.getContact());
+            params.put("passwd", userInfoParam.getPassword());
+            params.put("passwd_confirmation", userInfoParam.getConfirmPsw());
+            params.put("email", userInfoParam.getEmail());
+            params.put("real_name", userInfoParam.getRealName());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        dataInstance.sendPostRequestData(CommonUrl.REGISTER, params)
+                .execute(new GenericsCallback<Result>(new JsonGenericsSerializator()) {
+                    @Override
+                    public void onError(Response response, Call call, Exception e, int id) {
+                        String message = e.getMessage();
                       /*  String errorMsg = JsonUtils.getErrorMsg(response);
                         EventBus.getDefault().post(new ErrorResponseEvent(errorMsg, CommonPageState.login_page));*/
-                      Log.d("xyc", "onError: message="+message);
-                  }
+                        Log.d("xyc", "onError: message=" + message);
+                    }
 
-                  @Override
-                  public void onNetWorkError(Response response, String errorMsg, int NetWorkCode) {
+                    @Override
+                    public void onNetWorkError(Response response, String errorMsg, int NetWorkCode) {
 
-                  }
+                    }
 
-                  @Override
-                  public void onResponse(Result response, int id) {
-                      // EventBus.getDefault().post(new LoginEvent(response));
-                      Log.d("xyc", "onResponse: response="+response);
-                  }
-              });
-  }
+                    @Override
+                    public void onResponse(Result response, int id) {
+                        // EventBus.getDefault().post(new LoginEvent(response));
+                        Log.d("xyc", "onResponse: response=" + response);
+                    }
+                });
+    }
 
-    public void testIt(){
+    public void testIt() {
         dataInstance.sendGetRequestData(CommonUrl.TEST, null)
                 .execute(new GenericsCallback<Result>(new JsonGenericsSerializator()) {
                     @Override
@@ -197,7 +208,7 @@ public class MeterManager {
                     @Override
                     public void onResponse(Result response, int id) {
                         // EventBus.getDefault().post(new LoginEvent(response));
-                        Log.d("xyc", "onResponse: response="+response);
+                        Log.d("xyc", "onResponse: response=" + response);
                     }
                 });
     }

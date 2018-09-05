@@ -6,8 +6,11 @@ import android.widget.TextView;
 
 import com.app.watermeter.R;
 import com.app.watermeter.common.CommonParams;
+import com.app.watermeter.eventBus.GetMeterTypeEvent;
+import com.app.watermeter.eventBus.LoginEvent;
 import com.app.watermeter.manager.MeterManager;
 import com.app.watermeter.model.MeterInfoModel;
+import com.app.watermeter.model.MeterTypeModel;
 import com.app.watermeter.view.activity.MeterListActivity;
 import com.app.watermeter.view.adapter.ElectricityPagerAdapter;
 import com.app.watermeter.view.adapter.GasPagerAdapter;
@@ -15,6 +18,9 @@ import com.app.watermeter.view.adapter.WaterPagerAdapter;
 import com.app.watermeter.view.base.BaseFragment;
 import com.app.watermeter.view.views.AlphaTransformer;
 import com.app.watermeter.view.views.ScaleTransformer;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +48,7 @@ public class HomeFragment extends BaseFragment {
     ElectricityPagerAdapter electricityAdapter;
     GasPagerAdapter gasAdapter;
 
+    List<MeterTypeModel> typeList = new ArrayList<>();
 
     @Override
     protected void initView() {
@@ -53,9 +60,7 @@ public class HomeFragment extends BaseFragment {
     protected void initData() {
         MeterManager.getInstance().getMeterType();
 
-        initWaterData();
-        initElectricityData();
-        initGasData();
+
     }
 
 
@@ -80,6 +85,37 @@ public class HomeFragment extends BaseFragment {
         vpWater.setCurrentItem(1);
     }
 
+    /**
+     * 接口返回
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onGetDataEvent(GetMeterTypeEvent event) {
+        typeList = event.getTypeList();
+        if (typeList.size() > 0) {
+            try {
+//                for (MeterTypeModel model : typeList) {
+                for (int i = 0; i < typeList.size(); i++) {
+                    MeterTypeModel model = typeList.get(i);
+                    switch (model.getId()) {
+                        case MeterTypeModel.METER_WATER:
+                            initWaterData();
+                            break;
+                        case MeterTypeModel.METER_ELECT:
+                            initElectricityData();
+                            break;
+                        case MeterTypeModel.METER_GAS:
+                            initGasData();
+                            break;
+                        default:
+                            break;
+                    }
+                    System.out.println("=========" + model);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     /**
      * 电表

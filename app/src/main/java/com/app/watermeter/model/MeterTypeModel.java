@@ -8,6 +8,10 @@ package com.app.watermeter.model;
  */
 public class MeterTypeModel {
 
+    public static final int METER_WATER = 1;
+    public static final int METER_ELECT = 2;
+    public static final int METER_GAS = 3;
+
 //
 //    {
 //        "data": [
