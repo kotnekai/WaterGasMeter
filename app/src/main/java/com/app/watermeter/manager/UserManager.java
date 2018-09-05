@@ -11,12 +11,9 @@ import com.app.watermeter.eventBus.LoginEvent;
 import com.app.watermeter.eventBus.PersonInfoEvent;
 import com.app.watermeter.eventBus.RegisterInfoEvent;
 import com.app.watermeter.eventBus.SuccessEvent;
-import com.app.watermeter.model.ComResponseModel;
-import com.app.watermeter.model.LoginInfoModel;
 import com.app.watermeter.model.UserInfoModel;
 import com.app.watermeter.model.UserInfoParam;
 import com.app.watermeter.okhttp.DataManager;
-import com.google.gson.JsonObject;
 
 import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
@@ -76,8 +73,7 @@ public class UserManager {
 
                     @Override
                     public void onResponse(Result result, int id) {
-                        LoginInfoModel model = (LoginInfoModel)result.getData();
-                        EventBus.getDefault().post(new LoginEvent(model));
+                        EventBus.getDefault().post(new LoginEvent(result));
                     }
                 });
     }
@@ -113,8 +109,8 @@ public class UserManager {
 
                     @Override
                     public void onResponse(Result result, int id) {
-                        ComResponseModel model =(ComResponseModel) result.getData();
-                        EventBus.getDefault().post(new SuccessEvent(model));
+//                        ComResponseModel model =(ComResponseModel) result.getData();
+                        EventBus.getDefault().post(new SuccessEvent(result));
 
                     }
                 });
@@ -153,8 +149,8 @@ public class UserManager {
 
                     @Override
                     public void onResponse(Result result, int id) {
-                        ComResponseModel model =(ComResponseModel) result.getData();
-                        EventBus.getDefault().post(new CheckSmsCodeEvent(model));
+//                        ComResponseModel model =(ComResponseModel) result.getData();
+                        EventBus.getDefault().post(new CheckSmsCodeEvent(result));
                     }
 
 
@@ -194,9 +190,9 @@ public class UserManager {
 
                     @Override
                     public void onResponse(Result result, int id) {
-                        LoginInfoModel model = (LoginInfoModel) result.getData();
-                        EventBus.getDefault().post(new RegisterInfoEvent(model));
-                        Log.d("admin", "onResponse: response=" + model);
+//                        LoginInfoModel model = (LoginInfoModel) result.getData();
+                        EventBus.getDefault().post(new RegisterInfoEvent(result));
+                        Log.d("admin", "onResponse: response=" + result);
                     }
                 });
     }
@@ -256,8 +252,8 @@ public class UserManager {
                     @Override
                     public void onResponse(Result result, int id) {
 
-                        ComResponseModel model = (ComResponseModel) result.getData();
-                        EventBus.getDefault().post(new SuccessEvent(model));
+//                        ComResponseModel model = (ComResponseModel) result.getData();
+                        EventBus.getDefault().post(new SuccessEvent(result));
                     }
                 });
     }

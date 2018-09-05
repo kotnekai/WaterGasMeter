@@ -6,6 +6,7 @@ import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.app.okhttputils.Model.Result;
 import com.app.watermeter.R;
 import com.app.watermeter.common.CommonParams;
 import com.app.watermeter.eventBus.RegisterInfoEvent;
@@ -19,6 +20,7 @@ import com.app.watermeter.utils.PreferencesUtils;
 import com.app.watermeter.utils.ProgressUtils;
 import com.app.watermeter.utils.ToastUtil;
 import com.app.watermeter.view.base.BaseActivity;
+import com.google.gson.Gson;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -61,22 +63,26 @@ public class RegisterInfoActivity extends BaseActivity {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onRegisterInfoEvent(RegisterInfoEvent event) {
         ProgressUtils.getIntance().dismissProgress();
-        LoginInfoModel infoModel = event.getInfoModel();
+        Result infoModel = event.getResult();
         int status_code = infoModel.getStatus_code();
         String message = infoModel.getMessage();
         int err_code = infoModel.getErr_code();
         ToastUtil.showShort(message);
 
-        if (status_code == 200&&err_code==0) {
-            AccountExtraModel data = infoModel.getData();
-            if(data!=null){
-                Log.d("admin", "onRegisterInfoEvent: data="+data);
-                PreferencesUtils.putString(CommonParams.USER_TOKEN,data.getAccess_token());
-                PreferencesUtils.putInt(CommonParams.TOKEN_PERIOD,data.getExpires_in());
+        if (status_code == 200 && err_code == 0) {
+
+            Gson gson = new Gson();
+            String jsonString = gson.toJson(infoModel.getData());
+            AccountExtraModel data = gson.fromJson(jsonString,AccountExtraModel.class);
+
+                if (data != null) {
+                    Log.d("admin", "onRegisterInfoEvent: data=" + data);
+                    PreferencesUtils.putString(CommonParams.USER_TOKEN, data.getAccess_token());
+                    PreferencesUtils.putInt(CommonParams.TOKEN_PERIOD, data.getExpires_in());
+                }
+                startActivity(MainActivity.makeIntent(this));
+                finish();
             }
-            startActivity(MainActivity.makeIntent(this));
-            finish();
-        }
     }
 
     @OnClick({R.id.TvSubmitInfo})

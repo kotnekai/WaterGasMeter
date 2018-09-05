@@ -10,13 +10,12 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.app.okhttputils.Model.Result;
 import com.app.watermeter.R;
 import com.app.watermeter.common.CommonParams;
 import com.app.watermeter.eventBus.CheckSmsCodeEvent;
 import com.app.watermeter.eventBus.SuccessEvent;
 import com.app.watermeter.manager.UserManager;
-import com.app.watermeter.model.ComResponseModel;
-import com.app.watermeter.utils.EmptyUtil;
 import com.app.watermeter.utils.ProgressUtils;
 import com.app.watermeter.utils.ToastUtil;
 import com.app.watermeter.view.base.BaseActivity;
@@ -134,10 +133,10 @@ public class RegisterCodeActivity extends BaseActivity implements TextWatcher {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onSuccessEvent(SuccessEvent event) {
         ProgressUtils.getIntance().dismissProgress();
-        ComResponseModel successModel = event.getSuccessModel();
-        int status_code = successModel.getStatus_code();
-        String message = successModel.getMessage();
-        int errCode = successModel.getErr_code();//业务码
+        Result result = event.getResult();
+        int status_code = result.getStatus_code();
+        String message = result.getMessage();
+        int errCode = result.getErr_code();//业务码
         ToastUtil.showShort(message);
     }
 
@@ -147,13 +146,13 @@ public class RegisterCodeActivity extends BaseActivity implements TextWatcher {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onCheckSmsCodeEvent(CheckSmsCodeEvent event) {
         ProgressUtils.getIntance().dismissProgress();
-        ComResponseModel successModel = event.getSuccessModel();
-        int status_code = successModel.getStatus_code();
-        String message = successModel.getMessage();
-        int errCode = successModel.getErr_code();//业务码
+        Result result = event.getResult();
+        int status_code = result.getStatus_code();
+        String message = result.getMessage();
+        int errCode = result.getErr_code();//业务码
         ToastUtil.showShort(message);
-        if (status_code == 200&&errCode==0) {
-            startActivity(RegisterInfoActivity.makeIntent(this,phoneNumber));
+        if (status_code == 200 && errCode == 0) {
+            startActivity(RegisterInfoActivity.makeIntent(this, phoneNumber));
         }
 
     }

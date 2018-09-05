@@ -1,18 +1,18 @@
 package com.app.watermeter.eventBus;
 
-import com.app.watermeter.model.ComResponseModel;
+import com.app.okhttputils.Model.Result;
 
 /**
  * Create by Admin on 2018/9/3
  */
 public class CheckSmsCodeEvent {
-    private ComResponseModel successModel;
+    private Result result;
 
-    public CheckSmsCodeEvent(ComResponseModel successModel) {
-        this.successModel = successModel;
+    public CheckSmsCodeEvent(Result result) {
+        this.result = result;
     }
 
-    public ComResponseModel getSuccessModel() {
-        return successModel;
+    public Result getResult() {
+        return result;
     }
 }

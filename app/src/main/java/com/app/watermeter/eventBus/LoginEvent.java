@@ -1,18 +1,18 @@
 package com.app.watermeter.eventBus;
 
-import com.app.watermeter.model.LoginInfoModel;
+import com.app.okhttputils.Model.Result;
 
 /**
  * Create by Admin on 2018/9/3
  */
 public class LoginEvent {
-    private LoginInfoModel loginInfoModel;
+    private Result result;
 
-    public LoginEvent(LoginInfoModel loginInfoModel) {
-        this.loginInfoModel = loginInfoModel;
+    public LoginEvent(Result result) {
+        this.result = result;
     }
 
-    public LoginInfoModel getLoginInfoModel() {
-        return loginInfoModel;
+    public Result getResult() {
+        return result;
     }
 }

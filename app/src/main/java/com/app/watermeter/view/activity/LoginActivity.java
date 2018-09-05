@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.app.okhttputils.Model.Result;
 import com.app.watermeter.R;
 import com.app.watermeter.common.ComApplication;
 import com.app.watermeter.common.CommonParams;
@@ -22,6 +23,7 @@ import com.app.watermeter.utils.ProgressUtils;
 import com.app.watermeter.utils.ToastUtil;
 import com.app.watermeter.utils.UIUtils;
 import com.app.watermeter.view.base.BaseActivity;
+import com.google.gson.Gson;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -83,21 +85,25 @@ public class LoginActivity extends BaseActivity {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onLoginInfoEvent(LoginEvent event) {
         ProgressUtils.getIntance().dismissProgress();
-        LoginInfoModel infoModel = event.getLoginInfoModel();
+        Result infoModel = event.getResult();
         int status_code = infoModel.getStatus_code();
         String message = infoModel.getMessage();
         int err_code = infoModel.getErr_code();
         ToastUtil.showShort(message);
 
         if (status_code == 200&&err_code==0) {
-            AccountExtraModel data = infoModel.getData();
-            if(data!=null){
-                Log.d("admin", "onRegisterInfoEvent: data="+data);
-                PreferencesUtils.putString(CommonParams.USER_TOKEN,data.getAccess_token());
-                PreferencesUtils.putInt(CommonParams.TOKEN_PERIOD,data.getExpires_in());
-            }
-            startActivity(MainActivity.makeIntent(this));
-            finish();
+            Gson gson = new Gson();
+            String jsonString = gson.toJson(infoModel.getData());
+            AccountExtraModel data = gson.fromJson(jsonString,AccountExtraModel.class);
+
+                if (data != null) {
+                    Log.d("admin", "onRegisterInfoEvent: data=" + data);
+                    PreferencesUtils.putString(CommonParams.USER_TOKEN, data.getAccess_token());
+                    PreferencesUtils.putInt(CommonParams.TOKEN_PERIOD, data.getExpires_in());
+                }
+                startActivity(MainActivity.makeIntent(this));
+                finish();
+
         }
     }
 

@@ -21,13 +21,9 @@ import com.app.watermeter.R;
 import com.app.watermeter.common.ComApplication;
 import com.app.watermeter.common.CommonParams;
 import com.app.watermeter.eventBus.DefaultEvent;
-import com.app.watermeter.eventBus.SuccessEvent;
 import com.app.watermeter.manager.UserManager;
-import com.app.watermeter.model.ComResponseModel;
 import com.app.watermeter.utils.DateUtils;
-import com.app.watermeter.utils.EmptyUtil;
 import com.app.watermeter.utils.PreferencesUtils;
-import com.app.watermeter.utils.ToastUtil;
 import com.app.watermeter.view.activity.LoginActivity;
 
 import org.greenrobot.eventbus.EventBus;

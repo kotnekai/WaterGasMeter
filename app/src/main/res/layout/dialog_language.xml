@@ -12,6 +12,7 @@
         android:layout_centerHorizontal="true"
         android:gravity="center"
         android:text="@string/language_cn"
+        android:clickable="true"
         android:textColor="@color/main_page_number_color"
         android:textSize="17sp" />
 
@@ -27,6 +28,7 @@
         android:layout_centerHorizontal="true"
         android:gravity="center"
         android:text="@string/language_en"
+        android:clickable="true"
         android:textColor="@color/main_page_number_color"
         android:textSize="17sp" />
     <View
@@ -41,6 +43,7 @@
         android:layout_centerHorizontal="true"
         android:gravity="center"
         android:text="@string/language_km"
+        android:clickable="true"
         android:textColor="@color/main_page_number_color"
         android:textSize="17sp" />
     <View
@@ -52,6 +55,7 @@
         android:id="@+id/tvCancel"
         android:layout_width="match_parent"
         android:layout_height="40dp"
+        android:clickable="true"
         android:gravity="center"
         android:text="@string/cancel"
         android:textColor="@color/main_blue_color"

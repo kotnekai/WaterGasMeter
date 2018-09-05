@@ -7,10 +7,10 @@ import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.app.okhttputils.Model.Result;
 import com.app.watermeter.R;
 import com.app.watermeter.eventBus.SuccessEvent;
 import com.app.watermeter.manager.UserManager;
-import com.app.watermeter.model.ComResponseModel;
 import com.app.watermeter.utils.AccountValidatorUtil;
 import com.app.watermeter.utils.ToastUtil;
 import com.app.watermeter.view.base.BaseActivity;
@@ -94,14 +94,14 @@ public class ResetPswActivity extends BaseActivity {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onSuccessEvent(SuccessEvent event) {
-        ComResponseModel successModel = event.getSuccessModel();
-        if (successModel == null) {
+        Result result = event.getResult();
+        if (result == null) {
             ToastUtil.showShort(getString(R.string.request_data_error));
             return;
         }
-        int status_code = successModel.getStatus_code();
-        int err_code = successModel.getErr_code();
-        String message = successModel.getMessage();
+        int status_code = result.getStatus_code();
+        int err_code = result.getErr_code();
+        String message = result.getMessage();
         ToastUtil.showShort(message);
         if (err_code == 0 && status_code == 200) {
             finish();

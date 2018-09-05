@@ -6,7 +6,6 @@ import com.app.okhttputils.Model.Result;
 import com.app.okhttputils.callback.GenericsCallback;
 import com.app.okhttputils.request.JsonGenericsSerializator;
 import com.app.watermeter.common.CommonUrl;
-import com.app.watermeter.model.ComResponseModel;
 import com.app.watermeter.model.MeterTypeModel;
 import com.app.watermeter.model.UserInfoParam;
 import com.app.watermeter.okhttp.DataManager;
@@ -86,7 +85,7 @@ public class MeterManager {
             e.printStackTrace();
         }
         dataInstance.sendPostRequestData(CommonUrl.SEND_SMS, params)
-                .execute(new GenericsCallback<ComResponseModel>(new JsonGenericsSerializator()) {
+                .execute(new GenericsCallback<Result>(new JsonGenericsSerializator()) {
                     @Override
                     public void onError(Response response, Call call, Exception e, int id) {
                         String message = e.getMessage();
@@ -101,7 +100,7 @@ public class MeterManager {
                     }
 
                     @Override
-                    public void onResponse(ComResponseModel response, int id) {
+                    public void onResponse(Result response, int id) {
                         // EventBus.getDefault().post(new LoginEvent(response));
                         Log.d("xyc", "onResponse: response="+response);
                     }
@@ -124,7 +123,7 @@ public class MeterManager {
             e.printStackTrace();
         }
         dataInstance.sendPostRequestData(CommonUrl.CHECK_SMS_CODE, params)
-                .execute(new GenericsCallback<ComResponseModel>(new JsonGenericsSerializator()) {
+                .execute(new GenericsCallback<Result>(new JsonGenericsSerializator()) {
                     @Override
                     public void onError(Response response, Call call, Exception e, int id) {
                         String message = e.getMessage();
@@ -139,7 +138,7 @@ public class MeterManager {
                     }
 
                     @Override
-                    public void onResponse(ComResponseModel response, int id) {
+                    public void onResponse(Result response, int id) {
                         // EventBus.getDefault().post(new LoginEvent(response));
                         Log.d("xyc", "onResponse: response="+response);
                     }
@@ -157,7 +156,7 @@ public class MeterManager {
           e.printStackTrace();
       }
       dataInstance.sendPostRequestData(CommonUrl.REGISTER, params)
-              .execute(new GenericsCallback<ComResponseModel>(new JsonGenericsSerializator()) {
+              .execute(new GenericsCallback<Result>(new JsonGenericsSerializator()) {
                   @Override
                   public void onError(Response response, Call call, Exception e, int id) {
                       String message = e.getMessage();
@@ -172,7 +171,7 @@ public class MeterManager {
                   }
 
                   @Override
-                  public void onResponse(ComResponseModel response, int id) {
+                  public void onResponse(Result response, int id) {
                       // EventBus.getDefault().post(new LoginEvent(response));
                       Log.d("xyc", "onResponse: response="+response);
                   }
@@ -181,7 +180,7 @@ public class MeterManager {
 
     public void testIt(){
         dataInstance.sendGetRequestData(CommonUrl.TEST, null)
-                .execute(new GenericsCallback<ComResponseModel>(new JsonGenericsSerializator()) {
+                .execute(new GenericsCallback<Result>(new JsonGenericsSerializator()) {
                     @Override
                     public void onError(Response response, Call call, Exception e, int id) {
                         String message = e.getMessage();
@@ -196,7 +195,7 @@ public class MeterManager {
                     }
 
                     @Override
-                    public void onResponse(ComResponseModel response, int id) {
+                    public void onResponse(Result response, int id) {
                         // EventBus.getDefault().post(new LoginEvent(response));
                         Log.d("xyc", "onResponse: response="+response);
                     }

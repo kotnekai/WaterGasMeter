@@ -3,24 +3,16 @@ package com.app.watermeter.view.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.app.watermeter.R;
-import com.app.watermeter.common.CommonParams;
-import com.app.watermeter.eventBus.SuccessEvent;
-import com.app.watermeter.manager.UserManager;
-import com.app.watermeter.model.ComResponseModel;
 import com.app.watermeter.utils.AccountValidatorUtil;
 import com.app.watermeter.utils.EmptyUtil;
 import com.app.watermeter.utils.ToastUtil;
 import com.app.watermeter.view.base.BaseActivity;
-
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.OnClick;

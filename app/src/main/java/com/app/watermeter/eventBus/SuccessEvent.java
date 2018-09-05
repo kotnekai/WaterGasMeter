@@ -1,18 +1,18 @@
 package com.app.watermeter.eventBus;
 
-import com.app.watermeter.model.ComResponseModel;
+import com.app.okhttputils.Model.Result;
 
 /**
  * Create by Admin on 2018/8/25
  */
 public class SuccessEvent {
-    private ComResponseModel successModel;
+    private Result result;
 
-    public SuccessEvent(ComResponseModel successModel) {
-        this.successModel = successModel;
+    public SuccessEvent(Result result) {
+        this.result = result;
     }
 
-    public ComResponseModel getSuccessModel() {
-        return successModel;
+    public Result getResult() {
+        return result;
     }
 }

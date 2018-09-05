@@ -17,6 +17,7 @@ import com.app.watermeter.eventBus.LanguageChangedEvent;
 import com.app.watermeter.manager.UserManager;
 import com.app.watermeter.utils.LanguageUtils;
 import com.app.watermeter.utils.PreferencesUtils;
+import com.app.watermeter.utils.ToastUtil;
 import com.app.watermeter.view.base.BaseActivity;
 import com.app.watermeter.view.views.BottomDialogView;
 
@@ -28,7 +29,7 @@ import butterknife.OnClick;
 /**
  * @author admin
  */
-public class SettingActivity extends BaseActivity {
+public class SettingActivity extends BaseActivity implements View.OnClickListener {
 
     @BindView(R.id.llModifyPwd)
     LinearLayout llModifyPwd;
@@ -38,6 +39,15 @@ public class SettingActivity extends BaseActivity {
     TextView tvLanguage;
     @BindView(R.id.tvLoginOut)
     TextView tvLoginOut;
+
+    View view;
+    BottomDialogView bottomDialog;
+
+    TextView tvChinese;
+    TextView tvEnglish;
+    TextView tvKm;
+    TextView tvCancel;
+
 
     private Context mContext;
     private int currentLanguage;
@@ -61,7 +71,26 @@ public class SettingActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = SettingActivity.this;
+        initView();
         initLanguage();
+    }
+
+    private void initView() {
+
+        view = LayoutInflater.from(mContext).inflate(R.layout.dialog_language, null);
+        bottomDialog = new BottomDialogView(mContext, view, false, false);
+        tvChinese = view.findViewById(R.id.tvChinese);
+        tvEnglish = view.findViewById(R.id.tvEnglish);
+        tvKm = view.findViewById(R.id.tvKm);
+        tvCancel = view.findViewById(R.id.tvCancel);
+        tvChinese.setOnClickListener(this);
+        tvEnglish.setOnClickListener(this);
+        tvKm.setOnClickListener(this);
+        tvCancel.setOnClickListener(this);
+
+        llModifyPwd.setOnClickListener(this);
+        llChangedLanguage.setOnClickListener(this);
+        tvLoginOut.setOnClickListener(this);
     }
 
     /**
@@ -74,6 +103,7 @@ public class SettingActivity extends BaseActivity {
         switch (currentLanguage) {
             case Constants.LANGUAGE_DEFAULT:
                 tvLanguage.setText(getString(R.string.language_cn));
+                currentLanguage = Constants.LANGUAGE_CHINA;
                 break;
             case Constants.LANGUAGE_CHINA:
                 tvLanguage.setText(getString(R.string.language_cn));
@@ -89,14 +119,14 @@ public class SettingActivity extends BaseActivity {
         }
     }
 
-    @OnClick({R.id.llModifyPwd, R.id.llChangedLanguage, R.id.tvLoginOut})
+    @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.llModifyPwd:
                 startActivity(ResetPswActivity.makeIntent(mContext, ResetPswActivity.TYPE_MODIFY));
                 break;
             case R.id.llChangedLanguage:
-                showLanguageSelectDialog();
+                bottomDialog.show();
                 break;
             case R.id.tvLoginOut:
                 UserManager.getInstance().loginOut();
@@ -104,23 +134,7 @@ public class SettingActivity extends BaseActivity {
                 startActivity(LoginActivity.makeIntent(this));
                 ComApplication.getApp().removeAllActivity();
                 break;
-        }
-    }
-
-
-    private void showLanguageSelectDialog() {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.dialog_language, null);
-        final BottomDialogView bottomDialog = new BottomDialogView(mContext, view, false, false);
-
-        TextView tvChinese = view.findViewById(R.id.tvChinese);
-        TextView tvEnglish = view.findViewById(R.id.tvEnglish);
-        TextView tvKm = view.findViewById(R.id.tvKm);
-        TextView tvCancel = view.findViewById(R.id.tvCancel);
-
-        //切换中文
-        tvChinese.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+            case R.id.tvChinese:
                 if (bottomDialog.isShowing()) {
                     bottomDialog.dismiss();
                 }
@@ -130,12 +144,8 @@ public class SettingActivity extends BaseActivity {
                     LanguageUtils.applyChange(mContext);
                     EventBus.getDefault().post(new LanguageChangedEvent());
                 }
-            }
-        });
-        //切换英文
-        tvEnglish.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+                break;
+            case R.id.tvEnglish:
                 if (bottomDialog.isShowing()) {
                     bottomDialog.dismiss();
                 }
@@ -145,12 +155,8 @@ public class SettingActivity extends BaseActivity {
                     LanguageUtils.applyChange(mContext);
                     EventBus.getDefault().post(new LanguageChangedEvent());
                 }
-            }
-        });
-        //切换柬埔寨
-        tvKm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+                break;
+            case R.id.tvKm:
                 if (bottomDialog.isShowing()) {
                     bottomDialog.dismiss();
                 }
@@ -160,19 +166,22 @@ public class SettingActivity extends BaseActivity {
                     LanguageUtils.applyChange(mContext);
                     EventBus.getDefault().post(new LanguageChangedEvent());
                 }
-            }
-        });
-        tvCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+
+                break;
+            case R.id.tvCancel:
                 if (bottomDialog.isShowing()) {
                     bottomDialog.dismiss();
                 }
-            }
-        });
-        bottomDialog.show();
-
+                break;
+        }
     }
 
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (bottomDialog.isShowing()) {
+            bottomDialog.dismiss();
+            bottomDialog = null;
+        }
+    }
 }
