@@ -79,10 +79,15 @@ public class PreStorageSaveActivity extends BaseActivity {
         List<MeterTypeModel> list = new Gson().fromJson(typeJsonStr, new TypeToken<List<MeterTypeModel>>() {
         }.getType());
 
-        for (MeterTypeModel model:list) {
-            mViewPagerFragments.add(ReadAndReChargeFragment.newInstance(model.getId(), model.getName(), pageType));
+        if (list.size()>0) {
+            for (MeterTypeModel model : list) {
+                mViewPagerFragments.add(ReadAndReChargeFragment.newInstance(model.getId(), model.getName(), pageType));
+            }
         }
+        else
+        {
 
+        }
         adapter = new PerStorageFragmentAdapter(getSupportFragmentManager(), pageType);
         adapter.setTitles(mTitles);
         adapter.setFragments(mViewPagerFragments);

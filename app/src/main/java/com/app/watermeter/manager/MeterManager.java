@@ -80,6 +80,10 @@ public class MeterManager {
                     public void onResponse(Result result, int id) {
                         Log.d("admin", "getMeterType====onResponse: response=" + result);
                         String jsonString = gson.toJson(result.getData());
+
+                        //保存表类型数据
+                        PreferencesUtils.putString(CommonParams.METTER_TYPE_JSON, jsonString);
+
                         List<MeterTypeModel> list = gson.fromJson(jsonString.toString(), new TypeToken<List<MeterTypeModel>>() {
                         }.getType());
 
@@ -272,9 +276,6 @@ public class MeterManager {
                     @Override
                     public void onResponse(Result result, int id) {
                         String jsonString = gson.toJson(result.getData());
-                        //保存表类型数据
-                        PreferencesUtils.putString(CommonParams.METTER_TYPE_JSON, jsonString);
-
                         List<MeterReChargeModel> list = gson.fromJson(jsonString.toString(), new TypeToken<List<MeterReChargeModel>>() {
                         }.getType());
 
