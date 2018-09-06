@@ -52,7 +52,7 @@ public class MeterRecyclerAdapter extends RecyclerView.Adapter<MeterRecyclerAdap
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.startActivity(MeterDetailActivity.makeIntent(context, type));
+//                context.startActivity(MeterDetailActivity.makeIntent(context, type));
             }
         });
 

@@ -2,24 +2,21 @@ package com.app.watermeter.view.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.DashPathEffect;
-import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.app.watermeter.R;
 import com.app.watermeter.common.CommonParams;
+import com.app.watermeter.eventBus.BindEvent;
+import com.app.watermeter.eventBus.UnBindEvent;
+import com.app.watermeter.manager.MeterManager;
 import com.app.watermeter.utils.ToastUtil;
 import com.app.watermeter.view.base.BaseActivity;
 import com.app.watermeter.view.marker.MeterChartMarkerView;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.LimitLine;
@@ -28,12 +25,12 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
-import com.github.mikephil.charting.utils.Utils;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -76,8 +73,7 @@ public class MeterDetailActivity extends BaseActivity {
     private int typeValue;
 
 
-
-    public static Intent makeIntent(Context context, int type) {
+    public static Intent makeIntent(Context context, int meterId, int type) {
         Intent intent = new Intent(context, MeterDetailActivity.class);
         intent.putExtra(METER_TYPE, type);
         return intent;
@@ -95,9 +91,18 @@ public class MeterDetailActivity extends BaseActivity {
         setHeader_RightTextClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ToastUtil.showLong("取消绑定");
+                MeterManager.getInstance().unbindMeter("42443");
             }
         });
+    }
+
+
+    /**
+     * 接口返回
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(UnBindEvent event) {
+        ToastUtil.showLong(event.getResult().getMessage());
     }
 
     @Override
@@ -134,15 +139,14 @@ public class MeterDetailActivity extends BaseActivity {
         mChart.setDoubleTapToZoomEnabled(false);
         mChart.setMinOffset(0);
 
-        mChart.setExtraOffsets(10f,10f,10f,10f);
+        mChart.setExtraOffsets(10f, 10f, 10f, 10f);
         mChart.getAxisRight().setEnabled(false);
         // 拖拽时能否高亮（十字瞄准触摸到的点），默认true
         mChart.setHighlightPerDragEnabled(true);
         mChart.setHighlightPerTapEnabled(false);
         //设置悬浮
-        MeterChartMarkerView mv = new MeterChartMarkerView(this,R.layout.custom_marker_view);
+        MeterChartMarkerView mv = new MeterChartMarkerView(this, R.layout.custom_marker_view);
         mChart.setMarker(mv);
-
 
 
         //获取图例对象
@@ -213,7 +217,7 @@ public class MeterDetailActivity extends BaseActivity {
         LineDataSet lineSet;
 
         if (mChart.getData() != null && mChart.getData().getDataSetCount() > 0) {
-            lineSet = (LineDataSet)mChart.getData().getDataSetByIndex(0);
+            lineSet = (LineDataSet) mChart.getData().getDataSetByIndex(0);
             lineSet.setValues(values);
             mChart.getData().notifyDataChanged();
             mChart.notifyDataSetChanged();
@@ -253,13 +257,13 @@ public class MeterDetailActivity extends BaseActivity {
             LineData data = new LineData(dataSets);
 
             //设置一页最大显示个数为6，超出部分就滑动
-            float ratio = (float) count/(float) 6;
+            float ratio = (float) count / (float) 6;
             //显示的时候是按照多大的比率缩放显示,1f表示不放大缩小
-            mChart.zoom(ratio,1f,0,0);
+            mChart.zoom(ratio, 1f, 0, 0);
             //设置从X轴出来的动画时间
 //            mChart.animateX(1500);
             //设置XY轴动画
-            mChart.animateXY(1500,1500, Easing.EasingOption.EaseInSine, Easing.EasingOption.EaseInSine);
+            mChart.animateXY(1500, 1500, Easing.EasingOption.EaseInSine, Easing.EasingOption.EaseInSine);
             // set data
             mChart.setData(data);
             mChart.invalidate();
@@ -292,14 +296,14 @@ public class MeterDetailActivity extends BaseActivity {
         }
     }
 
-    @OnClick({R.id.tvGotoPayment, R.id.tvGotoPerStorage,R.id.tvCharge})
+    @OnClick({R.id.tvGotoPayment, R.id.tvGotoPerStorage, R.id.tvCharge})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tvGotoPayment:
-                startActivity(PerStorageSaveListActivity.makeIntent(mContext,CommonParams.PAGE_TYPE_SAVE));
+                startActivity(PerStorageSaveListActivity.makeIntent(mContext, CommonParams.PAGE_TYPE_READ));
                 break;
             case R.id.tvGotoPerStorage:
-                startActivity(PerStorageSaveListActivity.makeIntent(mContext,CommonParams.PAGE_TYPE_STORAGE));
+                startActivity(PerStorageSaveListActivity.makeIntent(mContext, CommonParams.PAGE_TYPE_RECHARGE));
                 break;
             case R.id.tvCharge:
                 startActivity(PayActionActivity.makeIntent(mContext));

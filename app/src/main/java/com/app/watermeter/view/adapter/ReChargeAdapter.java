@@ -9,64 +9,60 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.app.watermeter.R;
-import com.app.watermeter.model.PerSaveModel;
-import com.app.watermeter.model.PerStorageModel;
+import com.app.watermeter.model.MeterReChargeModel;
 
 import java.util.List;
 
 /**
  * Create by Admin on 2018/8/27
+ *
+ * @author Tim
  */
-public class PerSaveAdapter extends Adapter<PerSaveAdapter.MyViewHolder> {
-    private List<PerSaveModel> preSaveModelList;
+public class ReChargeAdapter extends Adapter<ReChargeAdapter.MyViewHolder> {
+    private List<MeterReChargeModel> reChargeList;
     private Context context;
     private LayoutInflater inflater;
 
-    public PerSaveAdapter(Context context, List<PerSaveModel> preSaveModelList) {
+    public ReChargeAdapter(Context context, List<MeterReChargeModel> reChargeList) {
         this.context = context;
-        this.preSaveModelList = preSaveModelList;
+        this.reChargeList = reChargeList;
         inflater = LayoutInflater.from(context);
     }
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View views = inflater.inflate(R.layout.item_pre_save, parent, false);
+        View views = inflater.inflate(R.layout.item_per_storage, parent, false);
         return new MyViewHolder(views);
     }
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        PerSaveModel preSaveModel = preSaveModelList.get(position);
+        MeterReChargeModel preSaveModel = reChargeList.get(position);
         if (preSaveModel == null) {
             return;
         }
-        holder.tvWaterType.setText(preSaveModel.getMeterSn());
-        holder.tvSaveMeasure.setText("50m3");
-        holder.tvSaveDate.setText(preSaveModel.getSaveTime());
-        holder.tvSaveMoney.setText(preSaveModel.getSaveMoney() + "");
+//        holder.tvWaterType.setText(preSaveModel.getMeterSn());
+//        holder.tvSaveDate.setText(preSaveModel.getSaveTime());
+//        holder.tvSaveMoney.setText(preSaveModel.getSaveMoney() + "");
     }
 
 
     @Override
     public int getItemCount() {
-        return preSaveModelList.size();
+        return reChargeList.size();
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
         TextView tvWaterType;
-        TextView tvSaveMeasure;
         TextView tvSaveDate;
 
-        TextView tvSaveHints;
 
         TextView tvSaveMoney;
 
         public MyViewHolder(View view) {
             super(view);
             tvWaterType = view.findViewById(R.id.tvWaterType);
-            tvSaveMeasure = view.findViewById(R.id.tvSaveMeasure);
             tvSaveDate = view.findViewById(R.id.tvSaveDate);
-            tvSaveHints = view.findViewById(R.id.tvSaveHints);
             tvSaveMoney = view.findViewById(R.id.tvSaveMoney);
         }
 

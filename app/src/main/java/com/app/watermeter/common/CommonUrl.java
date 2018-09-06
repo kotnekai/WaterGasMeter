@@ -12,5 +12,12 @@ public class CommonUrl {
     public static final String TEST = BASE_URL+"/api/test";
     public static final String METER_TYPE_URL = BASE_URL+"/machine/types";
     public static final String LOGIN_OUT = BASE_URL+"/auth/logout";
+    public static final String METER_LIST_URL = BASE_URL+"/machines";
+    public static final String METER_DETAIL_URL = BASE_URL+"/machine";
+    public static final String METER_BIND_URL = BASE_URL+"/machine/bind";
+    public static final String METER_UNBIND_URL = BASE_URL+"/machine/disbind";
+    public static final String METER_READ_LIST_URL = BASE_URL+"/record/read";
+    public static final String METER_RECHARGE_LIST_URL = BASE_URL+"/record/recharge";
+
 
 }

@@ -45,7 +45,7 @@ public class ElectricityPagerAdapter extends PagerAdapter {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                context.startActivity(MeterDetailActivity.makeIntent(context, CommonParams.TYPE_ELECT));
+//                context.startActivity(MeterDetailActivity.makeIntent(context, CommonParams.TYPE_ELECT));
             }
         });
         return view;

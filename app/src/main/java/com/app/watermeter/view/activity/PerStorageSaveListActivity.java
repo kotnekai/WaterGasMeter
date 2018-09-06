@@ -10,10 +10,10 @@ import android.support.v7.widget.RecyclerView;
 
 import com.app.watermeter.R;
 import com.app.watermeter.common.CommonParams;
-import com.app.watermeter.model.PerSaveModel;
-import com.app.watermeter.model.PerStorageModel;
-import com.app.watermeter.view.adapter.PerSaveAdapter;
-import com.app.watermeter.view.adapter.PerStorageAdapter;
+import com.app.watermeter.model.MeterReChargeModel;
+import com.app.watermeter.model.MeterReadModel;
+import com.app.watermeter.view.adapter.ReadAdapter;
+import com.app.watermeter.view.adapter.ReChargeAdapter;
 import com.app.watermeter.view.base.BaseActivity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -42,12 +42,12 @@ public class PerStorageSaveListActivity extends BaseActivity {
     RecyclerView recyclerView;
 
     Context mContext;
-    private PerStorageAdapter perStorageAdapter;
-    private PerSaveAdapter perSaveAdapter;
+    private ReChargeAdapter reChargeAdapter;
+    private ReadAdapter readAdapter;
     private LinearLayoutManager mLayoutManager;
 
-    private List<PerStorageModel> perStorageList = new ArrayList<>();
-    private List<PerSaveModel> perSaveList = new ArrayList<>();
+    private List<MeterReChargeModel> reChargeList = new ArrayList<>();
+    private List<MeterReadModel> perSaveList = new ArrayList<>();
 
 
     public static Intent makeIntent(Context context, int type) {
@@ -87,10 +87,10 @@ public class PerStorageSaveListActivity extends BaseActivity {
      */
     private void initData() {
         switch (fromPage) {
-            case CommonParams.PAGE_TYPE_STORAGE:
+            case CommonParams.PAGE_TYPE_RECHARGE:
                 setHeaderTitle(getString(R.string.mine_per_storage_list));
                 break;
-            case CommonParams.PAGE_TYPE_SAVE:
+            case CommonParams.PAGE_TYPE_READ:
                 setHeaderTitle(getString(R.string.mine_pay_list));
                 break;
         }
@@ -100,26 +100,26 @@ public class PerStorageSaveListActivity extends BaseActivity {
         recyclerView.setLayoutManager(mLayoutManager);
 
 
-        if (fromPage == CommonParams.PAGE_TYPE_STORAGE) {
-            perStorageAdapter = new PerStorageAdapter(mContext, perStorageList);
-            recyclerView.setAdapter(perStorageAdapter);
+        if (fromPage == CommonParams.PAGE_TYPE_RECHARGE) {
+            reChargeAdapter = new ReChargeAdapter(mContext, reChargeList);
+            recyclerView.setAdapter(reChargeAdapter);
         } else {
-            perSaveAdapter = new PerSaveAdapter(mContext, perSaveList);
-            recyclerView.setAdapter(perSaveAdapter);
+            readAdapter = new ReadAdapter(mContext, perSaveList);
+            recyclerView.setAdapter(readAdapter);
         }
         recyclerView.scrollToPosition(0);
 
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                if (fromPage == CommonParams.PAGE_TYPE_STORAGE) {
-                    perStorageList.clear();
+                if (fromPage == CommonParams.PAGE_TYPE_RECHARGE) {
+                    reChargeList.clear();
                     addListData(fromPage);
-                    perStorageAdapter.notifyDataSetChanged();
+                    reChargeAdapter.notifyDataSetChanged();
                 } else {
                     perSaveList.clear();
                     addListData(fromPage);
-                    perSaveAdapter.notifyDataSetChanged();
+                    readAdapter.notifyDataSetChanged();
                 }
 
                 refreshLayout.finishRefresh();
@@ -130,12 +130,12 @@ public class PerStorageSaveListActivity extends BaseActivity {
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
 
 
-                if (fromPage == CommonParams.PAGE_TYPE_STORAGE) {
+                if (fromPage == CommonParams.PAGE_TYPE_RECHARGE) {
                     addListData(fromPage);
-                    perStorageAdapter.notifyDataSetChanged();
+                    reChargeAdapter.notifyDataSetChanged();
                 } else {
                     addListData(fromPage);
-                    perSaveAdapter.notifyDataSetChanged();
+                    readAdapter.notifyDataSetChanged();
                 }
                 refreshLayout.finishLoadMore();
             }
@@ -144,14 +144,14 @@ public class PerStorageSaveListActivity extends BaseActivity {
 
 
     private void addListData(int type) {
-        if (type == CommonParams.PAGE_TYPE_STORAGE) {
-            for (int i = 0; i < 10; i++) {
-                perStorageList.add(new PerStorageModel("水表编码：21" + i, "2019/02/23", 23 + i));
-            }
-        } else {
-            for (int i = 0; i < 10; i++) {
-                perSaveList.add(new PerSaveModel("水表编码：21" + i, "2019/02/23", 23 + i));
-            }
-        }
+//        if (type == CommonParams.PAGE_TYPE_RECHARGE) {
+//            for (int i = 0; i < 10; i++) {
+//                reChargeList.add(new PerStorageModel("水表编码：21" + i, "2019/02/23", 23 + i));
+//            }
+//        } else {
+//            for (int i = 0; i < 10; i++) {
+//                perSaveList.add(new MeterReadModel("水表编码：21" + i, "2019/02/23", 23 + i));
+//            }
+//        }
     }
 }

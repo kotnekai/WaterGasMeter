@@ -6,11 +6,13 @@ import android.widget.TextView;
 
 import com.app.watermeter.R;
 import com.app.watermeter.common.CommonParams;
+import com.app.watermeter.eventBus.GetMeterListEvent;
 import com.app.watermeter.eventBus.GetMeterTypeEvent;
 import com.app.watermeter.eventBus.LoginEvent;
 import com.app.watermeter.manager.MeterManager;
 import com.app.watermeter.model.MeterInfoModel;
 import com.app.watermeter.model.MeterTypeModel;
+import com.app.watermeter.utils.PreferencesUtils;
 import com.app.watermeter.view.activity.MeterListActivity;
 import com.app.watermeter.view.adapter.ElectricityPagerAdapter;
 import com.app.watermeter.view.adapter.GasPagerAdapter;
@@ -49,6 +51,10 @@ public class HomeFragment extends BaseFragment {
     GasPagerAdapter gasAdapter;
 
     List<MeterTypeModel> typeList = new ArrayList<>();
+    List<MeterInfoModel> meterList = new ArrayList<>();
+    List<MeterInfoModel> electList = new ArrayList<>();
+    List<MeterInfoModel> gasList = new ArrayList<>();
+
 
     @Override
     protected void initView() {
@@ -64,26 +70,7 @@ public class HomeFragment extends BaseFragment {
     }
 
 
-    /**
-     * 水表数据
-     */
-    private void initWaterData() {
-        vpWater.setPageMargin(5);
-        vpWater.setOffscreenPageLimit(3);
-        List<MeterInfoModel> list = new ArrayList<>();
-        list.add(new MeterInfoModel());
-        list.add(new MeterInfoModel());
-        list.add(new MeterInfoModel());
-        list.add(new MeterInfoModel());
-        list.add(new MeterInfoModel());
-        list.add(new MeterInfoModel());
 
-        waterAdapter = new WaterPagerAdapter(getContext(), list);
-        vpWater.setPageTransformer(false, new ScaleTransformer());
-//        vpWater.setPageTransformer(false, new AlphaTransformer());
-        vpWater.setAdapter(waterAdapter);
-        vpWater.setCurrentItem(1);
-    }
 
     /**
      * 接口返回
@@ -93,23 +80,8 @@ public class HomeFragment extends BaseFragment {
         typeList = event.getTypeList();
         if (typeList.size() > 0) {
             try {
-//                for (MeterTypeModel model : typeList) {
-                for (int i = 0; i < typeList.size(); i++) {
-                    MeterTypeModel model = typeList.get(i);
-                    switch (model.getId()) {
-                        case MeterTypeModel.METER_WATER:
-                            initWaterData();
-                            break;
-                        case MeterTypeModel.METER_ELECT:
-                            initElectricityData();
-                            break;
-                        case MeterTypeModel.METER_GAS:
-                            initGasData();
-                            break;
-                        default:
-                            break;
-                    }
-                    System.out.println("=========" + model);
+                for (MeterTypeModel model : typeList) {
+                    MeterManager.getInstance().getMeterList(model.getId());
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -118,47 +90,58 @@ public class HomeFragment extends BaseFragment {
     }
 
     /**
-     * 电表
+     * 接口返回
      */
-    private void initElectricityData() {
-        vpElectricity.setPageMargin(5);
-        vpElectricity.setOffscreenPageLimit(3);
-        List<MeterInfoModel> list = new ArrayList<>();
-        list.add(new MeterInfoModel());
-        list.add(new MeterInfoModel());
-        list.add(new MeterInfoModel());
-        list.add(new MeterInfoModel());
-        list.add(new MeterInfoModel());
-        list.add(new MeterInfoModel());
-
-        electricityAdapter = new ElectricityPagerAdapter(getContext(), list);
-        vpElectricity.setPageTransformer(false, new ScaleTransformer());
-//        vpWater.setPageTransformer(false, new AlphaTransformer());
-        vpElectricity.setAdapter(electricityAdapter);
-        vpElectricity.setCurrentItem(1);
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onGetListEvent(GetMeterListEvent event) {
+        List<MeterInfoModel> list = event.getList();
+        initListData(list,event.getMeterType());
     }
 
     /**
-     * 燃气表
+     * 水表数据
      */
-    private void initGasData() {
-        vpGas.setPageMargin(5);
-        vpGas.setOffscreenPageLimit(3);
-        List<MeterInfoModel> list = new ArrayList<>();
-        list.add(new MeterInfoModel());
-        list.add(new MeterInfoModel());
-        list.add(new MeterInfoModel());
-        list.add(new MeterInfoModel());
-        list.add(new MeterInfoModel());
-        list.add(new MeterInfoModel());
+    private void initListData(List<MeterInfoModel> list,int type) {
 
-        gasAdapter = new GasPagerAdapter(getContext(), list);
-        vpGas.setPageTransformer(false, new ScaleTransformer());
-//        vpWater.setPageTransformer(false, new AlphaTransformer());
-        vpGas.setAdapter(gasAdapter);
-        vpGas.setCurrentItem(1);
+        switch (type) {
+            case MeterTypeModel.METER_WATER:
+                meterList = list;
+                vpWater.setPageMargin(5);
+                vpWater.setOffscreenPageLimit(3);
+                waterAdapter = new WaterPagerAdapter(getContext(), meterList);
+                vpWater.setPageTransformer(false, new ScaleTransformer());
+                //vpWater.setPageTransformer(false, new AlphaTransformer());
+                vpWater.setAdapter(waterAdapter);
+                vpWater.setCurrentItem(1);
+                break;
+            case MeterTypeModel.METER_ELECT:
+                electList = list;
+                vpElectricity.setPageMargin(5);
+                vpElectricity.setOffscreenPageLimit(3);
+
+                electricityAdapter = new ElectricityPagerAdapter(getContext(), electList);
+                vpElectricity.setPageTransformer(false, new ScaleTransformer());
+                //vpElectricity.setPageTransformer(false, new AlphaTransformer());
+                vpElectricity.setAdapter(electricityAdapter);
+                vpElectricity.setCurrentItem(1);
+                break;
+            case MeterTypeModel.METER_GAS:
+                gasList = list;
+                vpGas.setPageMargin(5);
+                vpGas.setOffscreenPageLimit(3);
+
+                gasAdapter = new GasPagerAdapter(getContext(), gasList);
+                vpGas.setPageTransformer(false, new ScaleTransformer());
+                //vpGas.setPageTransformer(false, new AlphaTransformer());
+                vpGas.setAdapter(gasAdapter);
+                vpGas.setCurrentItem(1);
+                break;
+            default:
+                break;
+        }
+
+
     }
-
 
     @Override
     protected void reLoadData() {

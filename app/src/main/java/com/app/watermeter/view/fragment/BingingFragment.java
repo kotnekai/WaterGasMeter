@@ -2,6 +2,7 @@ package com.app.watermeter.view.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -9,16 +10,28 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.app.watermeter.R;
+import com.app.watermeter.eventBus.BindEvent;
+import com.app.watermeter.eventBus.GetMeterTypeEvent;
+import com.app.watermeter.manager.MeterManager;
 import com.app.watermeter.utils.ToastUtil;
 import com.app.watermeter.utils.UIUtils;
 import com.app.watermeter.view.base.BaseFragment;
 import com.uuzuche.lib_zxing.activity.CaptureActivity;
 import com.uuzuche.lib_zxing.activity.CodeUtils;
 
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 
 public class BingingFragment extends BaseFragment {
+
+    private final int BIND_SUCCESS = 0;
+    private final int METER_EMPTY = 1;
+    private final int BINDED = 2;
+    private final int SERVER_ERR = 5;
+
     @BindView(R.id.llScanQrCode)
     LinearLayout llScanQrCode;
     @BindView(R.id.edtDeviceNumber)
@@ -48,18 +61,46 @@ public class BingingFragment extends BaseFragment {
 
     }
 
-    @OnClick({R.id.llScanQrCode,R.id.tvAddNumber})
+    @OnClick({R.id.llScanQrCode, R.id.tvAddNumber})
     public void onClick(View view) {
-         switch (view.getId()){
-             case R.id.llScanQrCode:
-                 Intent intent = new Intent(getActivity(), CaptureActivity.class);
-                 startActivityForResult(intent, REQUEST_CODE);
-                 break;
-             case R.id.tvAddNumber:
-                 break;
+        switch (view.getId()) {
+            case R.id.llScanQrCode:
+                Intent intent = new Intent(getActivity(), CaptureActivity.class);
+                startActivityForResult(intent, REQUEST_CODE);
+                break;
+            case R.id.tvAddNumber:
+                String sn = edtDeviceNumber.getText().toString().trim();
+                if (TextUtils.isEmpty(sn)) {
+                    ToastUtil.showLong(getString(R.string.bind_sn_empty));
+                }
+                MeterManager.getInstance().bindMeter(sn);
+                break;
 
-         }
+        }
     }
+
+    /**
+     * 接口返回
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(BindEvent event) {
+        switch (event.getResult().getErr_code()) {
+            case BIND_SUCCESS:
+                ToastUtil.showLong(getString(R.string.bind_success));
+                break;
+            case METER_EMPTY:
+                ToastUtil.showLong(getString(R.string.bind_empty));
+                break;
+            case BINDED:
+                ToastUtil.showLong(getString(R.string.bind_already));
+                break;
+            case SERVER_ERR:
+                ToastUtil.showLong(getString(R.string.bind_server_error));
+                break;
+        }
+    }
+
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

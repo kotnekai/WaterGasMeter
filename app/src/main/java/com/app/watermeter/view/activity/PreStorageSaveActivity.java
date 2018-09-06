@@ -8,11 +8,17 @@ import android.support.v4.view.ViewPager;
 
 import com.app.watermeter.R;
 import com.app.watermeter.common.CommonParams;
+import com.app.watermeter.model.MeterReChargeModel;
+import com.app.watermeter.model.MeterTypeModel;
+import com.app.watermeter.utils.PreferencesUtils;
 import com.app.watermeter.view.adapter.PerStorageFragmentAdapter;
 import com.app.watermeter.view.base.BaseActivity;
-import com.app.watermeter.view.fragment.PerStorageSaveFragment;
+import com.app.watermeter.view.fragment.ReadAndReChargeFragment;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -28,7 +34,7 @@ public class PreStorageSaveActivity extends BaseActivity {
 
     private PerStorageFragmentAdapter adapter;
     private String[] mTitles = new String[]{"水表", "电表", "燃气表"};
-    private ArrayList<PerStorageSaveFragment> mViewPagerFragments = new ArrayList<>();
+    private ArrayList<ReadAndReChargeFragment> mViewPagerFragments = new ArrayList<>();
 
     private Context mContext;
     int pageType;
@@ -39,9 +45,9 @@ public class PreStorageSaveActivity extends BaseActivity {
         return R.layout.activity_per_storage_save;
     }
 
-    public static Intent makeIntent(Context context,int pageType) {
+    public static Intent makeIntent(Context context, int pageType) {
         Intent intent = new Intent(context, PreStorageSaveActivity.class);
-        intent.putExtra("pageType",pageType);
+        intent.putExtra("pageType", pageType);
         return intent;
     }
 
@@ -61,17 +67,23 @@ public class PreStorageSaveActivity extends BaseActivity {
 
     private void initData() {
         Intent intent = getIntent();
-         pageType = intent.getIntExtra("pageType", 1);
-        if(pageType == CommonParams.PAGE_TYPE_STORAGE){
+        pageType = intent.getIntExtra("pageType", 1);
+        if (pageType == CommonParams.PAGE_TYPE_RECHARGE) {
             setHeaderTitle(getString(R.string.mine_per_storage_list));
-        }else {
+        } else {
             setHeaderTitle(getString(R.string.mine_pay_list));
         }
 
-        for (int i = 0; i < mTitles.length; i++) {
-            mViewPagerFragments.add(PerStorageSaveFragment.newInstance(mTitles[i],pageType));
+       String typeJsonStr =  PreferencesUtils.getString(CommonParams.METTER_TYPE_JSON);
+
+        List<MeterTypeModel> list = new Gson().fromJson(typeJsonStr, new TypeToken<List<MeterTypeModel>>() {
+        }.getType());
+
+        for (MeterTypeModel model:list) {
+            mViewPagerFragments.add(ReadAndReChargeFragment.newInstance(model.getId(), model.getName(), pageType));
         }
-        adapter = new PerStorageFragmentAdapter(getSupportFragmentManager(),pageType);
+
+        adapter = new PerStorageFragmentAdapter(getSupportFragmentManager(), pageType);
         adapter.setTitles(mTitles);
         adapter.setFragments(mViewPagerFragments);
 
@@ -84,7 +96,7 @@ public class PreStorageSaveActivity extends BaseActivity {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 //tab被选的时候回调
-                viewPager.setCurrentItem(tab.getPosition(),true);
+                viewPager.setCurrentItem(tab.getPosition(), true);
             }
 
             @Override

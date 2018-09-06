@@ -52,10 +52,10 @@ public class MineFragment extends BaseFragment {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.rlPreSave:
-                startActivity(PreStorageSaveActivity.makeIntent(getContext(), CommonParams.PAGE_TYPE_STORAGE));
+                startActivity(PreStorageSaveActivity.makeIntent(getContext(), CommonParams.PAGE_TYPE_RECHARGE));
                 break;
             case R.id.rlPayDes:
-                startActivity(PreStorageSaveActivity.makeIntent(getContext(), CommonParams.PAGE_TYPE_SAVE));
+                startActivity(PreStorageSaveActivity.makeIntent(getContext(), CommonParams.PAGE_TYPE_READ));
 
                 break;
             case R.id.rlPersonInfo:

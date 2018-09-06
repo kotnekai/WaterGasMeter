@@ -20,6 +20,12 @@
     <string name="add">បន្ថែម</string>
     <string name="sn_hints">បញ្ចូលលេខបង់បែបបទដោយដៃ</string>
     <string name="binding">ការចង</string>
+    <string name="bind_sn_empty">លេខបង់ប្រាក់មិនអាចទទេបានទេ</string>
+    <string name="bind_success">ការផ្សារភ្ជាប់ភាពជោគជ័យ</string>
+    <string name="bind_empty">មិនមានតារាង</string>
+    <string name="bind_already">តារាងនេះត្រូវបានចង</string>
+    <string name="bind_server_error">កំហុសម៉ាស៊ីនមេ</string>
+
 
     <string name="register_phone_title">បញ្ជាក់ទូរស័ព្ទ</string>
     <string name="register_info_title">ព័ត៌មានចុះឈ្មោះ</string>

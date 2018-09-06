@@ -20,6 +20,12 @@
     <string name="add">添加</string>
     <string name="sn_hints">手动输入表缴费号</string>
     <string name="binding">绑定</string>
+    <string name="bind_sn_empty">缴费号不能为空</string>
+    <string name="bind_success">绑定成功</string>
+    <string name="bind_empty">表不存在</string>
+    <string name="bind_already">此表已经绑定过了</string>
+    <string name="bind_server_error">服务器出错</string>
+
 
     <string name="register_phone_title">验证手机</string>
     <string name="register_info_title">注册信息</string>
