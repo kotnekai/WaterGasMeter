@@ -5,9 +5,12 @@ import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.app.watermeter.R;
+import com.app.watermeter.common.ComApplication;
 import com.app.watermeter.common.CommonParams;
+import com.app.watermeter.common.Constants;
 import com.app.watermeter.model.MeterInfoModel;
 import com.app.watermeter.view.activity.MeterDetailActivity;
 import com.app.watermeter.view.activity.MeterListActivity;
@@ -42,6 +45,43 @@ public class GasPagerAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_gas_meter, null);
+
+
+        TextView tvMeterName = (TextView)view.findViewById(R.id.tvMeterName);
+        TextView tvMeterAddress = (TextView)view.findViewById(R.id.tvMeterAddress);
+        TextView tvSquare = (TextView)view.findViewById(R.id.tvSquare);
+        TextView  tvUnit = (TextView)view.findViewById(R.id.tvUnit);
+        TextView  tvLastValue = (TextView)view.findViewById(R.id.tvLastValue);
+        TextView  tvBalanceValue = (TextView)view.findViewById(R.id.tvBalanceValue);
+
+        MeterInfoModel info = list.get(position);
+        if (info != null) {
+
+            switch (ComApplication.currentLanguage) {
+                case Constants.LANGUAGE_DEFAULT:
+                    tvMeterAddress.setText(info.getLocation_zh()+info.getPosition_zh());
+                    break;
+                case Constants.LANGUAGE_CHINA:
+                    tvMeterAddress.setText(info.getLocation_zh()+info.getPosition_zh());
+                    break;
+                case Constants.LANGUAGE_ENGLISH:
+                    tvMeterAddress.setText(info.getLocation_en()+info.getPosition_en());
+                    break;
+                case Constants.LANGUAGE_KH:
+                    tvMeterAddress.setText(info.getLocation_kh()+info.getPosition_kh());
+                    break;
+                default:
+                    tvMeterAddress.setText(info.getLocation_zh()+info.getPosition_zh());
+            }
+
+            tvMeterName.setText(info.getMachine_sn());
+
+            tvSquare.setText(info.getDegree()+"");
+            tvUnit.setText(String.format(context.getString(R.string.square),info.getUnit()+""));
+            tvLastValue.setText(info.getOld_degree()+"");
+            tvBalanceValue.setText(info.getBalance()+"");
+        }
+
         container.addView(view);
         view.setOnClickListener(new View.OnClickListener() {
             @Override

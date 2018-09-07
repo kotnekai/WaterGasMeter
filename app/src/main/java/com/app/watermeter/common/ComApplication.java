@@ -41,6 +41,9 @@ import me.weyye.hipermission.PermissionItem;
 public class ComApplication extends Application {
     public static ComApplication mzjApplication;
     public List<Activity> mActivityList = null;
+
+    public static int currentLanguage;
+
     //static 代码段可以防止内存泄露
     static {
         //设置全局的Header构建器

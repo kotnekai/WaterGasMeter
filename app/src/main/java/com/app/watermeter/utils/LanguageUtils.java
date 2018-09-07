@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.LocaleList;
 import android.util.DisplayMetrics;
 
+import com.app.watermeter.common.ComApplication;
 import com.app.watermeter.common.Constants;
 
 import java.util.Locale;
@@ -40,9 +41,9 @@ public class LanguageUtils {
 
     public static Locale getSetLocale() {
 
-        int currentLanguage = getAppLanguage();
+        ComApplication.currentLanguage = getAppLanguage();
 
-        switch (currentLanguage) {
+        switch (ComApplication.currentLanguage) {
             case Constants.LANGUAGE_DEFAULT:
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                     //解决了获取系统默认错误的问题

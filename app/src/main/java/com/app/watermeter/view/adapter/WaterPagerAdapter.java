@@ -1,6 +1,8 @@
 package com.app.watermeter.view.adapter;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.os.Build;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,9 +12,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.app.watermeter.R;
+import com.app.watermeter.common.ComApplication;
+import com.app.watermeter.common.Constants;
 import com.app.watermeter.model.MeterInfoModel;
 
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -55,8 +60,26 @@ public class WaterPagerAdapter extends PagerAdapter {
 
         MeterInfoModel info = list.get(position);
         if (info != null) {
+
+            switch (ComApplication.currentLanguage) {
+                case Constants.LANGUAGE_DEFAULT:
+                    tvMeterAddress.setText(info.getLocation_zh()+info.getPosition_zh());
+                    break;
+                case Constants.LANGUAGE_CHINA:
+                    tvMeterAddress.setText(info.getLocation_zh()+info.getPosition_zh());
+                    break;
+                case Constants.LANGUAGE_ENGLISH:
+                    tvMeterAddress.setText(info.getLocation_en()+info.getPosition_en());
+                    break;
+                case Constants.LANGUAGE_KH:
+                    tvMeterAddress.setText(info.getLocation_kh()+info.getPosition_kh());
+                    break;
+                default:
+                    tvMeterAddress.setText(info.getLocation_zh()+info.getPosition_zh());
+            }
+
             tvMeterName.setText(info.getMachine_sn());
-            tvMeterAddress.setText(info.getLocation_zh()+info.getPosition_zh());
+
             tvSquare.setText(info.getDegree()+"");
             tvUnit.setText(String.format(context.getString(R.string.square),info.getUnit()+""));
             tvLastValue.setText(info.getOld_degree()+"");
