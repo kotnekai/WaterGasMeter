@@ -105,7 +105,6 @@ public class PreStorageSaveActivity extends BaseActivity {
                         mTitles.add(model.getName_zh());
                         break;
                 }
-
             }
         }
         else

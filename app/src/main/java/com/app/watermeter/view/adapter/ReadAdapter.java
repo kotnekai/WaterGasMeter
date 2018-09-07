@@ -46,7 +46,7 @@ public class ReadAdapter extends Adapter<ReadAdapter.MyViewHolder> {
             return;
         }
         holder.tvWaterSn.setText(String.format(context.getString(R.string.water_sn),readModel.getMachine_type_id()+""));
-        holder.tvSaveMeasure.setText(String.format(context.getString(R.string.measurement),"50m3"));
+        holder.tvSaveMeasure.setText(String.format(context.getString(R.string.measurement),readModel.getRead_degree()+""));
         holder.tvSaveDate.setText(String.format(context.getString(R.string.payment_time),readModel.getCreated_at()));
         holder.tvSaveMoney.setText(readModel.getRead_fee() + "");
     }
