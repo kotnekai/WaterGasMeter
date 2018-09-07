@@ -12,11 +12,19 @@ public class MeterInfoModel {
     int machine_type_id;
     int collector_id;
     int community_id;
-    String location;
+
+    String location_zh;
+    String location_en;
+    String location_kh;
+    String position_zh;
+    String position_en;
+    String position_kh;
     String unit;
     int balance;
-    String final_recharged_at;
     int degree;
+    String final_recharged_at;
+    int old_degree;
+    String old_read_at;
     String final_read_at;
     String created_at;
     String updated_at;
@@ -62,12 +70,52 @@ public class MeterInfoModel {
         this.community_id = community_id;
     }
 
-    public String getLocation() {
-        return location;
+    public String getLocation_zh() {
+        return location_zh;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setLocation_zh(String location_zh) {
+        this.location_zh = location_zh;
+    }
+
+    public String getLocation_en() {
+        return location_en;
+    }
+
+    public void setLocation_en(String location_en) {
+        this.location_en = location_en;
+    }
+
+    public String getLocation_kh() {
+        return location_kh;
+    }
+
+    public void setLocation_kh(String location_kh) {
+        this.location_kh = location_kh;
+    }
+
+    public String getPosition_zh() {
+        return position_zh;
+    }
+
+    public void setPosition_zh(String position_zh) {
+        this.position_zh = position_zh;
+    }
+
+    public String getPosition_en() {
+        return position_en;
+    }
+
+    public void setPosition_en(String position_en) {
+        this.position_en = position_en;
+    }
+
+    public String getPosition_kh() {
+        return position_kh;
+    }
+
+    public void setPosition_kh(String position_kh) {
+        this.position_kh = position_kh;
     }
 
     public String getUnit() {
@@ -86,6 +134,14 @@ public class MeterInfoModel {
         this.balance = balance;
     }
 
+    public int getDegree() {
+        return degree;
+    }
+
+    public void setDegree(int degree) {
+        this.degree = degree;
+    }
+
     public String getFinal_recharged_at() {
         return final_recharged_at;
     }
@@ -94,12 +150,20 @@ public class MeterInfoModel {
         this.final_recharged_at = final_recharged_at;
     }
 
-    public int getDegree() {
-        return degree;
+    public int getOld_degree() {
+        return old_degree;
     }
 
-    public void setDegree(int degree) {
-        this.degree = degree;
+    public void setOld_degree(int old_degree) {
+        this.old_degree = old_degree;
+    }
+
+    public String getOld_read_at() {
+        return old_read_at;
+    }
+
+    public void setOld_read_at(String old_read_at) {
+        this.old_read_at = old_read_at;
     }
 
     public String getFinal_read_at() {

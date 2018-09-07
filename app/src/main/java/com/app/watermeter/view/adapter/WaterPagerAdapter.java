@@ -5,22 +5,25 @@ import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.app.watermeter.R;
-import com.app.watermeter.common.CommonParams;
 import com.app.watermeter.model.MeterInfoModel;
-import com.app.watermeter.view.activity.MeterDetailActivity;
-import com.app.watermeter.view.activity.MeterListActivity;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
- *
  * @author admin
  * @date 2018/8/23
  */
 
 public class WaterPagerAdapter extends PagerAdapter {
+
     private List<MeterInfoModel> list;
     private Context context;
 
@@ -42,6 +45,23 @@ public class WaterPagerAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_water_meter, null);
+
+        TextView tvMeterName = (TextView)view.findViewById(R.id.tvMeterName);
+        TextView tvMeterAddress = (TextView)view.findViewById(R.id.tvMeterAddress);
+        TextView tvSquare = (TextView)view.findViewById(R.id.tvSquare);
+        TextView  tvUnit = (TextView)view.findViewById(R.id.tvUnit);
+        TextView  tvLastValue = (TextView)view.findViewById(R.id.tvLastValue);
+        TextView  tvBalanceValue = (TextView)view.findViewById(R.id.tvBalanceValue);
+
+        MeterInfoModel info = list.get(position);
+        if (info != null) {
+            tvMeterName.setText(info.getMachine_sn());
+            tvMeterAddress.setText(info.getLocation_zh()+info.getPosition_zh());
+            tvSquare.setText(info.getDegree()+"");
+            tvUnit.setText(String.format(context.getString(R.string.square),info.getUnit()+""));
+            tvLastValue.setText(info.getOld_degree()+"");
+            tvBalanceValue.setText(info.getBalance()+"");
+        }
         container.addView(view);
         view.setOnClickListener(new View.OnClickListener() {
             @Override

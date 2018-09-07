@@ -65,12 +65,7 @@ public class HomeFragment extends BaseFragment {
     @Override
     protected void initData() {
         MeterManager.getInstance().getMeterType();
-
-
     }
-
-
-
 
     /**
      * 接口返回

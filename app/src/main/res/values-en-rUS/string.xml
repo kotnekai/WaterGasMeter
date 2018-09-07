@@ -11,7 +11,7 @@
     <string name="electricity_meter2">Electricity：</string>
     <string name="gas_meter2">Gas：</string>
     <string name="address">Address：</string>
-    <string name="square">（unit：㎡）</string>
+    <string name="square">（unit：%s）</string>
     <string name="last_value">Last value：</string>
     <string name="balance">balance：</string>
     <string name="yuan">%s rmb</string>

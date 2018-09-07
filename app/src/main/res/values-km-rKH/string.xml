@@ -11,7 +11,7 @@
     <string name="electricity_meter2">ម៉ែត្រអគ្គិសនី：</string>
     <string name="gas_meter2">ម៉ែត្រឧស្ម័ន：</string>
     <string name="address">អាសយដ្ឋាន：</string>
-    <string name="square">（ឯកតា：㎡）</string>
+    <string name="square">（ឯកតា：%s）</string>
     <string name="last_value">តម្លៃចុងក្រោយ：</string>
     <string name="balance">តុល្យភាព：</string>
     <string name="yuan">%s យាន</string>
