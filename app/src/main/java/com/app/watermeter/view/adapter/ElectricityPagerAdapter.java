@@ -57,9 +57,6 @@ public class ElectricityPagerAdapter extends PagerAdapter {
         if (info != null) {
 
             switch (ComApplication.currentLanguage) {
-                case Constants.LANGUAGE_DEFAULT:
-                    tvMeterAddress.setText(info.getLocation_zh()+info.getPosition_zh());
-                    break;
                 case Constants.LANGUAGE_CHINA:
                     tvMeterAddress.setText(info.getLocation_zh()+info.getPosition_zh());
                     break;
