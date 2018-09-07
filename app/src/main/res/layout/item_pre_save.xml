@@ -13,7 +13,7 @@
         android:layout_marginTop="10dp">
 
         <TextView
-            android:id="@+id/tvWaterType"
+            android:id="@+id/tvWaterSn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/water_sn" />
@@ -22,11 +22,11 @@
             android:id="@+id/tvSaveMeasure"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tvWaterType"
+            android:layout_below="@id/tvWaterSn"
             android:layout_marginTop="10dp"
             android:text="@string/measurement" />
         <TextView
-            android:id="@+id/tvSaveDate"
+            android:id="@+id/tvReChargeDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/tvSaveMeasure"

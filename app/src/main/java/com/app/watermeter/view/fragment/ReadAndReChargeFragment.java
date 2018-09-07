@@ -60,10 +60,6 @@ public class ReadAndReChargeFragment extends BaseFragment {
     private LinearLayoutManager mLayoutManager;
 
 
-
-
-
-
     public ReadAndReChargeFragment() {
     }
 
@@ -128,12 +124,10 @@ public class ReadAndReChargeFragment extends BaseFragment {
                     reChargeList.clear();
                     currentPageSize = 0;
                     initListData(meterType, fromPage);
-                    reChargeAdapter.notifyDataSetChanged();
                 } else {
                     perReadList.clear();
                     currentPageSize = 0;
                     initListData(meterType, fromPage);
-                    readAdapter.notifyDataSetChanged();
                 }
 
                 refreshLayout.finishRefresh();
@@ -146,11 +140,9 @@ public class ReadAndReChargeFragment extends BaseFragment {
                 if (fromPage == CommonParams.PAGE_TYPE_RECHARGE) {
                     currentPageSize += dataSize;
                     initListData(meterType, fromPage);
-                    reChargeAdapter.notifyDataSetChanged();
                 } else {
                     currentPageSize += dataSize;
                     initListData(meterType, fromPage);
-                    readAdapter.notifyDataSetChanged();
                 }
                 refreshLayout.finishLoadMore();
             }
@@ -178,10 +170,10 @@ public class ReadAndReChargeFragment extends BaseFragment {
     private void initListData(int meterType, int pageType) {
         if (pageType == CommonParams.PAGE_TYPE_RECHARGE) {
             //预存明细
-            MeterManager.getInstance().getReChargeList(currentPageSize, dataSize, meterType);
+            MeterManager.getInstance().getReChargeList(currentPageSize, dataSize, meterType,0);
         } else {
             //缴费明细
-            MeterManager.getInstance().getRePayList(currentPageSize, dataSize, meterType);
+            MeterManager.getInstance().getRePayList(currentPageSize, dataSize, meterType,0);
         }
     }
 
@@ -197,7 +189,8 @@ public class ReadAndReChargeFragment extends BaseFragment {
         } else {
             reChargeList = event.getList();
         }
-
+        reChargeAdapter.setData(reChargeList);
+        reChargeAdapter.notifyDataSetChanged();
 
     }
 
@@ -212,6 +205,8 @@ public class ReadAndReChargeFragment extends BaseFragment {
         } else {
             perReadList = event.getList();
         }
+        readAdapter.setData(perReadList);
+        readAdapter.notifyDataSetChanged();
     }
 }
 /*

@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import com.app.watermeter.view.fragment.ReadAndReChargeFragment;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -16,22 +17,23 @@ import java.util.ArrayList;
 
 public class PerStorageFragmentAdapter extends FragmentStatePagerAdapter {
 
-    private String[] titles;
-    private ArrayList<ReadAndReChargeFragment> viewPagerFragments;
+    private List<String> titles;
+    private List<ReadAndReChargeFragment> viewPagerFragments;
     private int pageType;
 
-    public PerStorageFragmentAdapter(FragmentManager fm, int type) {
+    public PerStorageFragmentAdapter(FragmentManager fm, int type, List<ReadAndReChargeFragment> fragments) {
         super(fm);
         this.pageType = type;
+        this.viewPagerFragments = fragments;
     }
 
-    public void setTitles(String[] titles) {
+    public void setTitles(List<String> titles) {
         this.titles = titles;
     }
 
-    public void setFragments(ArrayList<ReadAndReChargeFragment> viewPagerFragments) {
-        this.viewPagerFragments = viewPagerFragments;
-    }
+//    public void setFragments(ArrayList<ReadAndReChargeFragment> viewPagerFragments) {
+//        this.viewPagerFragments = viewPagerFragments;
+//    }
 
     @Override
     public Fragment getItem(int position) {
@@ -40,11 +42,15 @@ public class PerStorageFragmentAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        return viewPagerFragments.size();
+        int ret = 0;
+        if(viewPagerFragments != null){
+            ret = viewPagerFragments.size();
+        }
+        return ret;
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return titles[position];
+        return titles.get(position);
     }
 }

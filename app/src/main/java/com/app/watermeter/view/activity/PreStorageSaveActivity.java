@@ -33,7 +33,7 @@ public class PreStorageSaveActivity extends BaseActivity {
     ViewPager viewPager;
 
     private PerStorageFragmentAdapter adapter;
-    private String[] mTitles = new String[]{"水表", "电表", "燃气表"};
+    private List<String> mTitles = new ArrayList<>();
     private ArrayList<ReadAndReChargeFragment> mViewPagerFragments = new ArrayList<>();
 
     private Context mContext;
@@ -82,15 +82,15 @@ public class PreStorageSaveActivity extends BaseActivity {
         if (list.size()>0) {
             for (MeterTypeModel model : list) {
                 mViewPagerFragments.add(ReadAndReChargeFragment.newInstance(model.getId(), model.getName(), pageType));
+                mTitles.add(model.getName());
             }
         }
         else
         {
 
         }
-        adapter = new PerStorageFragmentAdapter(getSupportFragmentManager(), pageType);
+        adapter = new PerStorageFragmentAdapter(getSupportFragmentManager(), pageType, mViewPagerFragments);
         adapter.setTitles(mTitles);
-        adapter.setFragments(mViewPagerFragments);
 
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);

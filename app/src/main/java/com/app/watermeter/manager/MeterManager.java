@@ -218,11 +218,14 @@ public class MeterManager {
      * 获取缴费明细
      * https://www.showdoc.cc/web/#/137924192608060?page_id=789816901624533
      */
-    public void getRePayList(int offset, int count, final int type) {
+    public void getRePayList(int offset, int count, final int type, int machine) {
         Map<String, String> params = new HashMap<>();
         params.put("offset", offset + "");
-        params.put("offset", count + "");
+        params.put("count", count + "");
         params.put("type", type + "");
+        if (machine>0) {
+            params.put("machine", machine + "");
+        }
         dataInstance.sendGetRequestData(CommonUrl.METER_READ_LIST_URL, params)
                 .execute(new GenericsCallback<Result>(new JsonGenericsSerializator()) {
                     @Override
@@ -253,11 +256,14 @@ public class MeterManager {
      * 获取预存明细
      * https://www.showdoc.cc/web/#/137924192608060?page_id=789816901624533
      */
-    public void getReChargeList(int offset, int count, final int type) {
+    public void getReChargeList(int offset, int count, final int type, int machine) {
         Map<String, String> params = new HashMap<>();
         params.put("offset", offset + "");
-        params.put("offset", count + "");
+        params.put("count", count + "");
         params.put("type", type + "");
+        if (machine>0) {
+            params.put("machine", machine + "");
+        }
         dataInstance.sendGetRequestData(CommonUrl.METER_RECHARGE_LIST_URL, params)
                 .execute(new GenericsCallback<Result>(new JsonGenericsSerializator()) {
                     @Override

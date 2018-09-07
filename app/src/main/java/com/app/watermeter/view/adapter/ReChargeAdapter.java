@@ -29,6 +29,11 @@ public class ReChargeAdapter extends Adapter<ReChargeAdapter.MyViewHolder> {
         inflater = LayoutInflater.from(context);
     }
 
+    public void setData(List<MeterReChargeModel> list) {
+        if (list != null && list.size() > 0)
+            this.reChargeList = list;
+    }
+
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View views = inflater.inflate(R.layout.item_per_storage, parent, false);
@@ -37,13 +42,13 @@ public class ReChargeAdapter extends Adapter<ReChargeAdapter.MyViewHolder> {
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        MeterReChargeModel preSaveModel = reChargeList.get(position);
-        if (preSaveModel == null) {
+        MeterReChargeModel reChargeModel = reChargeList.get(position);
+        if (reChargeModel == null) {
             return;
         }
-//        holder.tvWaterType.setText(preSaveModel.getMeterSn());
-//        holder.tvSaveDate.setText(preSaveModel.getSaveTime());
-//        holder.tvSaveMoney.setText(preSaveModel.getSaveMoney() + "");
+        holder.tvWaterSn.setText(String.format(context.getString(R.string.water_sn), reChargeModel.getMachine_type_id() + ""));
+        holder.tvReChargeDate.setText(String.format(context.getString(R.string.storage_time), reChargeModel.getCreated_at()));
+        holder.tvSaveMoney.setText(reChargeModel.getRecharge_fee() + "");
     }
 
 
@@ -53,16 +58,14 @@ public class ReChargeAdapter extends Adapter<ReChargeAdapter.MyViewHolder> {
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView tvWaterType;
-        TextView tvSaveDate;
-
-
+        TextView tvWaterSn;
+        TextView tvReChargeDate;
         TextView tvSaveMoney;
 
         public MyViewHolder(View view) {
             super(view);
-            tvWaterType = view.findViewById(R.id.tvWaterType);
-            tvSaveDate = view.findViewById(R.id.tvSaveDate);
+            tvWaterSn = view.findViewById(R.id.tvWaterSn);
+            tvReChargeDate = view.findViewById(R.id.tvReChargeDate);
             tvSaveMoney = view.findViewById(R.id.tvSaveMoney);
         }
 
