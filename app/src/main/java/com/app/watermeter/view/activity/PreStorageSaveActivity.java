@@ -8,14 +8,23 @@ import android.support.v4.view.ViewPager;
 
 import com.app.watermeter.R;
 import com.app.watermeter.common.CommonParams;
+import com.app.watermeter.eventBus.GetElectReadListEvent;
+import com.app.watermeter.eventBus.GetGasReadListEvent;
+import com.app.watermeter.eventBus.GetWaterReadListEvent;
 import com.app.watermeter.model.MeterReChargeModel;
 import com.app.watermeter.model.MeterTypeModel;
 import com.app.watermeter.utils.PreferencesUtils;
 import com.app.watermeter.view.adapter.PerStorageFragmentAdapter;
 import com.app.watermeter.view.base.BaseActivity;
+import com.app.watermeter.view.base.BaseFragment;
+import com.app.watermeter.view.fragment.ElectReadAndReChargeFragment;
+import com.app.watermeter.view.fragment.GasReadAndReChargeFragment;
 import com.app.watermeter.view.fragment.ReadAndReChargeFragment;
+import com.app.watermeter.view.fragment.WaterReadAndReChargeFragment;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +43,7 @@ public class PreStorageSaveActivity extends BaseActivity {
 
     private PerStorageFragmentAdapter adapter;
     private List<String> mTitles = new ArrayList<>();
-    private ArrayList<ReadAndReChargeFragment> mViewPagerFragments = new ArrayList<>();
+    private ArrayList<BaseFragment> mViewPagerFragments = new ArrayList<>();
 
     private Context mContext;
     int pageType;
@@ -81,8 +90,22 @@ public class PreStorageSaveActivity extends BaseActivity {
 
         if (list.size()>0) {
             for (MeterTypeModel model : list) {
-                mViewPagerFragments.add(ReadAndReChargeFragment.newInstance(model.getId(), model.getName(), pageType));
-                mTitles.add(model.getName());
+                switch (model.getId())
+                {
+                    case MeterTypeModel.METER_WATER:
+                        mViewPagerFragments.add(WaterReadAndReChargeFragment.newInstance(model.getId(), model.getName_zh(), pageType));
+                        mTitles.add(model.getName_zh());
+                        break;
+                    case MeterTypeModel.METER_ELECT:
+                        mViewPagerFragments.add(ElectReadAndReChargeFragment.newInstance(model.getId(), model.getName_zh(), pageType));
+                        mTitles.add(model.getName_zh());
+                        break;
+                    case MeterTypeModel.METER_GAS:
+                        mViewPagerFragments.add(GasReadAndReChargeFragment.newInstance(model.getId(), model.getName_zh(), pageType));
+                        mTitles.add(model.getName_zh());
+                        break;
+                }
+
             }
         }
         else

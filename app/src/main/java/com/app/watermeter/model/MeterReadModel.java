@@ -3,8 +3,7 @@ package com.app.watermeter.model;
 /**
  * Create by Admin on 2018/9/6
  *
- * @author
- * https://www.showdoc.cc/web/#/137924192608060?page_id=789816901624533
+ * @author https://www.showdoc.cc/web/#/137924192608060?page_id=789816901624533
  */
 public class MeterReadModel {
     private int id;
@@ -12,6 +11,7 @@ public class MeterReadModel {
     private int machine_type_id;
     private int degree;
     private int read_fee;
+    private int read_degree;
     private int before_read_balance;
     private int after_read_balance;
     private String created_at;
@@ -55,6 +55,14 @@ public class MeterReadModel {
 
     public void setRead_fee(int read_fee) {
         this.read_fee = read_fee;
+    }
+
+    public int getRead_degree() {
+        return read_degree;
+    }
+
+    public void setRead_degree(int read_degree) {
+        this.read_degree = read_degree;
     }
 
     public int getBefore_read_balance() {
