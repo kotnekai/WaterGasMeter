@@ -65,7 +65,7 @@
 
 
     <string name="pay_sn">缴费号：</string>
-    <string name="square_detail">单位：m³</string>
+    <string name="square_detail">单位：%s</string>
 
     <string name="water_meter_detail_title">水表详情</string>
     <string name="elect_meter_detail_title">电表详情</string>

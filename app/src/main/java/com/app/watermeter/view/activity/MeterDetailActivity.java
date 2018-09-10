@@ -8,10 +8,14 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.app.watermeter.R;
+import com.app.watermeter.common.ComApplication;
 import com.app.watermeter.common.CommonParams;
-import com.app.watermeter.eventBus.BindEvent;
+import com.app.watermeter.common.Constants;
+import com.app.watermeter.eventBus.GetMeterInfoEvent;
+import com.app.watermeter.eventBus.UnBindErrEvent;
 import com.app.watermeter.eventBus.UnBindEvent;
 import com.app.watermeter.manager.MeterManager;
+import com.app.watermeter.model.MeterInfoModel;
 import com.app.watermeter.utils.ToastUtil;
 import com.app.watermeter.view.base.BaseActivity;
 import com.app.watermeter.view.marker.MeterChartMarkerView;
@@ -41,22 +45,25 @@ import butterknife.OnClick;
 public class MeterDetailActivity extends BaseActivity {
 
     public static final String METER_TYPE = "meterType";
+    public static final String METER_SN = "meterSN";
 
     Context mContext;
     @BindView(R.id.tvSn)
     TextView tvSn;
     @BindView(R.id.tvAddress)
     TextView tvAddress;
+    @BindView(R.id.tvUnit)
+    TextView tvUnit;
     @BindView(R.id.tvMeterName)
     TextView tvMeterName;
     @BindView(R.id.tvLastValue)
     TextView tvLastValue;
-    @BindView(R.id.tvLastDte)
-    TextView tvLastDte;
+    @BindView(R.id.tvLastDate)
+    TextView tvLastDate;
     @BindView(R.id.tvCurrentValue)
     TextView tvCurrentValue;
-    @BindView(R.id.tvCurrentDte)
-    TextView tvCurrentDte;
+    @BindView(R.id.tvCurrentDate)
+    TextView tvCurrentDate;
     @BindView(R.id.tvBalance)
     TextView tvBalance;
     @BindView(R.id.tvMoney)
@@ -71,11 +78,13 @@ public class MeterDetailActivity extends BaseActivity {
     LineChart mChart;
 
     private int typeValue;
+    private String meteSn;
 
 
-    public static Intent makeIntent(Context context, int meterId, int type) {
+    public static Intent makeIntent(Context context, String meterSn, int type) {
         Intent intent = new Intent(context, MeterDetailActivity.class);
         intent.putExtra(METER_TYPE, type);
+        intent.putExtra(METER_SN, meterSn);
         return intent;
     }
 
@@ -96,13 +105,19 @@ public class MeterDetailActivity extends BaseActivity {
         });
     }
 
-
     /**
      * 接口返回
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(UnBindEvent event) {
         ToastUtil.showLong(event.getResult().getMessage());
+    }
+    /**
+     * 接口返回
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(UnBindErrEvent event) {
+        ToastUtil.showLong(event.getResult());
     }
 
     @Override
@@ -277,6 +292,7 @@ public class MeterDetailActivity extends BaseActivity {
     private void initIntent() {
         Intent intent = getIntent();
         typeValue = intent.getIntExtra(METER_TYPE, CommonParams.TYPE_WATER);
+        meteSn = intent.getStringExtra(METER_SN);
     }
 
     /**
@@ -293,6 +309,38 @@ public class MeterDetailActivity extends BaseActivity {
             case CommonParams.TYPE_GAS:
                 setHeaderTitle(getString(R.string.gas_meter_detail_title));
                 break;
+        }
+        MeterManager.getInstance().getMeterDetail(meteSn);
+    }
+
+    /**
+     * 接口返回
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(GetMeterInfoEvent event) {
+        MeterInfoModel model = event.getModelInfo();
+        if (model != null) {
+            tvSn.setText(model.getMachine_sn());
+
+            switch (ComApplication.currentLanguage) {
+                case Constants.LANGUAGE_CHINA:
+                    tvAddress.setText(model.getLocation_zh()+model.getPosition_zh());
+                    break;
+                case Constants.LANGUAGE_ENGLISH:
+                    tvAddress.setText(model.getLocation_en()+model.getPosition_en());
+                    break;
+                case Constants.LANGUAGE_KH:
+                    tvAddress.setText(model.getLocation_kh()+model.getPosition_kh());
+                    break;
+                default:
+                    tvAddress.setText(model.getLocation_zh()+model.getPosition_zh());
+            }
+            tvUnit.setText(String.format(mContext.getString(R.string.square_detail),model.getUnit()+""));
+            tvLastValue.setText(model.getOld_degree()+"");
+            tvLastDate.setText(model.getOld_read_at());
+            tvCurrentValue.setText(model.getDegree()+"");
+            tvCurrentDate.setText(model.getFinal_read_at());
+            tvMoney.setText(model.getBalance()+"");
         }
     }
 

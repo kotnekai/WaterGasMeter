@@ -54,7 +54,7 @@ public class GasPagerAdapter extends PagerAdapter {
         TextView  tvLastValue = (TextView)view.findViewById(R.id.tvLastValue);
         TextView  tvBalanceValue = (TextView)view.findViewById(R.id.tvBalanceValue);
 
-        MeterInfoModel info = list.get(position);
+        final MeterInfoModel info = list.get(position);
         if (info != null) {
 
             switch (ComApplication.currentLanguage) {
@@ -83,7 +83,7 @@ public class GasPagerAdapter extends PagerAdapter {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                context.startActivity(MeterDetailActivity.makeIntent(context, CommonParams.TYPE_GAS));
+                context.startActivity(MeterDetailActivity.makeIntent(context,info.getMachine_sn(), CommonParams.TYPE_GAS));
             }
         });
         return view;

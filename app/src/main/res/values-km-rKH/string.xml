@@ -65,7 +65,7 @@
 
 
     <string name="pay_sn">លេខទូទាត់：</string>
-    <string name="square_detail">ឯកតា：m³</string>
+    <string name="square_detail">ឯកតា：%s</string>
 
     <string name="water_meter_detail_title">ព័ត៌មានលម្អិតអំពីទឹក</string>
     <string name="elect_meter_detail_title">ព័ត៌មានលម្អិតម៉ែត្រ</string>

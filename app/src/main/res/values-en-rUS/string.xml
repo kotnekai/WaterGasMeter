@@ -64,7 +64,7 @@
 
 
     <string name="pay_sn">Payment number：</string>
-    <string name="square_detail">unit：m³</string>
+    <string name="square_detail">unit：%s</string>
 
     <string name="water_meter_detail_title">Water meter details</string>
     <string name="elect_meter_detail_title">Meter details</string>

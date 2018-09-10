@@ -20,6 +20,7 @@ import com.app.watermeter.eventBus.GetReChargeListEvent;
 import com.app.watermeter.eventBus.GetReadListEvent;
 import com.app.watermeter.eventBus.GetWaterReChargeListEvent;
 import com.app.watermeter.eventBus.GetWaterReadListEvent;
+import com.app.watermeter.eventBus.UnBindErrEvent;
 import com.app.watermeter.eventBus.UnBindEvent;
 import com.app.watermeter.model.MeterInfoModel;
 import com.app.watermeter.model.MeterTypeModel;
@@ -181,6 +182,7 @@ public class MeterManager {
                     @Override
                     public void onNetWorkError(Response response, String errorMsg, int NetWorkCode) {
                         Log.d("admin", "onError: errorMsg=" + errorMsg);
+                        EventBus.getDefault().post(new UnBindErrEvent(errorMsg));
                     }
 
                     @Override

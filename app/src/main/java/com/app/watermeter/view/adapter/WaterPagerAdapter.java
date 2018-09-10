@@ -13,8 +13,10 @@ import android.widget.TextView;
 
 import com.app.watermeter.R;
 import com.app.watermeter.common.ComApplication;
+import com.app.watermeter.common.CommonParams;
 import com.app.watermeter.common.Constants;
 import com.app.watermeter.model.MeterInfoModel;
+import com.app.watermeter.view.activity.MeterDetailActivity;
 
 import java.util.List;
 import java.util.Locale;
@@ -58,7 +60,7 @@ public class WaterPagerAdapter extends PagerAdapter {
         TextView  tvLastValue = (TextView)view.findViewById(R.id.tvLastValue);
         TextView  tvBalanceValue = (TextView)view.findViewById(R.id.tvBalanceValue);
 
-        MeterInfoModel info = list.get(position);
+        final MeterInfoModel info = list.get(position);
         if (info != null) {
             switch (ComApplication.currentLanguage) {
                 case Constants.LANGUAGE_CHINA:
@@ -85,7 +87,7 @@ public class WaterPagerAdapter extends PagerAdapter {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                context.startActivity(MeterDetailActivity.makeIntent(context, CommonParams.TYPE_WATER));
+                context.startActivity(MeterDetailActivity.makeIntent(context, info.getMachine_sn(), CommonParams.TYPE_WATER));
             }
         });
         return view;
