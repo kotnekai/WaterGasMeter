@@ -56,7 +56,7 @@ public class PreStorageSaveActivity extends BaseActivity {
 
     public static Intent makeIntent(Context context, int pageType) {
         Intent intent = new Intent(context, PreStorageSaveActivity.class);
-        intent.putExtra("pageType", pageType);
+        intent.putExtra(CommonParams.PAGE_TYPE, pageType);
         return intent;
     }
 

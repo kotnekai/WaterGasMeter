@@ -44,8 +44,7 @@ import butterknife.OnClick;
  */
 public class MeterDetailActivity extends BaseActivity {
 
-    public static final String METER_TYPE = "meterType";
-    public static final String METER_SN = "meterSN";
+
 
     Context mContext;
     @BindView(R.id.tvSn)
@@ -77,14 +76,14 @@ public class MeterDetailActivity extends BaseActivity {
     @BindView(R.id.lineChart)
     LineChart mChart;
 
-    private int typeValue;
-    private String meteSn;
-
+    private int meterType;
+    private String meterSn;
+    MeterInfoModel model;
 
     public static Intent makeIntent(Context context, String meterSn, int type) {
         Intent intent = new Intent(context, MeterDetailActivity.class);
-        intent.putExtra(METER_TYPE, type);
-        intent.putExtra(METER_SN, meterSn);
+        intent.putExtra(CommonParams.METER_TYPE, type);
+        intent.putExtra(CommonParams.METER_SN, meterSn);
         return intent;
     }
 
@@ -291,15 +290,15 @@ public class MeterDetailActivity extends BaseActivity {
      */
     private void initIntent() {
         Intent intent = getIntent();
-        typeValue = intent.getIntExtra(METER_TYPE, CommonParams.TYPE_WATER);
-        meteSn = intent.getStringExtra(METER_SN);
+        meterType = intent.getIntExtra(CommonParams.METER_TYPE, CommonParams.TYPE_WATER);
+        meterSn = intent.getStringExtra(CommonParams.METER_SN);
     }
 
     /**
      * 水表数据
      */
     private void initData() {
-        switch (typeValue) {
+        switch (meterType) {
             case CommonParams.TYPE_WATER:
                 setHeaderTitle(getString(R.string.water_meter_detail_title));
                 break;
@@ -310,7 +309,7 @@ public class MeterDetailActivity extends BaseActivity {
                 setHeaderTitle(getString(R.string.gas_meter_detail_title));
                 break;
         }
-        MeterManager.getInstance().getMeterDetail(meteSn);
+        MeterManager.getInstance().getMeterDetail(meterSn);
     }
 
     /**
@@ -318,7 +317,7 @@ public class MeterDetailActivity extends BaseActivity {
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(GetMeterInfoEvent event) {
-        MeterInfoModel model = event.getModelInfo();
+        model = event.getModelInfo();
         if (model != null) {
             tvSn.setText(model.getMachine_sn());
 
@@ -348,10 +347,10 @@ public class MeterDetailActivity extends BaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tvGotoPayment:
-                startActivity(PerStorageSaveListActivity.makeIntent(mContext, CommonParams.PAGE_TYPE_READ));
+                startActivity(PerStorageSaveListActivity.makeIntent(mContext,model.getId(), meterType, CommonParams.PAGE_TYPE_READ));
                 break;
             case R.id.tvGotoPerStorage:
-                startActivity(PerStorageSaveListActivity.makeIntent(mContext, CommonParams.PAGE_TYPE_RECHARGE));
+                startActivity(PerStorageSaveListActivity.makeIntent(mContext,model.getId(), meterType, CommonParams.PAGE_TYPE_RECHARGE));
                 break;
             case R.id.tvCharge:
                 startActivity(PayActionActivity.makeIntent(mContext));

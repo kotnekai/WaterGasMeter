@@ -9,6 +9,8 @@ import com.app.watermeter.common.CommonParams;
 import com.app.watermeter.common.CommonUrl;
 import com.app.watermeter.eventBus.BindEvent;
 import com.app.watermeter.eventBus.DefaultResultEvent;
+import com.app.watermeter.eventBus.GetDetailReChargeListEvent;
+import com.app.watermeter.eventBus.GetDetailReadListEvent;
 import com.app.watermeter.eventBus.GetElectReChargeListEvent;
 import com.app.watermeter.eventBus.GetElectReadListEvent;
 import com.app.watermeter.eventBus.GetGasReChargeListEvent;
@@ -226,12 +228,12 @@ public class MeterManager {
      * 获取缴费明细
      * https://www.showdoc.cc/web/#/137924192608060?page_id=789816901624533
      */
-    public void getRePayList(int offset, int count, final int type, int machine) {
+    public void getRePayList(int offset, int count, final int type, final int machine) {
         Map<String, String> params = new HashMap<>();
         params.put("offset", offset + "");
         params.put("count", count + "");
         params.put("type", type + "");
-        if (machine>0) {
+        if (machine > 0) {
             params.put("machine", machine + "");
         }
         dataInstance.sendGetRequestData(CommonUrl.METER_READ_LIST_URL, params)
@@ -255,19 +257,23 @@ public class MeterManager {
                         List<MeterReadModel> list = gson.fromJson(jsonString.toString(), new TypeToken<List<MeterReadModel>>() {
                         }.getType());
 
-                        switch(type)
-                        {
-                            case MeterTypeModel.METER_WATER:
-                                EventBus.getDefault().post(new GetWaterReadListEvent(list));
-                                break;
-                            case MeterTypeModel.METER_ELECT:
-                                EventBus.getDefault().post(new GetElectReadListEvent(list));
+                        if (machine > 0) {
+                            EventBus.getDefault().post(new GetDetailReadListEvent(list));
+                        } else {
+                            switch (type) {
+                                case MeterTypeModel.METER_WATER:
+                                    EventBus.getDefault().post(new GetWaterReadListEvent(list));
+                                    break;
+                                case MeterTypeModel.METER_ELECT:
+                                    EventBus.getDefault().post(new GetElectReadListEvent(list));
 
-                                break;
-                            case MeterTypeModel.METER_GAS:
-                                EventBus.getDefault().post(new GetGasReadListEvent(list));
-                                break;
+                                    break;
+                                case MeterTypeModel.METER_GAS:
+                                    EventBus.getDefault().post(new GetGasReadListEvent(list));
+                                    break;
+                            }
                         }
+
 //                        EventBus.getDefault().post(new GetReadListEvent(list, type));
                     }
                 });
@@ -277,12 +283,12 @@ public class MeterManager {
      * 获取预存明细
      * https://www.showdoc.cc/web/#/137924192608060?page_id=789816901624533
      */
-    public void getReChargeList(int offset, int count, final int type, int machine) {
+    public void getReChargeList(int offset, int count, final int type, final int machine) {
         Map<String, String> params = new HashMap<>();
         params.put("offset", offset + "");
         params.put("count", count + "");
         params.put("type", type + "");
-        if (machine>0) {
+        if (machine > 0) {
             params.put("machine", machine + "");
         }
         dataInstance.sendGetRequestData(CommonUrl.METER_RECHARGE_LIST_URL, params)
@@ -305,20 +311,21 @@ public class MeterManager {
                         String jsonString = gson.toJson(result.getData());
                         List<MeterReChargeModel> list = gson.fromJson(jsonString.toString(), new TypeToken<List<MeterReChargeModel>>() {
                         }.getType());
-                        switch(type)
-                        {
-                            case MeterTypeModel.METER_WATER:
-                                EventBus.getDefault().post(new GetWaterReChargeListEvent(list));
-                                break;
-                            case MeterTypeModel.METER_ELECT:
-                                EventBus.getDefault().post(new GetElectReChargeListEvent(list));
-
-                                break;
-                            case MeterTypeModel.METER_GAS:
-                                EventBus.getDefault().post(new GetGasReChargeListEvent(list));
-                                break;
+                        if (machine > 0) {
+                            EventBus.getDefault().post(new GetDetailReChargeListEvent(list));
+                        } else {
+                            switch (type) {
+                                case MeterTypeModel.METER_WATER:
+                                    EventBus.getDefault().post(new GetWaterReChargeListEvent(list));
+                                    break;
+                                case MeterTypeModel.METER_ELECT:
+                                    EventBus.getDefault().post(new GetElectReChargeListEvent(list));
+                                    break;
+                                case MeterTypeModel.METER_GAS:
+                                    EventBus.getDefault().post(new GetGasReChargeListEvent(list));
+                                    break;
+                            }
                         }
-//                        EventBus.getDefault().post(new GetReChargeListEvent(list, type));
                     }
                 });
     }

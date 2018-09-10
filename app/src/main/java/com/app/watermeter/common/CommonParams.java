@@ -20,4 +20,11 @@ public class CommonParams {
 
     public static final String METTER_TYPE_JSON = "meterTypeJson";
 
+    public static final String PAGE_TYPE = "pageType";
+
+    public static final String METER_TYPE = "meterType";
+    public static final String METER_SN = "meterSN";
+    public static final String METER_ID = "meterId";
+
+
 }
