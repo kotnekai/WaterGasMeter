@@ -23,6 +23,7 @@ import com.app.watermeter.utils.DateUtils;
 import com.app.watermeter.utils.ToastUtil;
 import com.app.watermeter.view.base.BaseActivity;
 import com.app.watermeter.view.marker.MeterChartMarkerView;
+import com.app.watermeter.view.marker.XAxisEntry;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
@@ -227,7 +228,7 @@ public class MeterDetailActivity extends BaseActivity {
 
 
         // add data
-        setData(24, 24);
+//        setData(24, 10);
     }
 
     private void setData(int count, float range) {
@@ -371,16 +372,150 @@ public class MeterDetailActivity extends BaseActivity {
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(GetChartReadListEvent event) {
-        if (event.getList()!=null)
-        {
+        if (event.getList() != null) {
             chartList = event.getList();
-
-
-            //组合时间
-            //组合数值
-            //写X轴Y轴
-
+            setChartData(chartList);
         }
+    }
+
+    /**
+     * 图标填充数据
+     *
+     * @param chartList
+     */
+    private void setChartData(List<MeterReadModel> chartList) {
+        //X轴数据
+        ArrayList<XAxisEntry> xVals = new ArrayList<>();
+        //Y轴数据，用来算法最大最小值作为图表的边界
+        ArrayList<Integer> tempYvals = new ArrayList<>();
+
+
+        //Y轴数据
+        ArrayList<Entry> yVals = new ArrayList<>();
+
+        int minY, maxY;
+
+        for (int j = 0; j < 24; j++) {
+            yVals.add(new Entry(j, -5));
+        }
+
+
+        for (int i = 0; i < chartList.size(); i++) {
+            int hour = DateUtils.getHour(chartList.get(i).getCreated_at());
+            for (int k = 0; k < yVals.size(); k++) {
+                if (k == hour) {
+                    Entry entry = yVals.get(k);
+                    entry.setY(chartList.get(i).getDegree());
+
+                }
+            }
+
+//                yVals.add(new Entry(hour, chartList.get(i).getDegree()));
+//                xVals.add(new XAxisEntry(hour + "", false));
+            tempYvals.add(chartList.get(i).getDegree());
+        }
+
+
+        minY = 0;//getMin(tempXvals)-50;
+        maxY = getMax(tempYvals) + 50;
+
+
+        LineDataSet lineSet;
+
+        if (mChart.getData() != null && mChart.getData().getDataSetCount() > 0) {
+            lineSet = (LineDataSet) mChart.getData().getDataSetByIndex(0);
+            lineSet.setValues(yVals);
+            mChart.getData().notifyDataChanged();
+            mChart.notifyDataSetChanged();
+        } else {
+
+            YAxis leftAxis = mChart.getAxisLeft();
+            leftAxis.setAxisMaxValue(maxY);
+            leftAxis.setAxisMinValue(minY);
+
+            lineSet = new LineDataSet(yVals, "DataSet 1");
+            //设置图标不显示
+            lineSet.setDrawIcons(false);
+            //设置Y值使用左边Y轴的坐标值
+            lineSet.setAxisDependency(YAxis.AxisDependency.LEFT);
+            //画虚线
+//            set1.enableDashedLine(10f, 5f, 0f);
+//            set1.enableDashedHighlightLine(10f, 5f, 0f);
+            //设置线的颜色
+            lineSet.setColor(getResources().getColor(R.color.main_blue_color));
+            //设置数据点圆形的颜色
+            lineSet.setCircleColor(getResources().getColor(R.color.colorAccent));
+            //设置折线宽度
+            lineSet.setLineWidth(2f);
+            //设置折现点圆点半径
+            lineSet.setCircleRadius(4f);
+            //设置是否在数据点中间显示一个孔
+            lineSet.setDrawCircleHole(false);
+            lineSet.setValueTextSize(13f);
+            //设置允许填充
+            lineSet.setDrawFilled(false);
+            lineSet.setFormLineWidth(1f);
+            lineSet.setFormLineDashEffect(new DashPathEffect(new float[]{10f, 5f}, 0f));
+            lineSet.setFormSize(15.f);
+            lineSet.setHighlightEnabled(true);
+            lineSet.setDrawHorizontalHighlightIndicator(false);
+            lineSet.setDrawVerticalHighlightIndicator(true);
+
+            ArrayList<ILineDataSet> dataSets = new ArrayList<ILineDataSet>();
+            dataSets.add(lineSet);
+
+            // create a data object with the datasets
+            LineData data = new LineData(dataSets);
+
+            //设置一页最大显示个数为6，超出部分就滑动
+            float ratio = (float) 24 / (float) 6;
+            //显示的时候是按照多大的比率缩放显示,1f表示不放大缩小
+            mChart.zoom(ratio, 1f, 0, 0);
+            //设置从X轴出来的动画时间
+//            mChart.animateX(1500);
+            //设置XY轴动画
+            mChart.animateXY(1500, 1500, Easing.EasingOption.EaseInSine, Easing.EasingOption.EaseInSine);
+            // set data
+            mChart.setData(data);
+            mChart.invalidate();
+        }
+
+
+    }
+
+
+    /**
+     * 获取最大值
+     *
+     * @param arr
+     * @return
+     */
+    private int getMax(List<Integer> arr) {
+        int max = Integer.MIN_VALUE;
+
+        for (int i = 0; i < arr.size(); i++) {
+            if (arr.get(i) > max)
+                max = arr.get(i);
+        }
+
+        return max;
+    }
+
+    /**
+     * 获取最小值
+     *
+     * @param arr
+     * @return
+     */
+    private int getMin(List<Integer> arr) {
+        int min = Integer.MAX_VALUE;
+
+        for (int i = 0; i < arr.size(); i++) {
+            if (arr.get(i) < min)
+                min = arr.get(i);
+        }
+
+        return min;
     }
 
 

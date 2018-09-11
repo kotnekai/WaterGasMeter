@@ -143,6 +143,26 @@ public class DateUtils {
         return 0;
     }
 
+    /**
+     * 获取小时
+     * @param dateTime
+     * @return
+     */
+    public static int getHour(String dateTime) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATE_FORMAT_YEAR2);
+        Date date = null;
+        try {
+            date = simpleDateFormat.parse(dateTime);
+            Calendar rightNow = Calendar.getInstance();
+            rightNow.setTime(date);
+            int hour = rightNow.get(Calendar.HOUR_OF_DAY);
+            return hour;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
 
     public static long getSystemTime() {
         return System.currentTimeMillis();
