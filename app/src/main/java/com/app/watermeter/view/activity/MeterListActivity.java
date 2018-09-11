@@ -7,10 +7,11 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 
 import com.app.watermeter.R;
 import com.app.watermeter.common.CommonParams;
+import com.app.watermeter.eventBus.GetMeterListEvent;
+import com.app.watermeter.manager.MeterManager;
 import com.app.watermeter.model.MeterInfoModel;
 import com.app.watermeter.view.adapter.MeterRecyclerAdapter;
 import com.app.watermeter.view.base.BaseActivity;
@@ -18,6 +19,9 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +37,10 @@ public class MeterListActivity extends BaseActivity {
 
     //默认值
     private int typeValue;
-
+    //当前类计数量
+    private int currentPageSize = 0;
+    //每次请求数量
+    private int dataSize = 10;
 
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
@@ -68,7 +75,7 @@ public class MeterListActivity extends BaseActivity {
         mContext = MeterListActivity.this;
         initIntent();
         initData();
-        addMeterData();
+        addListData();
     }
 
     /**
@@ -110,27 +117,24 @@ public class MeterListActivity extends BaseActivity {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 meterLists.clear();
-                addMeterData();
-                adapter.notifyDataSetChanged();
+                currentPageSize = 0;
+                addListData();
                 refreshLayout.finishRefresh();
             }
         });
         refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                addMore();
-                adapter.notifyDataSetChanged();
+                currentPageSize += dataSize;
+                addListData();
                 refreshLayout.finishLoadMore();
             }
         });
 
     }
 
-    private void addMeterData() {
-        for (int i = 0; i < 10; i++) {
-            MeterInfoModel model = new MeterInfoModel();
-            meterLists.add(model);
-        }
+    private void addListData() {
+        MeterManager.getInstance().getMeterList(typeValue,currentPageSize, dataSize,false);
     }
 
     private void addMore() {
@@ -138,5 +142,21 @@ public class MeterListActivity extends BaseActivity {
             MeterInfoModel model = new MeterInfoModel();
             meterLists.add(model);
         }
+    }
+
+
+    /**
+     * 接口返回
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(GetMeterListEvent event) {
+        currentPageSize += event.getList().size();
+        if (meterLists.size() > 0) {
+            meterLists.addAll(event.getList());
+        } else {
+            meterLists = event.getList();
+        }
+        adapter.setData(meterLists);
+        adapter.notifyDataSetChanged();
     }
 }

@@ -30,8 +30,9 @@ public class ReChargeAdapter extends Adapter<ReChargeAdapter.MyViewHolder> {
     }
 
     public void setData(List<MeterReChargeModel> list) {
-        if (list != null && list.size() > 0)
+        if (list != null && list.size() > 0) {
             this.reChargeList = list;
+        }
     }
 
     @Override

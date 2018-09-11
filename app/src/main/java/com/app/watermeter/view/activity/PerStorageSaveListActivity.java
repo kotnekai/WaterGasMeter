@@ -137,7 +137,6 @@ public class PerStorageSaveListActivity extends BaseActivity {
                     currentPageSize = 0;
                     addListData(fromPage);
                 }
-
                 refreshLayout.finishRefresh();
             }
         });

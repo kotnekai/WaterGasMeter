@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import com.app.watermeter.R;
 import com.app.watermeter.common.CommonParams;
+import com.app.watermeter.eventBus.GetHomeMeterListEvent;
 import com.app.watermeter.eventBus.GetMeterListEvent;
 import com.app.watermeter.eventBus.GetMeterTypeEvent;
 import com.app.watermeter.eventBus.LoginEvent;
@@ -71,12 +72,12 @@ public class HomeFragment extends BaseFragment {
      * 接口返回
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onGetDataEvent(GetMeterTypeEvent event) {
+    public void onEvent(GetMeterTypeEvent event) {
         typeList = event.getTypeList();
         if (typeList.size() > 0) {
             try {
                 for (MeterTypeModel model : typeList) {
-                    MeterManager.getInstance().getMeterList(model.getId());
+                    MeterManager.getInstance().getMeterList(model.getId(),0,0,true);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -88,7 +89,7 @@ public class HomeFragment extends BaseFragment {
      * 接口返回
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onGetListEvent(GetMeterListEvent event) {
+    public void onEvent(GetHomeMeterListEvent event) {
         List<MeterInfoModel> list = event.getList();
         initListData(list,event.getMeterType());
     }

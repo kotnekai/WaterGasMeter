@@ -15,6 +15,7 @@ import com.app.watermeter.eventBus.GetElectReChargeListEvent;
 import com.app.watermeter.eventBus.GetElectReadListEvent;
 import com.app.watermeter.eventBus.GetGasReChargeListEvent;
 import com.app.watermeter.eventBus.GetGasReadListEvent;
+import com.app.watermeter.eventBus.GetHomeMeterListEvent;
 import com.app.watermeter.eventBus.GetMeterInfoEvent;
 import com.app.watermeter.eventBus.GetMeterListEvent;
 import com.app.watermeter.eventBus.GetMeterTypeEvent;
@@ -104,9 +105,13 @@ public class MeterManager {
     /**
      * 获取列表数据,指定TYPE
      */
-    public void getMeterList(final int meterType) {
+    public void getMeterList(final int meterType, final int offset, final int count,final boolean isHomeData) {
         Map<String, String> params = new HashMap<>();
         params.put("type", meterType + "");
+        if (count > 0) {
+            params.put("offset", offset + "");
+            params.put("count", count + "");
+        }
         dataInstance.sendGetRequestData(CommonUrl.METER_LIST_URL, params)
                 .execute(new GenericsCallback<Result>(new JsonGenericsSerializator()) {
                     @Override
@@ -128,8 +133,12 @@ public class MeterManager {
                         String jsonString = gson.toJson(result.getData());
                         List<MeterInfoModel> list = gson.fromJson(jsonString.toString(), new TypeToken<List<MeterInfoModel>>() {
                         }.getType());
+                        if (isHomeData) {
+                            EventBus.getDefault().post(new GetHomeMeterListEvent(list, meterType));
+                        } else {
+                            EventBus.getDefault().post(new GetMeterListEvent(list, meterType));
 
-                        EventBus.getDefault().post(new GetMeterListEvent(list, meterType));
+                        }
                     }
                 });
     }
