@@ -47,6 +47,8 @@ public class HomeFragment extends BaseFragment {
     @BindView(R.id.vpGas)
     ViewPager vpGas;
 
+    int meterType;
+
     WaterPagerAdapter waterAdapter;
     ElectricityPagerAdapter electricityAdapter;
     GasPagerAdapter gasAdapter;
@@ -100,7 +102,7 @@ public class HomeFragment extends BaseFragment {
     private void initListData(List<MeterInfoModel> list,int type) {
 
         switch (type) {
-            case MeterTypeModel.METER_WATER:
+            case CommonParams.TYPE_WATER:
                 meterList = list;
                 vpWater.setPageMargin(5);
                 vpWater.setOffscreenPageLimit(3);
@@ -110,7 +112,7 @@ public class HomeFragment extends BaseFragment {
                 vpWater.setAdapter(waterAdapter);
                 vpWater.setCurrentItem(1);
                 break;
-            case MeterTypeModel.METER_ELECT:
+            case CommonParams.TYPE_ELECT:
                 electList = list;
                 vpElectricity.setPageMargin(5);
                 vpElectricity.setOffscreenPageLimit(3);
@@ -121,7 +123,7 @@ public class HomeFragment extends BaseFragment {
                 vpElectricity.setAdapter(electricityAdapter);
                 vpElectricity.setCurrentItem(1);
                 break;
-            case MeterTypeModel.METER_GAS:
+            case CommonParams.TYPE_GAS:
                 gasList = list;
                 vpGas.setPageMargin(5);
                 vpGas.setOffscreenPageLimit(3);

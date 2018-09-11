@@ -8,8 +8,11 @@ import android.support.v4.view.ViewPager;
 
 import com.app.watermeter.R;
 import com.app.watermeter.common.CommonParams;
+import com.app.watermeter.eventBus.GetElectReChargeListEvent;
 import com.app.watermeter.eventBus.GetElectReadListEvent;
+import com.app.watermeter.eventBus.GetGasReChargeListEvent;
 import com.app.watermeter.eventBus.GetGasReadListEvent;
+import com.app.watermeter.eventBus.GetWaterReChargeListEvent;
 import com.app.watermeter.eventBus.GetWaterReadListEvent;
 import com.app.watermeter.model.MeterReChargeModel;
 import com.app.watermeter.model.MeterTypeModel;
@@ -92,19 +95,19 @@ public class PreStorageSaveActivity extends BaseActivity {
             for (MeterTypeModel model : list) {
                 switch (model.getId())
                 {
-                    case MeterTypeModel.METER_WATER:
+                    case CommonParams.TYPE_WATER:
                         mViewPagerFragments.add(WaterReadAndReChargeFragment.newInstance(model.getId(), model.getName_zh(), pageType));
                         mTitles.add(model.getName_zh());
                         break;
-                    case MeterTypeModel.METER_ELECT:
+                    case CommonParams.TYPE_ELECT:
                         mViewPagerFragments.add(ElectReadAndReChargeFragment.newInstance(model.getId(), model.getName_zh(), pageType));
                         mTitles.add(model.getName_zh());
                         break;
-                    case MeterTypeModel.METER_GAS:
+                    case CommonParams.TYPE_GAS:
                         mViewPagerFragments.add(GasReadAndReChargeFragment.newInstance(model.getId(), model.getName_zh(), pageType));
                         mTitles.add(model.getName_zh());
                         break;
-                }
+                  }
             }
         }
         else

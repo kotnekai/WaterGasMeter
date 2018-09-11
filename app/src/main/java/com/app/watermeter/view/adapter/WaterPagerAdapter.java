@@ -87,7 +87,7 @@ public class WaterPagerAdapter extends PagerAdapter {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                context.startActivity(MeterDetailActivity.makeIntent(context, info.getMachine_sn(), CommonParams.TYPE_WATER));
+                context.startActivity(MeterDetailActivity.makeIntent(context, info.getId(), info.getMachine_sn(),info.getFinal_read_at(), CommonParams.TYPE_WATER));
             }
         });
         return view;

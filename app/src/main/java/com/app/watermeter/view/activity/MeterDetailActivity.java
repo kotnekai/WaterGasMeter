@@ -11,11 +11,15 @@ import com.app.watermeter.R;
 import com.app.watermeter.common.ComApplication;
 import com.app.watermeter.common.CommonParams;
 import com.app.watermeter.common.Constants;
+import com.app.watermeter.eventBus.GetChartReadListEvent;
+import com.app.watermeter.eventBus.GetDetailReadListEvent;
 import com.app.watermeter.eventBus.GetMeterInfoEvent;
 import com.app.watermeter.eventBus.UnBindErrEvent;
 import com.app.watermeter.eventBus.UnBindEvent;
 import com.app.watermeter.manager.MeterManager;
 import com.app.watermeter.model.MeterInfoModel;
+import com.app.watermeter.model.MeterReadModel;
+import com.app.watermeter.utils.DateUtils;
 import com.app.watermeter.utils.ToastUtil;
 import com.app.watermeter.view.base.BaseActivity;
 import com.app.watermeter.view.marker.MeterChartMarkerView;
@@ -35,6 +39,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -43,7 +48,6 @@ import butterknife.OnClick;
  * @author admin
  */
 public class MeterDetailActivity extends BaseActivity {
-
 
 
     Context mContext;
@@ -76,14 +80,19 @@ public class MeterDetailActivity extends BaseActivity {
     @BindView(R.id.lineChart)
     LineChart mChart;
 
+    private int meterId;
     private int meterType;
+    private long mTimeStamp;
     private String meterSn;
     MeterInfoModel model;
+    List<MeterReadModel> chartList = new ArrayList<>();
 
-    public static Intent makeIntent(Context context, String meterSn, int type) {
+    public static Intent makeIntent(Context context, int meterId, String meterSn, String dateTime, int type) {
         Intent intent = new Intent(context, MeterDetailActivity.class);
+        intent.putExtra(CommonParams.METER_ID, meterId);
         intent.putExtra(CommonParams.METER_TYPE, type);
         intent.putExtra(CommonParams.METER_SN, meterSn);
+        intent.putExtra(CommonParams.METER_TIME, dateTime);
         return intent;
     }
 
@@ -111,6 +120,7 @@ public class MeterDetailActivity extends BaseActivity {
     public void onEvent(UnBindEvent event) {
         ToastUtil.showLong(event.getResult().getMessage());
     }
+
     /**
      * 接口返回
      */
@@ -126,8 +136,10 @@ public class MeterDetailActivity extends BaseActivity {
         initIntent();
         initData();
         initMPAndroidChart();
+        initChartData();
 
     }
+
 
     private void initMPAndroidChart() {
 //        mChart.setIsDrag(true);
@@ -290,8 +302,12 @@ public class MeterDetailActivity extends BaseActivity {
      */
     private void initIntent() {
         Intent intent = getIntent();
+        meterId = intent.getIntExtra(CommonParams.METER_ID, 0);
         meterType = intent.getIntExtra(CommonParams.METER_TYPE, CommonParams.TYPE_WATER);
         meterSn = intent.getStringExtra(CommonParams.METER_SN);
+        String time = intent.getStringExtra(CommonParams.METER_TIME);
+
+        mTimeStamp = DateUtils.getTimeStampByDate(time, DateUtils.DATE_FORMAT_DAY2);
     }
 
     /**
@@ -313,6 +329,13 @@ public class MeterDetailActivity extends BaseActivity {
     }
 
     /**
+     * 图表数据
+     */
+    private void initChartData() {
+        MeterManager.getInstance().getRePayList(0, 0, meterType, meterId, mTimeStamp);
+    }
+
+    /**
      * 接口返回
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -323,34 +346,52 @@ public class MeterDetailActivity extends BaseActivity {
 
             switch (ComApplication.currentLanguage) {
                 case Constants.LANGUAGE_CHINA:
-                    tvAddress.setText(model.getLocation_zh()+model.getPosition_zh());
+                    tvAddress.setText(model.getLocation_zh() + model.getPosition_zh());
                     break;
                 case Constants.LANGUAGE_ENGLISH:
-                    tvAddress.setText(model.getLocation_en()+model.getPosition_en());
+                    tvAddress.setText(model.getLocation_en() + model.getPosition_en());
                     break;
                 case Constants.LANGUAGE_KH:
-                    tvAddress.setText(model.getLocation_kh()+model.getPosition_kh());
+                    tvAddress.setText(model.getLocation_kh() + model.getPosition_kh());
                     break;
                 default:
-                    tvAddress.setText(model.getLocation_zh()+model.getPosition_zh());
+                    tvAddress.setText(model.getLocation_zh() + model.getPosition_zh());
             }
-            tvUnit.setText(String.format(mContext.getString(R.string.square_detail),model.getUnit()+""));
-            tvLastValue.setText(model.getOld_degree()+"");
+            tvUnit.setText(String.format(mContext.getString(R.string.square_detail), model.getUnit() + ""));
+            tvLastValue.setText(model.getOld_degree() + "");
             tvLastDate.setText(model.getOld_read_at());
-            tvCurrentValue.setText(model.getDegree()+"");
+            tvCurrentValue.setText(model.getDegree() + "");
             tvCurrentDate.setText(model.getFinal_read_at());
-            tvMoney.setText(model.getBalance()+"");
+            tvMoney.setText(model.getBalance() + "");
         }
     }
+
+    /**
+     * 接口返回--缴费
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(GetChartReadListEvent event) {
+        if (event.getList()!=null)
+        {
+            chartList = event.getList();
+
+
+            //组合时间
+            //组合数值
+            //写X轴Y轴
+
+        }
+    }
+
 
     @OnClick({R.id.tvGotoPayment, R.id.tvGotoPerStorage, R.id.tvCharge})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tvGotoPayment:
-                startActivity(PerStorageSaveListActivity.makeIntent(mContext,model.getId(), meterType, CommonParams.PAGE_TYPE_READ));
+                startActivity(PerStorageSaveListActivity.makeIntent(mContext, model.getId(), meterType, CommonParams.PAGE_TYPE_READ));
                 break;
             case R.id.tvGotoPerStorage:
-                startActivity(PerStorageSaveListActivity.makeIntent(mContext,model.getId(), meterType, CommonParams.PAGE_TYPE_RECHARGE));
+                startActivity(PerStorageSaveListActivity.makeIntent(mContext, model.getId(), meterType, CommonParams.PAGE_TYPE_RECHARGE));
                 break;
             case R.id.tvCharge:
                 startActivity(PayActionActivity.makeIntent(mContext));

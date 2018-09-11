@@ -173,7 +173,7 @@ public class ElectReadAndReChargeFragment extends BaseFragment {
             MeterManager.getInstance().getReChargeList(currentPageSize, dataSize, meterType,0);
         } else {
             //缴费明细
-            MeterManager.getInstance().getRePayList(currentPageSize, dataSize, meterType,0);
+            MeterManager.getInstance().getRePayList(currentPageSize, dataSize, meterType,0,0);
         }
     }
 

@@ -34,9 +34,11 @@ import butterknife.BindView;
 public class MeterListActivity extends BaseActivity {
 
     public static final String METER_TYPE = "meterType";
+    public static final String TYPE_ID = "typeID";
 
     //默认值
     private int typeValue;
+    private int typeId;
     //当前类计数量
     private int currentPageSize = 0;
     //每次请求数量
@@ -54,9 +56,9 @@ public class MeterListActivity extends BaseActivity {
     List<MeterInfoModel> meterLists = new ArrayList<>();
 
 
-    public static Intent makeIntent(Context context, int type) {
+    public static Intent makeIntent(Context context, int meterType) {
         Intent intent = new Intent(context, MeterListActivity.class);
-        intent.putExtra(METER_TYPE, type);
+        intent.putExtra(METER_TYPE, meterType);
         return intent;
     }
 
@@ -83,6 +85,7 @@ public class MeterListActivity extends BaseActivity {
      */
     private void initIntent() {
         Intent intent = getIntent();
+        typeId = intent.getIntExtra(TYPE_ID, 0);
         typeValue = intent.getIntExtra(METER_TYPE, CommonParams.TYPE_WATER);
     }
 
@@ -136,14 +139,6 @@ public class MeterListActivity extends BaseActivity {
     private void addListData() {
         MeterManager.getInstance().getMeterList(typeValue,currentPageSize, dataSize,false);
     }
-
-    private void addMore() {
-        for (int i = 0; i < 10; i++) {
-            MeterInfoModel model = new MeterInfoModel();
-            meterLists.add(model);
-        }
-    }
-
 
     /**
      * 接口返回

@@ -9,6 +9,7 @@ import com.app.watermeter.common.CommonParams;
 import com.app.watermeter.common.CommonUrl;
 import com.app.watermeter.eventBus.BindEvent;
 import com.app.watermeter.eventBus.DefaultResultEvent;
+import com.app.watermeter.eventBus.GetChartReadListEvent;
 import com.app.watermeter.eventBus.GetDetailReChargeListEvent;
 import com.app.watermeter.eventBus.GetDetailReadListEvent;
 import com.app.watermeter.eventBus.GetElectReChargeListEvent;
@@ -237,13 +238,16 @@ public class MeterManager {
      * 获取缴费明细
      * https://www.showdoc.cc/web/#/137924192608060?page_id=789816901624533
      */
-    public void getRePayList(int offset, int count, final int type, final int machine) {
+    public void getRePayList(int offset, int count, final int type, final int machine,final long dateTime) {
         Map<String, String> params = new HashMap<>();
         params.put("offset", offset + "");
         params.put("count", count + "");
         params.put("type", type + "");
         if (machine > 0) {
             params.put("machine", machine + "");
+        }
+        if (dateTime>0) {
+            params.put("date", dateTime + "");
         }
         dataInstance.sendGetRequestData(CommonUrl.METER_READ_LIST_URL, params)
                 .execute(new GenericsCallback<Result>(new JsonGenericsSerializator()) {
@@ -267,17 +271,21 @@ public class MeterManager {
                         }.getType());
 
                         if (machine > 0) {
-                            EventBus.getDefault().post(new GetDetailReadListEvent(list));
+                            if (dateTime > 0) {
+                                EventBus.getDefault().post(new GetChartReadListEvent(list));
+                            } else {
+                                EventBus.getDefault().post(new GetDetailReadListEvent(list));
+                            }
                         } else {
                             switch (type) {
-                                case MeterTypeModel.METER_WATER:
+                                case CommonParams.TYPE_WATER:
                                     EventBus.getDefault().post(new GetWaterReadListEvent(list));
                                     break;
-                                case MeterTypeModel.METER_ELECT:
+                                case CommonParams.TYPE_ELECT:
                                     EventBus.getDefault().post(new GetElectReadListEvent(list));
 
                                     break;
-                                case MeterTypeModel.METER_GAS:
+                                case CommonParams.TYPE_GAS:
                                     EventBus.getDefault().post(new GetGasReadListEvent(list));
                                     break;
                             }
@@ -324,13 +332,13 @@ public class MeterManager {
                             EventBus.getDefault().post(new GetDetailReChargeListEvent(list));
                         } else {
                             switch (type) {
-                                case MeterTypeModel.METER_WATER:
+                                case CommonParams.TYPE_WATER:
                                     EventBus.getDefault().post(new GetWaterReChargeListEvent(list));
                                     break;
-                                case MeterTypeModel.METER_ELECT:
+                                case CommonParams.TYPE_ELECT:
                                     EventBus.getDefault().post(new GetElectReChargeListEvent(list));
                                     break;
-                                case MeterTypeModel.METER_GAS:
+                                case CommonParams.TYPE_GAS:
                                     EventBus.getDefault().post(new GetGasReChargeListEvent(list));
                                     break;
                             }
