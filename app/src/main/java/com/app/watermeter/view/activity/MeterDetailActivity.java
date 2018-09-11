@@ -410,8 +410,6 @@ public class MeterDetailActivity extends BaseActivity {
                 }
             }
 
-//                yVals.add(new Entry(hour, chartList.get(i).getDegree()));
-//                xVals.add(new XAxisEntry(hour + "", false));
             tempYvals.add(chartList.get(i).getDegree());
         }
 

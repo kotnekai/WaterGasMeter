@@ -346,4 +346,100 @@ public class MeterManager {
                     }
                 });
     }
+
+
+
+
+    /**
+     * 获取缴费明细
+     * https://www.showdoc.cc/web/#/137924192608060?page_id=789816901624533
+     */
+    public void getRePayList2(int offset, int count, final int type, final int machine,final long dateTime) {
+        Map<String, String> params = new HashMap<>();
+        params.put("offset", offset + "");
+        params.put("count", count + "");
+        params.put("type", type + "");
+        if (machine > 0) {
+            params.put("machine", machine + "");
+        }
+        if (dateTime>0) {
+            params.put("date", dateTime + "");
+        }
+        dataInstance.sendGetRequestData(CommonUrl.METER_READ_LIST_URL, params)
+                .execute(new GenericsCallback<Result>(new JsonGenericsSerializator()) {
+                    @Override
+                    public void onError(Response response, Call call, Exception e, int id) {
+                        String message = e.getMessage();
+                      /*  String errorMsg = JsonUtils.getErrorMsg(response);
+                        EventBus.getDefault().post(new ErrorResponseEvent(errorMsg, CommonPageState.login_page));*/
+                        Log.d("admin", "onError: message=" + message);
+                    }
+
+                    @Override
+                    public void onNetWorkError(Response response, String errorMsg, int NetWorkCode) {
+                        Log.d("admin", "onError: errorMsg=" + errorMsg);
+                    }
+
+                    @Override
+                    public void onResponse(Result result, int id) {
+                        String jsonString = gson.toJson(result.getData());
+                        List<MeterReadModel> list = gson.fromJson(jsonString.toString(), new TypeToken<List<MeterReadModel>>() {
+                        }.getType());
+
+                        if (machine > 0) {
+                            if (dateTime > 0) {
+                                EventBus.getDefault().post(new GetChartReadListEvent(list));
+                            } else {
+                                EventBus.getDefault().post(new GetDetailReadListEvent(list));
+                            }
+                        } else {
+                                EventBus.getDefault().post(new GetReadListEvent(list,type));
+                            }
+                        }
+
+                });
+    }
+
+
+    /**
+     * 获取预存明细
+     * https://www.showdoc.cc/web/#/137924192608060?page_id=789816901624533
+     */
+    public void getReChargeList2(int offset, int count, final int type, final int machine) {
+        Map<String, String> params = new HashMap<>();
+        params.put("offset", offset + "");
+        params.put("count", count + "");
+        params.put("type", type + "");
+        if (machine > 0) {
+            params.put("machine", machine + "");
+        }
+        dataInstance.sendGetRequestData(CommonUrl.METER_RECHARGE_LIST_URL, params)
+                .execute(new GenericsCallback<Result>(new JsonGenericsSerializator()) {
+                    @Override
+                    public void onError(Response response, Call call, Exception e, int id) {
+                        String message = e.getMessage();
+                      /*  String errorMsg = JsonUtils.getErrorMsg(response);
+                        EventBus.getDefault().post(new ErrorResponseEvent(errorMsg, CommonPageState.login_page));*/
+                        Log.d("admin", "onError: message=" + message);
+                    }
+
+                    @Override
+                    public void onNetWorkError(Response response, String errorMsg, int NetWorkCode) {
+                        Log.d("admin", "onError: errorMsg=" + errorMsg);
+                    }
+
+                    @Override
+                    public void onResponse(Result result, int id) {
+                        String jsonString = gson.toJson(result.getData());
+                        List<MeterReChargeModel> list = gson.fromJson(jsonString.toString(), new TypeToken<List<MeterReChargeModel>>() {
+                        }.getType());
+                        if (machine > 0) {
+                            EventBus.getDefault().post(new GetDetailReChargeListEvent(list));
+                        } else {
+                            EventBus.getDefault().post(new GetReChargeListEvent(list,type));
+
+                        }
+                    }
+                });
+    }
 }

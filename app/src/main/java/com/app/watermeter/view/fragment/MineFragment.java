@@ -6,6 +6,7 @@ import android.widget.RelativeLayout;
 import com.app.watermeter.R;
 import com.app.watermeter.common.CommonParams;
 import com.app.watermeter.view.activity.PersonInfoActivity;
+import com.app.watermeter.view.activity.PreStorageSave2Activity;
 import com.app.watermeter.view.activity.PreStorageSaveActivity;
 import com.app.watermeter.view.activity.SettingActivity;
 import com.app.watermeter.view.base.BaseFragment;

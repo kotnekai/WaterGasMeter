@@ -27,7 +27,10 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 
@@ -50,13 +53,24 @@ public class ReadAndReChargeFragment extends BaseFragment {
     private int currentPageSize = 0;
     //每次请求数量
     private int dataSize = 10;
+
+    //记录当前分页
+    private Map<Integer, Integer> totalCurrentPageSize = new HashMap<>();
+
+
     //预存明细
     private List<MeterReChargeModel> reChargeList = new ArrayList<>();
+    private Map<Integer, List<MeterReChargeModel>> totalChargeList = new HashMap<>();
     //缴费明细
     private List<MeterReadModel> perReadList = new ArrayList<>();
+    private Map<Integer, List<MeterReadModel>> totalReadList = new HashMap<>();
 
     private ReChargeAdapter reChargeAdapter;
+    private Map<Integer, ReChargeAdapter> totalChargeAdapters = new HashMap<>();
+
     private ReadAdapter readAdapter;
+    private Map<Integer, ReadAdapter> totalReadAdapters = new HashMap<>();
+
     private LinearLayoutManager mLayoutManager;
 
 
@@ -88,8 +102,18 @@ public class ReadAndReChargeFragment extends BaseFragment {
             mTitle = bundle.getString(KEY_TITLE);
             meterType = bundle.getInt(KEY_METER_TYPE);
             fromPage = bundle.getInt(KEY_PAGE, 1);
+            if (fromPage == CommonParams.PAGE_TYPE_RECHARGE) {
+                totalChargeList.put(meterType, new ArrayList<MeterReChargeModel>());
+                totalChargeAdapters.put(meterType, new ReChargeAdapter(getActivity(), new ArrayList<MeterReChargeModel>()));
+            } else {
+                totalReadList.put(meterType, new ArrayList<MeterReadModel>());
+                totalReadAdapters.put(meterType, new ReadAdapter(getActivity(), new ArrayList<MeterReadModel>()));
+
+            }
+            totalCurrentPageSize.put(meterType, 0);
         }
     }
+
 
     @Override
     protected void initView() {
@@ -108,12 +132,10 @@ public class ReadAndReChargeFragment extends BaseFragment {
 
         //预存明细
         if (fromPage == CommonParams.PAGE_TYPE_RECHARGE) {
-            reChargeAdapter = new ReChargeAdapter(getActivity(), reChargeList);
-            recyclerView.setAdapter(reChargeAdapter);
+            recyclerView.setAdapter(new ReChargeAdapter(getActivity(), new ArrayList<MeterReChargeModel>()));
         } else {
             //缴费明细
-            readAdapter = new ReadAdapter(getActivity(), perReadList);
-            recyclerView.setAdapter(readAdapter);
+            recyclerView.setAdapter(new ReadAdapter(getActivity(), new ArrayList<MeterReadModel>()));
         }
         recyclerView.scrollToPosition(0);
 
@@ -121,12 +143,14 @@ public class ReadAndReChargeFragment extends BaseFragment {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 if (fromPage == CommonParams.PAGE_TYPE_RECHARGE) {
-                    reChargeList.clear();
-                    currentPageSize = 0;
+
+                    totalCurrentPageSize.put(meterType, 0);
+                    totalChargeList.put(meterType, new ArrayList<MeterReChargeModel>());
                     initListData(meterType, fromPage);
                 } else {
-                    perReadList.clear();
-                    currentPageSize = 0;
+
+                    totalCurrentPageSize.put(meterType, 0);
+                    totalChargeList.put(meterType, new ArrayList<MeterReChargeModel>());
                     initListData(meterType, fromPage);
                 }
 
@@ -170,10 +194,10 @@ public class ReadAndReChargeFragment extends BaseFragment {
     private void initListData(int meterType, int pageType) {
         if (pageType == CommonParams.PAGE_TYPE_RECHARGE) {
             //预存明细
-            MeterManager.getInstance().getReChargeList(currentPageSize, dataSize, meterType,0);
+            MeterManager.getInstance().getReChargeList2(currentPageSize, dataSize, meterType, 0);
         } else {
             //缴费明细
-            MeterManager.getInstance().getRePayList(currentPageSize, dataSize, meterType,0,0);
+            MeterManager.getInstance().getRePayList2(currentPageSize, dataSize, meterType, 0, 0);
         }
     }
 
@@ -183,14 +207,26 @@ public class ReadAndReChargeFragment extends BaseFragment {
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(GetReChargeListEvent event) {
-        currentPageSize += event.getList().size();
-        if (reChargeList.size() > 0) {
-            reChargeList.addAll(event.getList());
+        //根据类型，增加分页数
+        int pageSize = totalCurrentPageSize.get(event.getMeterType());
+        pageSize += event.getList().size();
+        totalCurrentPageSize.put(event.getMeterType(),pageSize);
+
+
+        List<MeterReChargeModel> list = (List<MeterReChargeModel>)totalChargeList.get(event.getMeterType());
+
+        if (list.size() > 0) {
+            list.addAll(event.getList());
         } else {
-            reChargeList = event.getList();
+            list = event.getList();
         }
-        reChargeAdapter.setData(reChargeList);
-        reChargeAdapter.notifyDataSetChanged();
+        totalChargeList.put(event.getMeterType(),list);
+
+
+        ReChargeAdapter adapter = totalChargeAdapters.get(meterType);
+        adapter.setData(list);
+        adapter.notifyDataSetChanged();
+
 
     }
 
@@ -199,14 +235,22 @@ public class ReadAndReChargeFragment extends BaseFragment {
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(GetReadListEvent event) {
-        currentPageSize += event.getList().size();
-        if (perReadList.size() > 0) {
-            perReadList.addAll(event.getList());
+        int pageSize = totalCurrentPageSize.get(event.getMeterType());
+        pageSize += event.getList().size();
+        totalCurrentPageSize.put(event.getMeterType(),pageSize);
+
+        List<MeterReadModel> list = (List<MeterReadModel>)totalReadList.get(event.getMeterType());
+
+        if (list.size() > 0) {
+            list.addAll(event.getList());
         } else {
-            perReadList = event.getList();
+            list = event.getList();
         }
-        readAdapter.setData(perReadList);
-        readAdapter.notifyDataSetChanged();
+        totalReadList.put(event.getMeterType(),list);
+
+        ReadAdapter adapter = totalReadAdapters.get(meterType);
+        adapter.setData(list);
+        adapter.notifyDataSetChanged();
     }
 }
 /*
