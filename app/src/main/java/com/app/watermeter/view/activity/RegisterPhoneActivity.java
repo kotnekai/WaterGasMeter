@@ -3,12 +3,14 @@ package com.app.watermeter.view.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.app.watermeter.R;
+import com.app.watermeter.common.CommonParams;
 import com.app.watermeter.utils.AccountValidatorUtil;
 import com.app.watermeter.utils.EmptyUtil;
 import com.app.watermeter.utils.ToastUtil;
@@ -30,6 +32,7 @@ public class RegisterPhoneActivity extends BaseActivity {
 
     private String countryCode;
     private String phoneNumber;
+    private int fromType;
 
     @Override
     protected int getCenterView() {
@@ -37,8 +40,21 @@ public class RegisterPhoneActivity extends BaseActivity {
     }
 
 
-    public static Intent makeIntent(Context context) {
-        return new Intent(context, RegisterPhoneActivity.class);
+    public static Intent makeIntent(Context context,int fromType) {
+        Intent intent = new Intent(context, RegisterPhoneActivity.class);
+        intent.putExtra(CommonParams.fromType,fromType);
+        return intent;
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Intent intent = getIntent();
+        if(intent==null){
+            return;
+        }
+        fromType = intent.getIntExtra(CommonParams.fromType,0);
+
     }
 
     @Override
@@ -56,11 +72,12 @@ public class RegisterPhoneActivity extends BaseActivity {
                 phoneNumber = edtPhoneNumber.getText().toString();
                 countryCode = tvCountryCode.getText().toString();
 //                boolean mobile = AccountValidatorUtil.isMobile(phoneNumber);
-//                if (!mobile || EmptyUtil.isEmpty(countryCode)) {
-//                    ToastUtil.showShort(getString(R.string.phone_number));
-//                    return;
-//                }
-                startActivity(RegisterCodeActivity.makeIntent(this, countryCode, phoneNumber));
+               if (phoneNumber==null || EmptyUtil.isEmpty(phoneNumber)) {
+                   ToastUtil.showShort(getString(R.string.phone_number));
+                 return;
+                }
+
+                startActivity(RegisterCodeActivity.makeIntent(this, countryCode, phoneNumber,fromType));
 
                 break;
         }

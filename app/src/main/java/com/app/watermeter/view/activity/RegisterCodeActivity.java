@@ -14,6 +14,7 @@ import com.app.okhttputils.Model.Result;
 import com.app.watermeter.R;
 import com.app.watermeter.common.CommonParams;
 import com.app.watermeter.eventBus.CheckSmsCodeEvent;
+import com.app.watermeter.eventBus.PersonInfoEvent;
 import com.app.watermeter.eventBus.SuccessEvent;
 import com.app.watermeter.manager.UserManager;
 import com.app.watermeter.utils.ProgressUtils;
@@ -47,6 +48,7 @@ public class RegisterCodeActivity extends BaseActivity implements TextWatcher {
     private StringBuffer veryCode;
     private String countryCode;
     private String phoneNumber;
+    private int fromType;
 
 
     @Override
@@ -54,8 +56,9 @@ public class RegisterCodeActivity extends BaseActivity implements TextWatcher {
         return R.layout.activity_register_code;
     }
 
-    public static Intent makeIntent(Context context, String countryCode, String phoneNumber) {
+    public static Intent makeIntent(Context context, String countryCode, String phoneNumber, int fromType) {
         Intent intent = new Intent(context, RegisterCodeActivity.class);
+        intent.putExtra(CommonParams.fromType, fromType);
         intent.putExtra("phoneNumber", phoneNumber);
         intent.putExtra("countryCode", countryCode);
         return intent;
@@ -71,6 +74,7 @@ public class RegisterCodeActivity extends BaseActivity implements TextWatcher {
     private void initData() {
         Intent intent = getIntent();
         if (intent != null) {
+            fromType = intent.getIntExtra(CommonParams.fromType, 0);
             countryCode = intent.getStringExtra("countryCode");
             phoneNumber = intent.getStringExtra("phoneNumber");
             String formatNumber = String.format(getString(R.string.register_verify_phone), countryCode, phoneNumber);
@@ -78,7 +82,7 @@ public class RegisterCodeActivity extends BaseActivity implements TextWatcher {
         }
         if (countTimer == null) {
             countTimer = new CountTimer(millisInFuture, countDownInterval);
-            countTimer.start();///开启倒计时
+
         }
         edtCodeFirst.addTextChangedListener(this);
         edtCodeSecond.addTextChangedListener(this);
@@ -123,8 +127,8 @@ public class RegisterCodeActivity extends BaseActivity implements TextWatcher {
         if (veryCode.length() != 4) {
             return;
         }
-        ProgressUtils.getIntance().setProgressDialog(getString(R.string.com_loading_tips),this);
-        UserManager.getInstance().checkSmsCode(phoneNumber, CommonParams.BUSS_REGISTER_TYPE,veryCode.toString());
+        ProgressUtils.getIntance().setProgressDialog(getString(R.string.com_loading_tips), this);
+        UserManager.getInstance().checkSmsCode(phoneNumber, CommonParams.BUSS_REGISTER_TYPE, veryCode.toString());
     }
 
     /**
@@ -138,6 +142,9 @@ public class RegisterCodeActivity extends BaseActivity implements TextWatcher {
         String message = result.getMessage();
         int errCode = result.getErr_code();//业务码
         ToastUtil.showShort(message);
+        if (status_code == 200 && errCode == 0) {
+            countTimer.start();///开启倒计时
+        }
     }
 
     /**
@@ -152,7 +159,11 @@ public class RegisterCodeActivity extends BaseActivity implements TextWatcher {
         int errCode = result.getErr_code();//业务码
         ToastUtil.showShort(message);
         if (status_code == 200 && errCode == 0) {
-            startActivity(RegisterInfoActivity.makeIntent(this, phoneNumber));
+            if (fromType == CommonParams.fromTypeRegister) {
+                startActivity(RegisterInfoActivity.makeIntent(this, phoneNumber));
+            } else if (fromType == CommonParams.fromTypeReset) {
+                startActivity(ResetPswActivity.makeIntent(this, ResetPswActivity.TYPE_MODIFY));
+            }
         }
 
     }
@@ -165,7 +176,7 @@ public class RegisterCodeActivity extends BaseActivity implements TextWatcher {
 
     @OnClick({R.id.tvGoNext})
     public void getCode() {
-        startActivity(RegisterInfoActivity.makeIntent(this,phoneNumber));
+        startActivity(RegisterInfoActivity.makeIntent(this, phoneNumber));
     }
 
     @Override
