@@ -55,11 +55,11 @@ public class RegisterPhoneActivity extends BaseActivity {
             case R.id.tvGoNext:
                 phoneNumber = edtPhoneNumber.getText().toString();
                 countryCode = tvCountryCode.getText().toString();
-                boolean mobile = AccountValidatorUtil.isMobile(phoneNumber);
-                if (!mobile || EmptyUtil.isEmpty(countryCode)) {
-                    ToastUtil.showShort(getString(R.string.phone_number));
-                    return;
-                }
+//                boolean mobile = AccountValidatorUtil.isMobile(phoneNumber);
+//                if (!mobile || EmptyUtil.isEmpty(countryCode)) {
+//                    ToastUtil.showShort(getString(R.string.phone_number));
+//                    return;
+//                }
                 startActivity(RegisterCodeActivity.makeIntent(this, countryCode, phoneNumber));
 
                 break;

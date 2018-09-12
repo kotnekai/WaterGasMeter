@@ -109,7 +109,7 @@ public class MeterDetailActivity extends BaseActivity {
         setHeader_RightTextClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MeterManager.getInstance().unbindMeter("42443");
+                MeterManager.getInstance().unbindMeter(model.getMachine_sn());
             }
         });
     }
