@@ -25,67 +25,22 @@
         android:textColor="@color/register_phone_code_color"
         android:textSize="24sp" />
 
-    <LinearLayout
-        android:id="@+id/llVeryCode"
+    <com.app.watermeter.view.views.SecurityCodeView
+        android:id="@+id/scv_editText"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tvPhone"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal"
         android:layout_marginEnd="20dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
-        android:gravity="center"
-        android:orientation="horizontal">
+        android:layout_below="@id/tvPhone"/>
 
-        <EditText
-            android:id="@+id/edtCodeFirst"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:background="@drawable/com_line_bg_shape"
-            android:gravity="center"
-            android:maxLength="1"
-             android:inputType="number"
-            android:textSize="25sp" />
-
-        <EditText
-            android:id="@+id/edtCodeSecond"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:maxLength="1"
-            android:inputType="number"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/com_line_bg_shape"
-            android:gravity="center"
-            android:textSize="25sp" />
-
-        <EditText
-            android:id="@+id/edtCodeThird"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/com_line_bg_shape"
-            android:gravity="center"
-            android:inputType="number"
-            android:maxLength="1"
-            android:textSize="25sp" />
-
-        <EditText
-            android:id="@+id/edtCodeFourth"
-            android:layout_width="60dp"
-            android:inputType="number"
-            android:layout_height="60dp"
-            android:maxLength="1"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/com_line_bg_shape"
-            android:gravity="center"
-            android:textSize="25sp" />
-
-    </LinearLayout>
 
     <TextView
         android:id="@+id/tvGoNext"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/llVeryCode"
+        android:layout_below="@id/scv_editText"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="70dp"
         android:background="@mipmap/anniu"

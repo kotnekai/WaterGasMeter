@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -19,6 +20,7 @@ import com.app.watermeter.manager.UserManager;
 import com.app.watermeter.utils.ProgressUtils;
 import com.app.watermeter.utils.ToastUtil;
 import com.app.watermeter.view.base.BaseActivity;
+import com.app.watermeter.view.views.SecurityCodeView;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -26,27 +28,22 @@ import org.greenrobot.eventbus.ThreadMode;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class RegisterCodeActivity extends BaseActivity implements TextWatcher {
+public class RegisterCodeActivity extends BaseActivity {
     @BindView(R.id.tvPhone)
     TextView tvPhone;
-    @BindView(R.id.edtCodeFirst)
-    EditText edtCodeFirst;
-    @BindView(R.id.edtCodeSecond)
-    EditText edtCodeSecond;
-    @BindView(R.id.edtCodeThird)
-    EditText edtCodeThird;
-    @BindView(R.id.edtCodeFourth)
-    EditText edtCodeFourth;
+
     @BindView(R.id.tvGoNext)
     TextView tvGoNext;
-    @BindView(R.id.llVeryCode)
-    LinearLayout llVeryCode;
+
     private final int millisInFuture = 60000;
     private final int countDownInterval = 1000;
+    @BindView(R.id.scv_editText)
+    SecurityCodeView scvEditText;
     private CountTimer countTimer;
     private StringBuffer veryCode;
     private String countryCode;
     private String phoneNumber;
+    private final int MAX_CODE_LENGTH = 4;//验证码长度
 
 
     @Override
@@ -80,52 +77,35 @@ public class RegisterCodeActivity extends BaseActivity implements TextWatcher {
             countTimer = new CountTimer(millisInFuture, countDownInterval);
             countTimer.start();///开启倒计时
         }
-        edtCodeFirst.addTextChangedListener(this);
-        edtCodeSecond.addTextChangedListener(this);
-        edtCodeThird.addTextChangedListener(this);
-        edtCodeFourth.addTextChangedListener(this);
 
+
+        scvEditText.setDefaultCount(MAX_CODE_LENGTH);
+        scvEditText.setInputCompleteListener(new SecurityCodeView.InputCompleteListener() {
+                 @Override
+                 public void inputComplete() {
+
+                     InputMethodManager imm = (InputMethodManager) scvEditText.getContext()
+                             .getSystemService(Context.INPUT_METHOD_SERVICE);
+                     if (imm.isActive()) {
+                         imm.hideSoftInputFromWindow(scvEditText.getApplicationWindowToken(), 0);
+                     }
+
+                     String code = scvEditText.getEditContent();
+                     ProgressUtils.getIntance().setProgressDialog(getString(R.string.com_loading_tips), RegisterCodeActivity.this);
+                     UserManager.getInstance().checkSmsCode(phoneNumber, CommonParams.BUSS_REGISTER_TYPE, code);
+                 }
+
+                 @Override
+                 public void deleteContent(boolean isDelete) {
+
+                 }
+           });
         UserManager.getInstance().sendSmsToCheck(phoneNumber, CommonParams.BUSS_REGISTER_TYPE);
 
     }
 
-    @Override
-    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-    }
 
-    @Override
-    public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-    }
-
-    @Override
-    public void afterTextChanged(Editable s) {
-        if (s == null || s.length() == 0) {
-            return;
-        }
-        getCodeNumber();
-    }
-
-    /**
-     * 拿到填入的验证码
-     */
-    private void getCodeNumber() {
-        veryCode = new StringBuffer(llVeryCode.getChildCount());
-        if (llVeryCode == null) {
-            return;
-        }
-        for (int i = 0; i < llVeryCode.getChildCount(); i++) {
-            String number = ((EditText) llVeryCode.getChildAt(i)).getText().toString();
-            veryCode.append(number);
-        }
-        ToastUtil.showShort(veryCode);
-        if (veryCode.length() != 4) {
-            return;
-        }
-        ProgressUtils.getIntance().setProgressDialog(getString(R.string.com_loading_tips),this);
-        UserManager.getInstance().checkSmsCode(phoneNumber, CommonParams.BUSS_REGISTER_TYPE,veryCode.toString());
-    }
 
     /**
      * 发送验证码结果接口返回
@@ -153,6 +133,7 @@ public class RegisterCodeActivity extends BaseActivity implements TextWatcher {
         ToastUtil.showShort(message);
         if (status_code == 200 && errCode == 0) {
             startActivity(RegisterInfoActivity.makeIntent(this, phoneNumber));
+            scvEditText.clearEditText();
         }
 
     }
@@ -165,7 +146,7 @@ public class RegisterCodeActivity extends BaseActivity implements TextWatcher {
 
     @OnClick({R.id.tvGoNext})
     public void getCode() {
-        startActivity(RegisterInfoActivity.makeIntent(this,phoneNumber));
+        startActivity(RegisterInfoActivity.makeIntent(this, phoneNumber));
     }
 
     @Override
