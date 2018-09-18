@@ -44,6 +44,7 @@ public class RegisterCodeActivity extends BaseActivity {
     private String countryCode;
     private String phoneNumber;
     private final int MAX_CODE_LENGTH = 4;//验证码长度
+    private int fromType;
 
 
     @Override
@@ -51,8 +52,9 @@ public class RegisterCodeActivity extends BaseActivity {
         return R.layout.activity_register_code;
     }
 
-    public static Intent makeIntent(Context context, String countryCode, String phoneNumber) {
+    public static Intent makeIntent(Context context, String countryCode, String phoneNumber, int fromType) {
         Intent intent = new Intent(context, RegisterCodeActivity.class);
+        intent.putExtra(CommonParams.fromType, fromType);
         intent.putExtra("phoneNumber", phoneNumber);
         intent.putExtra("countryCode", countryCode);
         return intent;
@@ -68,6 +70,7 @@ public class RegisterCodeActivity extends BaseActivity {
     private void initData() {
         Intent intent = getIntent();
         if (intent != null) {
+            fromType = intent.getIntExtra(CommonParams.fromType, 0);
             countryCode = intent.getStringExtra("countryCode");
             phoneNumber = intent.getStringExtra("phoneNumber");
             String formatNumber = String.format(getString(R.string.register_verify_phone), countryCode, phoneNumber);
@@ -75,7 +78,7 @@ public class RegisterCodeActivity extends BaseActivity {
         }
         if (countTimer == null) {
             countTimer = new CountTimer(millisInFuture, countDownInterval);
-            countTimer.start();///开启倒计时
+
         }
 
 
@@ -118,6 +121,9 @@ public class RegisterCodeActivity extends BaseActivity {
         String message = result.getMessage();
         int errCode = result.getErr_code();//业务码
         ToastUtil.showShort(message);
+        if (status_code == 200 && errCode == 0) {
+            countTimer.start();///开启倒计时
+        }
     }
 
     /**
@@ -132,7 +138,11 @@ public class RegisterCodeActivity extends BaseActivity {
         int errCode = result.getErr_code();//业务码
         ToastUtil.showShort(message);
         if (status_code == 200 && errCode == 0) {
-            startActivity(RegisterInfoActivity.makeIntent(this, phoneNumber));
+            if (fromType == CommonParams.fromTypeRegister) {
+                startActivity(RegisterInfoActivity.makeIntent(this, phoneNumber));
+            } else if (fromType == CommonParams.fromTypeReset) {
+                startActivity(ResetPswActivity.makeIntent(this, ResetPswActivity.TYPE_MODIFY));
+            }
             scvEditText.clearEditText();
         }
 
