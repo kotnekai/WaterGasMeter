@@ -15,8 +15,8 @@ public class CommonParams {
     public static final int TYPE_ELECT = 2;
     public static final int TYPE_GAS = 3;
 
-    public static final int PAGE_TYPE_RECHARGE =1;//预存明细
-    public static final int PAGE_TYPE_READ =2;//缴费明细
+    public static final int PAGE_TYPE_RECHARGE = 1;//预存明细
+    public static final int PAGE_TYPE_READ = 2;//缴费明细
 
     public static final String METTER_TYPE_JSON = "meterTypeJson";
 
@@ -31,4 +31,10 @@ public class CommonParams {
     public static int mMeterWater;
     public static int mMeterElect;
     public static int mMeterGas;
+
+    public static final int fromTypeRegister = 1;//注册
+    public static final String fromType = "fromType";//
+    public static final int fromTypeReset = 2;//重置
+
+
 }
