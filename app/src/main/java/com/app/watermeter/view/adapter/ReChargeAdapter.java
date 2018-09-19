@@ -50,7 +50,7 @@ public class ReChargeAdapter extends Adapter<ReChargeAdapter.MyViewHolder> {
         }
         holder.tvWaterSn.setText(String.format(context.getString(R.string.water_sn), reChargeModel.getMachine_type_id() + ""));
         holder.tvReChargeDate.setText(String.format(context.getString(R.string.storage_time), reChargeModel.getCreated_at()));
-        holder.tvSaveMoney.setText(reChargeModel.getRecharge_fee() + "");
+        holder.tvSaveMoney.setText("+"+reChargeModel.getRecharge_fee() + context.getString(R.string.unit_yuan));
     }
 
 

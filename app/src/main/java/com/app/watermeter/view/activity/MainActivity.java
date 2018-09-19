@@ -109,18 +109,24 @@ public class MainActivity extends BaseActivity {
                 ivHomeTab.setSelected(true);
                 ivMeterTab.setSelected(false);
                 ivMineTab.setSelected(false);
+                setHeaderTitle(getString(R.string.main_home));
+
                 break;
             case R.id.ivMeterTab:
                 viewPager.setCurrentItem(1);
                 ivHomeTab.setSelected(false);
                 ivMeterTab.setSelected(true);
                 ivMineTab.setSelected(false);
+                setHeaderTitle(getString(R.string.binding));
+
                 break;
             case R.id.ivMineTab:
                 viewPager.setCurrentItem(2);
                 ivHomeTab.setSelected(false);
                 ivMeterTab.setSelected(false);
                 ivMineTab.setSelected(true);
+                setHeaderTitle(getString(R.string.mine));
+
                 break;
             case R.id.tvFourthTab:
                 break;

@@ -38,11 +38,13 @@
             android:layout_marginTop="30dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="18sp"
             android:layout_alignParentRight="true"
             android:layout_marginRight="15dp"
             android:text="2323" />
         <TextView
             android:id="@+id/tvSaveHints"
+            android:textColor="@color/text_color_green"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
