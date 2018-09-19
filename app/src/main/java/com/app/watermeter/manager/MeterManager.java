@@ -516,9 +516,8 @@ public class MeterManager {
                         Log.d("admin", "getMeterDetail====onResponse: response=" + result);
 //                        String jsonString = gson.toJson(result.getData());
 //                        PayResultModel model = gson.fromJson(jsonString.toString(), PayResultModel.class);
-//                        EventBus.getDefault().post(new GetPayResultEvent(model));
-                        String str = result.getData().toString();
-                        System.out.println("=====str===="+str);
+                        EventBus.getDefault().post(new GetPayResultEvent(result.getData().toString()));
+
                     }
                 });
     }

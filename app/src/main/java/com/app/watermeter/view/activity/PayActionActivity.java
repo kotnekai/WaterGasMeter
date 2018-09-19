@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.app.watermeter.R;
 import com.app.watermeter.common.CommonParams;
+import com.app.watermeter.common.CommonUrl;
 import com.app.watermeter.eventBus.GetChartReadListEvent;
 import com.app.watermeter.eventBus.GetPayResultEvent;
 import com.app.watermeter.eventBus.GetPerPayEvent;
@@ -18,6 +19,7 @@ import com.app.watermeter.manager.MeterManager;
 import com.app.watermeter.utils.DataUtils;
 import com.app.watermeter.utils.DateUtils;
 import com.app.watermeter.view.base.BaseActivity;
+import com.app.watermeter.view.base.WebViewActivity;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -117,9 +119,12 @@ public class PayActionActivity extends BaseActivity {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(GetPayResultEvent event) {
 
-        if(event.getModelInfo()!=null)
+        if(!TextUtils.isEmpty(event.getHtmlStr()))
         {
+            String html = event.getHtmlStr();
+           String htmlStr =  html.replace("./web/", CommonUrl.BASE_PAY_URL);
 
+            mContext.startActivity(WebViewActivity.makeIntent(mContext, htmlStr));
         }
     }
 }

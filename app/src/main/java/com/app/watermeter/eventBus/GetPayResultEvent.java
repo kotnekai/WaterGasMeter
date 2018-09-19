@@ -7,11 +7,13 @@ public class GetPayResultEvent {
 
     private PayResultModel payResultModel;
 
-    public GetPayResultEvent(PayResultModel model) {
-        this.payResultModel = model;
+    private String  htmlStr;
+
+    public GetPayResultEvent(String str) {
+        this.htmlStr = str;
     }
 
-    public PayResultModel getModelInfo() {
-        return payResultModel;
+    public String getHtmlStr() {
+        return htmlStr;
     }
 }
