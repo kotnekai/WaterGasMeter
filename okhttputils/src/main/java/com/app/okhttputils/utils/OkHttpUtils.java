@@ -147,11 +147,12 @@ public class OkHttpUtils {
         }
         try {
             Object o = null;
-            o = callback.parseNetworkResponse(response, id);
-            final Result result = (Result) o;
-
-            //判断网络返回200即成功
-            if (result.isSuccess()) {
+            if (response.request().url().toString().contains("ace.trade.pay"))
+            {
+                final Result result = new Result();
+                result.setMessage(response.message());
+                result.setStatus_code(response.code());
+                result.setData(response.body().string());
                 mPlatform.execute(new Runnable() {
                     @Override
                     public void run() {
@@ -163,24 +164,39 @@ public class OkHttpUtils {
                 });
             }
             else {
+                o = callback.parseNetworkResponse(response, id);
+                final Result result = (Result) o;
 
-                String errMessage="";
-                switch (result.getStatus_code())
-                {
-                    case Result.TOKEN_FAILD:
-                        errMessage = "token过期，请重新登录";
-                }
-
-                final String finalErrMessage = errMessage;
-                mPlatform.execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (result != null) {
-                            callback.onNetWorkError(response, finalErrMessage, result.getErr_code());
-                            callback.onAfter(id);
+                //判断网络返回200即成功
+                if (result.isSuccess()) {
+                    mPlatform.execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (result != null) {
+                                callback.onResponse(result, id);
+                                callback.onAfter(id);
+                            }
                         }
+                    });
+                } else {
+
+                    String errMessage = "";
+                    switch (result.getStatus_code()) {
+                        case Result.TOKEN_FAILD:
+                            errMessage = "token过期，请重新登录";
                     }
-                });
+
+                    final String finalErrMessage = errMessage;
+                    mPlatform.execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (result != null) {
+                                callback.onNetWorkError(response, finalErrMessage, result.getErr_code());
+                                callback.onAfter(id);
+                            }
+                        }
+                    });
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();

@@ -12,7 +12,11 @@ public class Result<T> {
     public static final int TOKEN_FAILD = 401;
 
     private int status_code;
+    private int return_code;
+
     private String message;
+    private String error_message;
+
     private int err_code;
     private  T data;
 
@@ -61,6 +65,22 @@ public class Result<T> {
     }
 
 
+    public int getReturn_code() {
+        return return_code;
+    }
+
+    public void setReturn_code(int return_code) {
+        this.return_code = return_code;
+    }
+
+    public String getError_message() {
+        return error_message;
+    }
+
+    public void setError_message(String error_message) {
+        this.error_message = error_message;
+    }
+
     public static <T> Result<T> httpError(String msg) {
         Result<T> result = new Result();
         result.setMessage(msg);
@@ -71,15 +91,5 @@ public class Result<T> {
     }
 
 
-    public boolean checkData(boolean throwIfException) {
-        switch(this.status_code) {
-            case STATE_OK:
-                return true;
-            case TOKEN_FAILD:
-            default:
-                return false;
-
-        }
-    }
 
 }

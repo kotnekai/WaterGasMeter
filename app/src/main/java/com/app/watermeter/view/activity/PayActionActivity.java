@@ -124,7 +124,7 @@ public class PayActionActivity extends BaseActivity {
             String html = event.getHtmlStr();
            String htmlStr =  html.replace("./web/", CommonUrl.BASE_PAY_URL);
 
-            mContext.startActivity(WebViewActivity.makeIntent(mContext, htmlStr));
+            mContext.startActivity(WebViewActivity.makeIntent(mContext, html));
         }
     }
 }
