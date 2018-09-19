@@ -123,4 +123,6 @@
     <string name="login_invalid_tip">Login is invalid, please log in again</string>
     <string name="login_out">sign out</string>
 
+    <string name="mine">mine</string>
+
 </resources>

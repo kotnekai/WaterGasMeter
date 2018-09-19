@@ -40,7 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="10dp"
-            android:text="+855"
+            android:text="+86"
             android:textSize="17sp" />
     </LinearLayout>
 
