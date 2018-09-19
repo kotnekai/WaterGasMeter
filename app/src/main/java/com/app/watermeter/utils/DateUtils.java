@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  * Created by hasee on 2017/12/25.
@@ -125,11 +126,12 @@ public class DateUtils {
 
     /**
      * 日期获取时间戳
+     *
      * @param dateTime
      * @param dateFormat
      * @return
      */
-    public static long getTimeStampByDate(String dateTime,String dateFormat) {
+    public static long getTimeStampByDate(String dateTime, String dateFormat) {
         String res;
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(dateFormat);
         Date date = null;
@@ -145,6 +147,7 @@ public class DateUtils {
 
     /**
      * 获取小时
+     *
      * @param dateTime
      * @return
      */
@@ -458,7 +461,7 @@ public class DateUtils {
     }
 
     public static long getTimeByDay(String selectTime) {
-        if (selectTime==null||selectTime.isEmpty()) {
+        if (selectTime == null || selectTime.isEmpty()) {
             return 0;
         }
         Date date = stringToDate(selectTime);
@@ -477,5 +480,13 @@ public class DateUtils {
         times[0] = hour;
         times[1] = minute;
         return times;
+    }
+
+    public static String getGMT7PayTime() {
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT_YEAR2);
+        sdf.setTimeZone(TimeZone.getTimeZone("GMT+7"));
+        String timeStr = sdf.format(calendar.getTime());
+        return timeStr;
     }
 }

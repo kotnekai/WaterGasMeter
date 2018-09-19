@@ -112,7 +112,25 @@ public class DataManager {
         }
         return postStringBuilder.build();
     }
-
+    /**
+     * 默认的post请求
+     *
+     * @param url
+     * @param params
+     * @return
+     */
+    public RequestCall sendPayPostRequestData(String url, JSONObject params) {
+        String token = getToken();
+        PostStringBuilder postStringBuilder = OkHttpUtils.postString().url(url);
+        postStringBuilder.mediaType(MediaType.parse("application/json; charset=utf-8"));
+        postStringBuilder.addHeader("Content-Type", "application/x-www-form-urlencoded");
+        if (params != null) {
+            postStringBuilder.content(params.toString());
+        } else {
+            postStringBuilder.content(new JSONObject().toString());
+        }
+        return postStringBuilder.build();
+    }
     /**
      * 只返回code的表单请求。在主线程中返回出去
      *

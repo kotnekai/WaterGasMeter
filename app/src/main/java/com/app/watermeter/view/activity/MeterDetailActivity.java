@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.DashPathEffect;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
@@ -307,8 +308,11 @@ public class MeterDetailActivity extends BaseActivity {
         meterType = intent.getIntExtra(CommonParams.METER_TYPE, CommonParams.TYPE_WATER);
         meterSn = intent.getStringExtra(CommonParams.METER_SN);
         String time = intent.getStringExtra(CommonParams.METER_TIME);
+        if (!TextUtils.isEmpty(time))
+        {
+            mTimeStamp = DateUtils.getTimeStampByDate(time, DateUtils.DATE_FORMAT_DAY2);
 
-        mTimeStamp = DateUtils.getTimeStampByDate(time, DateUtils.DATE_FORMAT_DAY2);
+        }
     }
 
     /**
@@ -527,7 +531,7 @@ public class MeterDetailActivity extends BaseActivity {
                 startActivity(PerStorageSaveListActivity.makeIntent(mContext, model.getId(), meterType, CommonParams.PAGE_TYPE_RECHARGE));
                 break;
             case R.id.tvCharge:
-                startActivity(PayActionActivity.makeIntent(mContext));
+                startActivity(PayActionActivity.makeIntent(mContext,meterId));
                 break;
 
         }

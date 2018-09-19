@@ -13,6 +13,7 @@ import com.app.watermeter.eventBus.LoginEvent;
 import com.app.watermeter.manager.MeterManager;
 import com.app.watermeter.model.MeterInfoModel;
 import com.app.watermeter.model.MeterTypeModel;
+import com.app.watermeter.utils.DateUtils;
 import com.app.watermeter.utils.PreferencesUtils;
 import com.app.watermeter.view.activity.MeterListActivity;
 import com.app.watermeter.view.adapter.ElectricityPagerAdapter;

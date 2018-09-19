@@ -36,5 +36,13 @@ public class CommonParams {
     public static final String fromType = "fromType";//
     public static final int fromTypeReset = 2;//重置
 
+    public static final String USD = "USD";
+    public static final String KDR = "KDR";
+
+
+
+    public static final String SECURITY_KEY = "key_ace_uat_1819";
+    public static final String PARTNER  = "1819";
+
 
 }

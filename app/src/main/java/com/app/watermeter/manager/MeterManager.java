@@ -20,6 +20,8 @@ import com.app.watermeter.eventBus.GetHomeMeterListEvent;
 import com.app.watermeter.eventBus.GetMeterInfoEvent;
 import com.app.watermeter.eventBus.GetMeterListEvent;
 import com.app.watermeter.eventBus.GetMeterTypeEvent;
+import com.app.watermeter.eventBus.GetPayResultEvent;
+import com.app.watermeter.eventBus.GetPerPayEvent;
 import com.app.watermeter.eventBus.GetReChargeListEvent;
 import com.app.watermeter.eventBus.GetReadListEvent;
 import com.app.watermeter.eventBus.GetWaterReChargeListEvent;
@@ -30,12 +32,16 @@ import com.app.watermeter.model.MeterInfoModel;
 import com.app.watermeter.model.MeterTypeModel;
 import com.app.watermeter.model.MeterReChargeModel;
 import com.app.watermeter.model.MeterReadModel;
+import com.app.watermeter.model.PayResultModel;
+import com.app.watermeter.model.PerPayModel;
 import com.app.watermeter.okhttp.DataManager;
 import com.app.watermeter.utils.PreferencesUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import org.greenrobot.eventbus.EventBus;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.List;
@@ -106,7 +112,7 @@ public class MeterManager {
     /**
      * 获取列表数据,指定TYPE
      */
-    public void getMeterList(final int meterType, final int offset, final int count,final boolean isHomeData) {
+    public void getMeterList(final int meterType, final int offset, final int count, final boolean isHomeData) {
         Map<String, String> params = new HashMap<>();
         params.put("type", meterType + "");
         if (count > 0) {
@@ -238,7 +244,7 @@ public class MeterManager {
      * 获取缴费明细
      * https://www.showdoc.cc/web/#/137924192608060?page_id=789816901624533
      */
-    public void getRePayList(int offset, int count, final int type, final int machine,final long dateTime) {
+    public void getRePayList(int offset, int count, final int type, final int machine, final long dateTime) {
         Map<String, String> params = new HashMap<>();
         params.put("offset", offset + "");
         params.put("count", count + "");
@@ -246,7 +252,7 @@ public class MeterManager {
         if (machine > 0) {
             params.put("machine", machine + "");
         }
-        if (dateTime>0) {
+        if (dateTime > 0) {
             params.put("date", dateTime + "");
         }
         dataInstance.sendGetRequestData(CommonUrl.METER_READ_LIST_URL, params)
@@ -348,13 +354,11 @@ public class MeterManager {
     }
 
 
-
-
     /**
      * 获取缴费明细
      * https://www.showdoc.cc/web/#/137924192608060?page_id=789816901624533
      */
-    public void getRePayList2(int offset, int count, final int type, final int machine,final long dateTime) {
+    public void getRePayList2(int offset, int count, final int type, final int machine, final long dateTime) {
         Map<String, String> params = new HashMap<>();
         params.put("offset", offset + "");
         params.put("count", count + "");
@@ -362,7 +366,7 @@ public class MeterManager {
         if (machine > 0) {
             params.put("machine", machine + "");
         }
-        if (dateTime>0) {
+        if (dateTime > 0) {
             params.put("date", dateTime + "");
         }
         dataInstance.sendGetRequestData(CommonUrl.METER_READ_LIST_URL, params)
@@ -393,9 +397,9 @@ public class MeterManager {
                                 EventBus.getDefault().post(new GetDetailReadListEvent(list));
                             }
                         } else {
-                                EventBus.getDefault().post(new GetReadListEvent(list,type));
-                            }
+                            EventBus.getDefault().post(new GetReadListEvent(list, type));
                         }
+                    }
 
                 });
     }
@@ -436,9 +440,85 @@ public class MeterManager {
                         if (machine > 0) {
                             EventBus.getDefault().post(new GetDetailReChargeListEvent(list));
                         } else {
-                            EventBus.getDefault().post(new GetReChargeListEvent(list,type));
+                            EventBus.getDefault().post(new GetReChargeListEvent(list, type));
 
                         }
+                    }
+                });
+    }
+
+
+    /**
+     * 下单充钱
+     */
+    public void saveMoney(final int machine_id, float amount, String currency) {
+        JSONObject params = new JSONObject();
+        try {
+            params.put("machine_id", machine_id + "");
+            params.put("amount", amount + "");
+            params.put("currency", currency);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        dataInstance.sendPostRequestData(CommonUrl.PREPAY_URL, params)
+                .execute(new GenericsCallback<Result>(new JsonGenericsSerializator()) {
+                    @Override
+                    public void onError(Response response, Call call, Exception e, int id) {
+                        String message = e.getMessage();
+                        Log.d("admin", "onError: message=" + message);
+                    }
+
+                    @Override
+                    public void onNetWorkError(Response response, String errorMsg, int NetWorkCode) {
+                        Log.d("admin", "onError: errorMsg=" + errorMsg);
+                    }
+
+                    @Override
+                    public void onResponse(Result result, int id) {
+                        Log.d("admin", "getMeterDetail====onResponse: response=" + result);
+                        String jsonString = gson.toJson(result.getData());
+                        PerPayModel model = gson.fromJson(jsonString.toString(), PerPayModel.class);
+                        EventBus.getDefault().post(new GetPerPayEvent(model));
+                    }
+                });
+    }
+
+
+    /**
+     * 下单充钱
+     */
+    public void paymentAction( int trade_id, String call_time,String security) {
+        JSONObject params = new JSONObject();
+        try {
+            params.put("partner ", CommonParams.SECURITY_KEY);
+            params.put("trade_id", trade_id + "");
+            params.put("call_time", call_time);
+            params.put("security ", security);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        dataInstance.sendPayPostRequestData(CommonUrl.PAY_URL, params)
+                .execute(new GenericsCallback<Result>(new JsonGenericsSerializator()) {
+                    @Override
+                    public void onError(Response response, Call call, Exception e, int id) {
+                        String message = e.getMessage();
+                        Log.d("admin", "onError: message=" + message);
+                    }
+
+                    @Override
+                    public void onNetWorkError(Response response, String errorMsg, int NetWorkCode) {
+                        Log.d("admin", "onError: errorMsg=" + errorMsg);
+                    }
+
+                    @Override
+                    public void onResponse(Result result, int id) {
+                        Log.d("admin", "getMeterDetail====onResponse: response=" + result);
+//                        String jsonString = gson.toJson(result.getData());
+//                        PayResultModel model = gson.fromJson(jsonString.toString(), PayResultModel.class);
+//                        EventBus.getDefault().post(new GetPayResultEvent(model));
+                        String str = result.getData().toString();
+                        System.out.println("=====str===="+str);
                     }
                 });
     }
