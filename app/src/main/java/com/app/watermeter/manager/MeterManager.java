@@ -20,6 +20,7 @@ import com.app.watermeter.eventBus.GetHomeMeterListEvent;
 import com.app.watermeter.eventBus.GetMeterInfoEvent;
 import com.app.watermeter.eventBus.GetMeterListEvent;
 import com.app.watermeter.eventBus.GetMeterTypeEvent;
+import com.app.watermeter.eventBus.GetOrderInfoEvent;
 import com.app.watermeter.eventBus.GetPayResultEvent;
 import com.app.watermeter.eventBus.GetPerPayEvent;
 import com.app.watermeter.eventBus.GetReChargeListEvent;
@@ -32,6 +33,7 @@ import com.app.watermeter.model.MeterInfoModel;
 import com.app.watermeter.model.MeterTypeModel;
 import com.app.watermeter.model.MeterReChargeModel;
 import com.app.watermeter.model.MeterReadModel;
+import com.app.watermeter.model.OrderInfoModel;
 import com.app.watermeter.model.PayResultModel;
 import com.app.watermeter.model.PerPayModel;
 import com.app.watermeter.okhttp.DataManager;
@@ -475,7 +477,7 @@ public class MeterManager {
 
                     @Override
                     public void onResponse(Result result, int id) {
-                        Log.d("admin", "getMeterDetail====onResponse: response=" + result);
+                        Log.d("admin", "saveMoney====onResponse: response=" + result);
                         String jsonString = gson.toJson(result.getData());
                         PerPayModel model = gson.fromJson(jsonString.toString(), PerPayModel.class);
                         EventBus.getDefault().post(new GetPerPayEvent(model));
@@ -485,12 +487,12 @@ public class MeterManager {
 
 
     /**
-     * 下单充钱
+     * 在线支付
      */
     public void paymentAction( int trade_id, String call_time,String security) {
         JSONObject params = new JSONObject();
         try {
-            params.put("partner ", CommonParams.SECURITY_KEY);
+            params.put("partner ", CommonParams.PARTNER);
             params.put("trade_id", trade_id + "");
             params.put("call_time", call_time);
             params.put("security ", security);
@@ -513,11 +515,44 @@ public class MeterManager {
 
                     @Override
                     public void onResponse(Result result, int id) {
-                        Log.d("admin", "getMeterDetail====onResponse: response=" + result);
+                        Log.d("admin", "paymentAction====onResponse: response=" + result);
 //                        String jsonString = gson.toJson(result.getData());
 //                        PayResultModel model = gson.fromJson(jsonString.toString(), PayResultModel.class);
                         EventBus.getDefault().post(new GetPayResultEvent(result.getData().toString()));
 
+                    }
+                });
+    }
+
+    /**
+     * 查询订单信息
+     */
+    public void getOrderInfo(final String out_trade_no) {
+        JSONObject params = new JSONObject();
+        try {
+            params.put("out_trade_no", out_trade_no);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        dataInstance.sendPostRequestData(CommonUrl.ORDER_INFO_URL, params)
+                .execute(new GenericsCallback<Result>(new JsonGenericsSerializator()) {
+                    @Override
+                    public void onError(Response response, Call call, Exception e, int id) {
+                        String message = e.getMessage();
+                        Log.d("admin", "onError: message=" + message);
+                    }
+
+                    @Override
+                    public void onNetWorkError(Response response, String errorMsg, int NetWorkCode) {
+                        Log.d("admin", "onError: errorMsg=" + errorMsg);
+                    }
+
+                    @Override
+                    public void onResponse(Result result, int id) {
+                        Log.d("admin", "getOrderInfo====onResponse: response=" + result);
+                        String jsonString = gson.toJson(result.getData());
+                        OrderInfoModel model = gson.fromJson(jsonString.toString(), OrderInfoModel.class);
+                        EventBus.getDefault().post(new GetOrderInfoEvent(model));
                     }
                 });
     }

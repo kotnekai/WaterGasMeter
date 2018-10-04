@@ -86,6 +86,7 @@ public class PayActionActivity extends BaseActivity {
 //                llPayEnd.setVisibility(View.VISIBLE);
 //                tvPayAction.setText(getString(R.string.completed));
 
+
                 String money = etMoney.getText().toString().trim();
                 if (TextUtils.isEmpty(money)) {
 
@@ -107,24 +108,25 @@ public class PayActionActivity extends BaseActivity {
 
             String callTime = DateUtils.getGMT7PayTime();
 
-            String security = DataUtils.getRandomStr() + CommonParams.SECURITY_KEY + tradeId + DataUtils.getRandomStr();
+            String security = DataUtils.getRandomStr() + DataUtils.MD5(CommonParams.PARTNER + CommonParams.SECURITY_KEY + tradeId + callTime) + DataUtils.getRandomStr();
 
-            String md5Str = DataUtils.MD5(security);
-            MeterManager.getInstance().paymentAction(event.getModelInfo().getTrade_id(), callTime,md5Str);
+            String html = "<!DOCTYPE><html><head><title>ACE API</title><meta charset=\"UTF-8\"/></head><body><form action=\"https://uat-api.asiaweiluy.com/gateway.php?method=ace.trade.pay\" method=\"post\" id=\"awl_post\" target=\"_self\"><input type=\"hidden\" name=\"partner\" value=\"" + CommonParams.PARTNER + "\"/><input type=\"hidden\" name=\"trade_id\" value=\"" + tradeId + "\"/><input type=\"hidden\" name=\"call_time\" value=\"" + callTime + "\"/><input type=\"hidden\" name=\"security\" value=\"" + security.toLowerCase() + "\"/></form></body><script>window.onload=function(){document.getElementById(\"awl_post\").submit();}</script></html>\n";
+            mContext.startActivity(WebViewActivity.makeIntent(mContext, html));
+//            MeterManager.getInstance().paymentAction(event.getModelInfo().getTrade_id(), callTime, security.toLowerCase());
         }
     }
+
     /**
      * 接口返回--支付
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(GetPayResultEvent event) {
 
-        if(!TextUtils.isEmpty(event.getHtmlStr()))
-        {
+        if (!TextUtils.isEmpty(event.getHtmlStr())) {
             String html = event.getHtmlStr();
-           String htmlStr =  html.replace("./web/", CommonUrl.BASE_PAY_URL);
+            String htmlStr = html.replace("./web/", CommonUrl.BASE_PAY_URL);
 
-            mContext.startActivity(WebViewActivity.makeIntent(mContext, html));
+            mContext.startActivity(WebViewActivity.makeIntent(mContext, htmlStr));
         }
     }
 }

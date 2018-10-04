@@ -21,6 +21,7 @@ public class CommonUrl {
     public static final String METER_READ_LIST_URL = BASE_URL + "/record/read";
     public static final String METER_RECHARGE_LIST_URL = BASE_URL + "/record/recharge";
     public static final String PREPAY_URL = BASE_URL + "/recharge/prepay";
+    public static final String ORDER_INFO_URL = BASE_URL + "/order/info";
 
    public static final String PAY_URL = "https://uat-api.asiaweiluy.com/gateway.php?method=ace.trade.pay";
 }

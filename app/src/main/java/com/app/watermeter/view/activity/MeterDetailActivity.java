@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.DashPathEffect;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
@@ -15,6 +16,7 @@ import com.app.watermeter.common.Constants;
 import com.app.watermeter.eventBus.GetChartReadListEvent;
 import com.app.watermeter.eventBus.GetDetailReadListEvent;
 import com.app.watermeter.eventBus.GetMeterInfoEvent;
+import com.app.watermeter.eventBus.GetOrderInfoEvent;
 import com.app.watermeter.eventBus.UnBindErrEvent;
 import com.app.watermeter.eventBus.UnBindEvent;
 import com.app.watermeter.manager.MeterManager;
@@ -308,8 +310,7 @@ public class MeterDetailActivity extends BaseActivity {
         meterType = intent.getIntExtra(CommonParams.METER_TYPE, CommonParams.TYPE_WATER);
         meterSn = intent.getStringExtra(CommonParams.METER_SN);
         String time = intent.getStringExtra(CommonParams.METER_TIME);
-        if (!TextUtils.isEmpty(time))
-        {
+        if (!TextUtils.isEmpty(time)) {
             mTimeStamp = DateUtils.getTimeStampByDate(time, DateUtils.DATE_FORMAT_DAY2);
 
         }
@@ -531,10 +532,39 @@ public class MeterDetailActivity extends BaseActivity {
                 startActivity(PerStorageSaveListActivity.makeIntent(mContext, model.getId(), meterType, CommonParams.PAGE_TYPE_RECHARGE));
                 break;
             case R.id.tvCharge:
-                startActivity(PayActionActivity.makeIntent(mContext,meterId));
+                startActivity(PayActionActivity.makeIntent(mContext, meterId));
                 break;
 
         }
     }
 
+
+    /**
+     * 接口返回--查询订单
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(GetOrderInfoEvent event) {
+        if (event.getOrderInfo() != null) {
+            int status = event.getOrderInfo().getStatus();
+            switch (status) {
+                case CommonParams.PAY_RESULT_PENDING:
+                    //todo 1秒后请求多一次结果，7次超时
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            MeterManager.getInstance().getOrderInfo("");
+                        }
+                    }, 1000);
+                    break;
+                case CommonParams.PAY_RESULT_SUCCESS:
+                    //todo 支付成功，刷新数据
+                    MeterManager.getInstance().getMeterDetail(meterSn);
+                    break;
+                case CommonParams.PAY_RESULT_CANCEL:
+                    //todo 支付取消
+                    break;
+
+            }
+        }
+    }
 }

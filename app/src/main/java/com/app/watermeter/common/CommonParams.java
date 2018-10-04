@@ -11,6 +11,11 @@ public class CommonParams {
 
     public static final String BUSS_REGISTER_TYPE = "register";
 
+
+    public static final int PAY_RESULT_PENDING = 1;
+    public static final int PAY_RESULT_SUCCESS = 3;
+    public static final int PAY_RESULT_CANCEL = 4;
+
     public static final int TYPE_WATER = 1;
     public static final int TYPE_ELECT = 2;
     public static final int TYPE_GAS = 3;

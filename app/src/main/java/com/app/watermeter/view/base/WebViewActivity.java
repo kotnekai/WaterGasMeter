@@ -103,7 +103,9 @@ public class WebViewActivity extends BaseActivity {
         if (!TextUtils.isEmpty(loadUrl)) {
             webView.loadUrl(loadUrl);
         } else if (!TextUtils.isEmpty(htmlStr)) {
-            webView.loadDataWithBaseURL(null, htmlStr, "text/html", "utf-8", null);
+//            webView.loadDataWithBaseURL(null, htmlStr, "text/html", "utf-8", null);
+            webView.loadData(htmlStr, "text/html", "utf-8");
+
         }
         webView.setWebViewClient(new WebViewClient() {
             @Override
