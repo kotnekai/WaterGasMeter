@@ -116,10 +116,9 @@ public class BingingFragment extends BaseFragment {
                 }
                 if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_SUCCESS) {
                     String result = bundle.getString(CodeUtils.RESULT_STRING);
-                    ToastUtil.showShort(UIUtils.getValueString(R.string.scan_code));
 
                     if (result != null) {
-                        ToastUtil.showShort(result);
+                        MeterManager.getInstance().bindMeter(result);
                     }
                 } else if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_FAILED) {
                     ToastUtil.showShort(UIUtils.getValueString(R.string.scan_code));

@@ -423,7 +423,7 @@ public class MeterDetailActivity extends BaseActivity {
 
 
         minY = 0;//getMin(tempXvals)-50;
-        maxY = getMax(tempYvals) + 50;
+        maxY = getMax(tempYvals) + 2;
 
 
         LineDataSet lineSet;
