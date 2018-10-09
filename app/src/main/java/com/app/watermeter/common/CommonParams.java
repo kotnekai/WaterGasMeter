@@ -11,6 +11,8 @@ public class CommonParams {
 
     public static final String BUSS_REGISTER_TYPE = "register";
 
+    public static final int PAY_RESULT = 100; //支付成功finish
+
 
     public static final int PAY_RESULT_PENDING = 1;
     public static final int PAY_RESULT_SUCCESS = 3;

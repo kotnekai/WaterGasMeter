@@ -1,9 +1,12 @@
 package com.app.watermeter.view.base;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -11,14 +14,17 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.app.watermeter.R;
+import com.app.watermeter.common.CommonParams;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import butterknife.BindView;
@@ -171,6 +177,7 @@ public class WebViewActivity extends BaseActivity {
         });
     }
 
+
     /**
      * 视频播放全屏
      **/
@@ -280,7 +287,32 @@ public class WebViewActivity extends BaseActivity {
         webView.getSettings().setBuiltInZoomControls(true);
 
         webView.getSettings().setDefaultTextEncodingName("utf-8");//设置编码格式
+
+        //  支持js(必要)
+        webView.getSettings().setJavaScriptEnabled(true);
+        //    添加js对象(必要)
+        webView.addJavascriptInterface(new JsOperation(this), "AndroidWebView");
+    }
+}
+
+
+class JsOperation {
+
+    Activity mActivity;
+
+    public JsOperation(Activity activity) {
+        mActivity = activity;
     }
 
-
+    //    测试方法
+    @JavascriptInterface
+    public void paySuccessHandle() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mActivity.setResult(CommonParams.PAY_RESULT);
+                mActivity.finish();
+            }
+        },3000);
+    }
 }

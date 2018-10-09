@@ -19,11 +19,12 @@ public class MeterInfoModel {
     String position_zh;
     String position_en;
     String position_kh;
+    int measurement_id;
     String unit;
-    int balance;
-    int degree;
+    float balance;
+    float degree;
     String final_recharged_at;
-    int old_degree;
+    float old_degree;
     String old_read_at;
     String final_read_at;
     String created_at;
@@ -126,7 +127,7 @@ public class MeterInfoModel {
         this.unit = unit;
     }
 
-    public int getBalance() {
+    public float getBalance() {
         return balance;
     }
 
@@ -134,12 +135,20 @@ public class MeterInfoModel {
         this.balance = balance;
     }
 
-    public int getDegree() {
+    public float getDegree() {
         return degree;
     }
 
     public void setDegree(int degree) {
         this.degree = degree;
+    }
+
+    public int getMeasurement_id() {
+        return measurement_id;
+    }
+
+    public void setMeasurement_id(int measurement_id) {
+        this.measurement_id = measurement_id;
     }
 
     public String getFinal_recharged_at() {
@@ -150,11 +159,11 @@ public class MeterInfoModel {
         this.final_recharged_at = final_recharged_at;
     }
 
-    public int getOld_degree() {
+    public float getOld_degree() {
         return old_degree;
     }
 
-    public void setOld_degree(int old_degree) {
+    public void setOld_degree(float old_degree) {
         this.old_degree = old_degree;
     }
 

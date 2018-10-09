@@ -23,6 +23,7 @@ import com.app.watermeter.manager.MeterManager;
 import com.app.watermeter.model.MeterInfoModel;
 import com.app.watermeter.model.MeterReadModel;
 import com.app.watermeter.utils.DateUtils;
+import com.app.watermeter.utils.PreferencesUtils;
 import com.app.watermeter.utils.ToastUtil;
 import com.app.watermeter.view.base.BaseActivity;
 import com.app.watermeter.view.marker.MeterChartMarkerView;
@@ -84,6 +85,8 @@ public class MeterDetailActivity extends BaseActivity {
     @BindView(R.id.lineChart)
     LineChart mChart;
 
+    public int requestIndex = 0;
+    public final int MAX_REQUEST_COUNT = 6;
     private int meterId;
     private int meterType;
     private long mTimeStamp;
@@ -392,13 +395,13 @@ public class MeterDetailActivity extends BaseActivity {
         //X轴数据
         ArrayList<XAxisEntry> xVals = new ArrayList<>();
         //Y轴数据，用来算法最大最小值作为图表的边界
-        ArrayList<Integer> tempYvals = new ArrayList<>();
+        ArrayList<Float> tempYvals = new ArrayList<>();
 
 
         //Y轴数据
         ArrayList<Entry> yVals = new ArrayList<>();
 
-        int minY, maxY;
+        float minY, maxY;
 
         for (int j = 0; j < 24; j++) {
             yVals.add(new Entry(j, -5));
@@ -493,12 +496,13 @@ public class MeterDetailActivity extends BaseActivity {
      * @param arr
      * @return
      */
-    private int getMax(List<Integer> arr) {
-        int max = Integer.MIN_VALUE;
+    private float getMax(List<Float> arr) {
+        float max = Float.MIN_VALUE;
 
         for (int i = 0; i < arr.size(); i++) {
-            if (arr.get(i) > max)
+            if (arr.get(i) > max) {
                 max = arr.get(i);
+            }
         }
 
         return max;
@@ -510,12 +514,13 @@ public class MeterDetailActivity extends BaseActivity {
      * @param arr
      * @return
      */
-    private int getMin(List<Integer> arr) {
-        int min = Integer.MAX_VALUE;
+    private float getMin(List<Float> arr) {
+        float min = Float.MAX_VALUE;
 
         for (int i = 0; i < arr.size(); i++) {
-            if (arr.get(i) < min)
+            if (arr.get(i) < min) {
                 min = arr.get(i);
+            }
         }
 
         return min;
@@ -532,7 +537,7 @@ public class MeterDetailActivity extends BaseActivity {
                 startActivity(PerStorageSaveListActivity.makeIntent(mContext, model.getId(), meterType, CommonParams.PAGE_TYPE_RECHARGE));
                 break;
             case R.id.tvCharge:
-                startActivity(PayActionActivity.makeIntent(mContext, meterId));
+                startActivityForResult(PayActionActivity.makeIntent(mContext, meterId), CommonParams.PAY_RESULT);
                 break;
 
         }
@@ -549,15 +554,24 @@ public class MeterDetailActivity extends BaseActivity {
             switch (status) {
                 case CommonParams.PAY_RESULT_PENDING:
                     //todo 1秒后请求多一次结果，7次超时
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            MeterManager.getInstance().getOrderInfo("");
-                        }
-                    }, 1000);
+                    requestIndex++;
+                    if (requestIndex > MAX_REQUEST_COUNT) {
+                        //弹出请求超时
+                    } else {
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                String orderNo = PreferencesUtils.getString("orderNo");
+                                MeterManager.getInstance().getOrderInfo(orderNo);
+                            }
+                        }, 1000);
+
+                    }
+
                     break;
                 case CommonParams.PAY_RESULT_SUCCESS:
                     //todo 支付成功，刷新数据
+                    PreferencesUtils.putString("orderNo", "");
                     MeterManager.getInstance().getMeterDetail(meterSn);
                     break;
                 case CommonParams.PAY_RESULT_CANCEL:
@@ -565,6 +579,17 @@ public class MeterDetailActivity extends BaseActivity {
                     break;
 
             }
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == CommonParams.PAY_RESULT) {
+            String orderNo = PreferencesUtils.getString("orderNo");
+            System.out.println("===@@@@@===orderNo======"+orderNo);
+            MeterManager.getInstance().getOrderInfo(orderNo);
+            //请求一次
+            requestIndex = 1;
         }
     }
 }

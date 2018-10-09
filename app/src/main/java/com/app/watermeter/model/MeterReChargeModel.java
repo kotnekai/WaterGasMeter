@@ -12,9 +12,9 @@ public class MeterReChargeModel {
     private String user_real_name;
     private int machine_id;
     private int machine_type_id;
-    private int recharge_fee;
-    private int before_recharge_balance;
-    private int after_recharge_balance;
+    private float recharge_fee;
+    private float before_recharge_balance;
+    private float after_recharge_balance;
     private String created_at;
     private String updated_at;
     private int status;
@@ -59,27 +59,27 @@ public class MeterReChargeModel {
         this.machine_type_id = machine_type_id;
     }
 
-    public int getRecharge_fee() {
+    public float getRecharge_fee() {
         return recharge_fee;
     }
 
-    public void setRecharge_fee(int recharge_fee) {
+    public void setRecharge_fee(float recharge_fee) {
         this.recharge_fee = recharge_fee;
     }
 
-    public int getBefore_recharge_balance() {
+    public float getBefore_recharge_balance() {
         return before_recharge_balance;
     }
 
-    public void setBefore_recharge_balance(int before_recharge_balance) {
+    public void setBefore_recharge_balance(float before_recharge_balance) {
         this.before_recharge_balance = before_recharge_balance;
     }
 
-    public int getAfter_recharge_balance() {
+    public float getAfter_recharge_balance() {
         return after_recharge_balance;
     }
 
-    public void setAfter_recharge_balance(int after_recharge_balance) {
+    public void setAfter_recharge_balance(float after_recharge_balance) {
         this.after_recharge_balance = after_recharge_balance;
     }
 

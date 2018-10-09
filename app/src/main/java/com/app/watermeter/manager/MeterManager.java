@@ -45,6 +45,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -140,14 +141,18 @@ public class MeterManager {
                     public void onResponse(Result result, int id) {
                         Log.d("admin", "getMeterList====onResponse: response=" + result);
                         String jsonString = gson.toJson(result.getData());
-                        List<MeterInfoModel> list = gson.fromJson(jsonString.toString(), new TypeToken<List<MeterInfoModel>>() {
-                        }.getType());
+                        List<MeterInfoModel> list = new ArrayList<>();
+                        if (jsonString.length() > 2) {
+                            list = gson.fromJson(jsonString.toString(), new TypeToken<List<MeterInfoModel>>() {
+                            }.getType());
+                        }
                         if (isHomeData) {
                             EventBus.getDefault().post(new GetHomeMeterListEvent(list, meterType));
                         } else {
                             EventBus.getDefault().post(new GetMeterListEvent(list, meterType));
 
                         }
+
                     }
                 });
     }
@@ -489,7 +494,7 @@ public class MeterManager {
     /**
      * 在线支付
      */
-    public void paymentAction( int trade_id, String call_time,String security) {
+    public void paymentAction(int trade_id, String call_time, String security) {
         JSONObject params = new JSONObject();
         try {
             params.put("partner ", CommonParams.PARTNER);

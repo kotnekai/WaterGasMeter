@@ -9,11 +9,11 @@ public class MeterReadModel {
     private int id;
     private int machine_id;
     private int machine_type_id;
-    private int degree;
-    private int read_fee;
-    private int read_degree;
-    private int before_read_balance;
-    private int after_read_balance;
+    private float degree;
+    private float read_fee;
+    private float read_degree;
+    private float before_read_balance;
+    private float after_read_balance;
     private String created_at;
     private String updated_at;
 
@@ -41,43 +41,43 @@ public class MeterReadModel {
         this.machine_type_id = machine_type_id;
     }
 
-    public int getDegree() {
+    public float getDegree() {
         return degree;
     }
 
-    public void setDegree(int degree) {
+    public void setDegree(float degree) {
         this.degree = degree;
     }
 
-    public int getRead_fee() {
+    public float getRead_fee() {
         return read_fee;
     }
 
-    public void setRead_fee(int read_fee) {
+    public void setRead_fee(float read_fee) {
         this.read_fee = read_fee;
     }
 
-    public int getRead_degree() {
+    public float getRead_degree() {
         return read_degree;
     }
 
-    public void setRead_degree(int read_degree) {
+    public void setRead_degree(float read_degree) {
         this.read_degree = read_degree;
     }
 
-    public int getBefore_read_balance() {
+    public float getBefore_read_balance() {
         return before_read_balance;
     }
 
-    public void setBefore_read_balance(int before_read_balance) {
+    public void setBefore_read_balance(float before_read_balance) {
         this.before_read_balance = before_read_balance;
     }
 
-    public int getAfter_read_balance() {
+    public float getAfter_read_balance() {
         return after_read_balance;
     }
 
-    public void setAfter_read_balance(int after_read_balance) {
+    public void setAfter_read_balance(float after_read_balance) {
         this.after_read_balance = after_read_balance;
     }
 

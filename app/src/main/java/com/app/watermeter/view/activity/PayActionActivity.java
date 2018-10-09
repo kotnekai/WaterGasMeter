@@ -18,6 +18,7 @@ import com.app.watermeter.eventBus.GetPerPayEvent;
 import com.app.watermeter.manager.MeterManager;
 import com.app.watermeter.utils.DataUtils;
 import com.app.watermeter.utils.DateUtils;
+import com.app.watermeter.utils.PreferencesUtils;
 import com.app.watermeter.view.base.BaseActivity;
 import com.app.watermeter.view.base.WebViewActivity;
 
@@ -105,13 +106,15 @@ public class PayActionActivity extends BaseActivity {
     public void onEvent(GetPerPayEvent event) {
         if (event.getModelInfo() != null) {
             String tradeId = event.getModelInfo().getTrade_id() + "";
+            String orderNo = event.getModelInfo().getOut_trade_no();
+            PreferencesUtils.putString("orderNo",orderNo);
 
             String callTime = DateUtils.getGMT7PayTime();
 
             String security = DataUtils.getRandomStr() + DataUtils.MD5(CommonParams.PARTNER + CommonParams.SECURITY_KEY + tradeId + callTime) + DataUtils.getRandomStr();
 
             String html = "<!DOCTYPE><html><head><title>ACE API</title><meta charset=\"UTF-8\"/></head><body><form action=\"https://uat-api.asiaweiluy.com/gateway.php?method=ace.trade.pay\" method=\"post\" id=\"awl_post\" target=\"_self\"><input type=\"hidden\" name=\"partner\" value=\"" + CommonParams.PARTNER + "\"/><input type=\"hidden\" name=\"trade_id\" value=\"" + tradeId + "\"/><input type=\"hidden\" name=\"call_time\" value=\"" + callTime + "\"/><input type=\"hidden\" name=\"security\" value=\"" + security.toLowerCase() + "\"/></form></body><script>window.onload=function(){document.getElementById(\"awl_post\").submit();}</script></html>\n";
-            mContext.startActivity(WebViewActivity.makeIntent(mContext, html));
+            startActivityForResult(WebViewActivity.makeIntent(mContext, html),CommonParams.PAY_RESULT);
 //            MeterManager.getInstance().paymentAction(event.getModelInfo().getTrade_id(), callTime, security.toLowerCase());
         }
     }
@@ -127,6 +130,14 @@ public class PayActionActivity extends BaseActivity {
             String htmlStr = html.replace("./web/", CommonUrl.BASE_PAY_URL);
 
             mContext.startActivity(WebViewActivity.makeIntent(mContext, htmlStr));
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode == CommonParams.PAY_RESULT) {
+            setResult(CommonParams.PAY_RESULT);
+            finish();
         }
     }
 }
