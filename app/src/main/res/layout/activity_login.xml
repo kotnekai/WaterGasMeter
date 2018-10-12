@@ -8,6 +8,7 @@
     android:fitsSystemWindows="true"
     tools:context=".view.activity.LoginActivity">
 
+
     <ImageView
         android:id="@+id/ivLogo"
         android:layout_width="wrap_content"
@@ -15,6 +16,13 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp"
         android:src="@mipmap/logoyuan" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="95dp"
+        android:src="@mipmap/logo" />
 
     <LinearLayout
         android:id="@+id/llSerialNumber"
@@ -99,9 +107,9 @@
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="10dp"
-            android:inputType="textPassword"
             android:background="@color/white"
             android:hint="@string/person_password"
+            android:inputType="textPassword"
             android:textSize="17sp" />
     </LinearLayout>
 
