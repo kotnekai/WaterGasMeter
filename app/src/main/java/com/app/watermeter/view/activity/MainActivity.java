@@ -37,12 +37,12 @@ import butterknife.OnClick;
 public class MainActivity extends BaseActivity {
     @BindView(R.id.viewPager)
     NoScrollViewPager viewPager;
-    @BindView(R.id.ivHomeTab)
-    ImageView ivHomeTab;
-    @BindView(R.id.ivMeterTab)
-    ImageView ivMeterTab;
-    @BindView(R.id.ivMineTab)
-    ImageView ivMineTab;
+    @BindView(R.id.tvHomeTab)
+    TextView tvHomeTab;
+    @BindView(R.id.tvMeterTab)
+    TextView tvMeterTab;
+    @BindView(R.id.tvMineTab)
+    TextView tvMineTab;
     @BindView(R.id.tvFourthTab)
     TextView tvFourthTab;
     private List<Fragment> fragmentList;
@@ -97,34 +97,34 @@ public class MainActivity extends BaseActivity {
         adapter = new FragmentAdapter(fragmentList, getSupportFragmentManager());
         viewPager.setOffscreenPageLimit(2);
         viewPager.setAdapter(adapter);
-        ivHomeTab.setSelected(true);
+        tvHomeTab.setSelected(true);
 
     }
 
-    @OnClick({R.id.ivHomeTab, R.id.ivMeterTab, R.id.ivMineTab, R.id.tvFourthTab})
+    @OnClick({R.id.tvHomeTab, R.id.tvMeterTab, R.id.tvMineTab, R.id.tvFourthTab})
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.ivHomeTab:
+            case R.id.tvHomeTab:
                 viewPager.setCurrentItem(0);
-                ivHomeTab.setSelected(true);
-                ivMeterTab.setSelected(false);
-                ivMineTab.setSelected(false);
+                tvHomeTab.setSelected(true);
+                tvMeterTab.setSelected(false);
+                tvMineTab.setSelected(false);
                 setHeaderTitle(getString(R.string.main_home));
 
                 break;
-            case R.id.ivMeterTab:
+            case R.id.tvMeterTab:
                 viewPager.setCurrentItem(1);
-                ivHomeTab.setSelected(false);
-                ivMeterTab.setSelected(true);
-                ivMineTab.setSelected(false);
+                tvHomeTab.setSelected(false);
+                tvMeterTab.setSelected(true);
+                tvMineTab.setSelected(false);
                 setHeaderTitle(getString(R.string.binding));
 
                 break;
-            case R.id.ivMineTab:
+            case R.id.tvMineTab:
                 viewPager.setCurrentItem(2);
-                ivHomeTab.setSelected(false);
-                ivMeterTab.setSelected(false);
-                ivMineTab.setSelected(true);
+                tvHomeTab.setSelected(false);
+                tvMeterTab.setSelected(false);
+                tvMineTab.setSelected(true);
                 setHeaderTitle(getString(R.string.mine));
 
                 break;

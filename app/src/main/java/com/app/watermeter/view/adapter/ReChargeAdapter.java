@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.app.watermeter.R;
+import com.app.watermeter.common.CommonParams;
 import com.app.watermeter.model.MeterReChargeModel;
 
 import java.util.ArrayList;
@@ -23,8 +24,9 @@ public class ReChargeAdapter extends Adapter<ReChargeAdapter.MyViewHolder> {
     private List<MeterReChargeModel> reChargeList;
     private Context context;
     private LayoutInflater inflater;
+    private int mTabType;
 
-    public ReChargeAdapter(Context context, List<MeterReChargeModel> reChargeList) {
+    public ReChargeAdapter(Context context, List<MeterReChargeModel> reChargeList, int tabType) {
         this.context = context;
         this.reChargeList = reChargeList;
         inflater = LayoutInflater.from(context);
@@ -48,9 +50,17 @@ public class ReChargeAdapter extends Adapter<ReChargeAdapter.MyViewHolder> {
         if (reChargeModel == null) {
             return;
         }
-        holder.tvWaterSn.setText(String.format(context.getString(R.string.water_sn), reChargeModel.getMachine_type_id() + ""));
+        String typeStr;
+        if (mTabType == CommonParams.TYPE_ELECT) {
+            typeStr = context.getString(R.string.electricity_sn);
+        } else if (mTabType == CommonParams.TYPE_GAS) {
+            typeStr = context.getString(R.string.gas_sn);
+        } else {
+            typeStr = context.getString(R.string.water_sn);
+        }
+        holder.tvWaterSn.setText(String.format(typeStr, reChargeModel.getMachine_type_id() + ""));
         holder.tvReChargeDate.setText(String.format(context.getString(R.string.storage_time), reChargeModel.getCreated_at()));
-        holder.tvSaveMoney.setText("+"+reChargeModel.getRecharge_fee() + context.getString(R.string.unit_yuan));
+        holder.tvSaveMoney.setText("+" + reChargeModel.getRecharge_fee() + context.getString(R.string.unit_yuan));
     }
 
 

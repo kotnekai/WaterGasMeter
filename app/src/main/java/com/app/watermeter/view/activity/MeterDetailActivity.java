@@ -530,9 +530,11 @@ public class MeterDetailActivity extends BaseActivity {
     @OnClick({R.id.tvGotoPayment, R.id.tvGotoPerStorage, R.id.tvCharge})
     public void onClick(View view) {
         switch (view.getId()) {
+            // 缴费明细
             case R.id.tvGotoPayment:
                 startActivity(PerStorageSaveListActivity.makeIntent(mContext, model.getId(), meterType, CommonParams.PAGE_TYPE_READ));
                 break;
+            // 预存明细
             case R.id.tvGotoPerStorage:
                 startActivity(PerStorageSaveListActivity.makeIntent(mContext, model.getId(), meterType, CommonParams.PAGE_TYPE_RECHARGE));
                 break;
@@ -586,7 +588,7 @@ public class MeterDetailActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == CommonParams.PAY_RESULT) {
             String orderNo = PreferencesUtils.getString("orderNo");
-            System.out.println("===@@@@@===orderNo======"+orderNo);
+            System.out.println("===@@@@@===orderNo======" + orderNo);
             MeterManager.getInstance().getOrderInfo(orderNo);
             //请求一次
             requestIndex = 1;

@@ -97,7 +97,7 @@ public class WaterReadAndReChargeFragment extends BaseFragment {
     protected void initView() {
     }
 
-
+    private int tabType = 1;// 1,水表，2电表 ，3，燃气表
     @Override
     protected void initData() {
 
@@ -105,19 +105,18 @@ public class WaterReadAndReChargeFragment extends BaseFragment {
 
         mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         mLayoutManager.setOrientation(GridLayoutManager.VERTICAL);
-        mLayoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(mLayoutManager);
 
         //预存明细
         if (fromPage == CommonParams.PAGE_TYPE_RECHARGE) {
-            reChargeAdapter = new ReChargeAdapter(getActivity(), reChargeList);
+            reChargeAdapter = new ReChargeAdapter(getActivity(), reChargeList,tabType);
             recyclerView.setAdapter(reChargeAdapter);
         } else {
             //缴费明细
-            readAdapter = new ReadAdapter(getActivity(), perReadList);
+            readAdapter = new ReadAdapter(getActivity(), perReadList,meterType);
             recyclerView.setAdapter(readAdapter);
         }
-        recyclerView.scrollToPosition(0);
+
 
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
@@ -166,7 +165,7 @@ public class WaterReadAndReChargeFragment extends BaseFragment {
     /**
      * 初始化获取数据
      *
-     * @param meterType
+     * @param meterType  表类型
      * @param pageType
      */
     private void initListData(int meterType, int pageType) {
@@ -191,6 +190,7 @@ public class WaterReadAndReChargeFragment extends BaseFragment {
         } else {
             reChargeList = event.getList();
         }
+        tabType = meterType;
         reChargeAdapter.setData(reChargeList);
         reChargeAdapter.notifyDataSetChanged();
 

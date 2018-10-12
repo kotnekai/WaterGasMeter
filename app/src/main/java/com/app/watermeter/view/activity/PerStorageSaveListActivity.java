@@ -117,10 +117,10 @@ public class PerStorageSaveListActivity extends BaseActivity {
 
 
         if (fromPage == CommonParams.PAGE_TYPE_RECHARGE) {
-            reChargeAdapter = new ReChargeAdapter(mContext, reChargeList);
+            reChargeAdapter = new ReChargeAdapter(mContext, reChargeList,meterType);
             recyclerView.setAdapter(reChargeAdapter);
         } else {
-            readAdapter = new ReadAdapter(mContext, perSaveList);
+            readAdapter = new ReadAdapter(mContext, perSaveList,meterType);
             recyclerView.setAdapter(readAdapter);
         }
         recyclerView.scrollToPosition(0);
@@ -179,6 +179,7 @@ public class PerStorageSaveListActivity extends BaseActivity {
         } else {
             reChargeList = event.getList();
         }
+
         reChargeAdapter.setData(reChargeList);
         reChargeAdapter.notifyDataSetChanged();
 

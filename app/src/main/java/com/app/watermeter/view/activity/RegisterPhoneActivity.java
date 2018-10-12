@@ -9,12 +9,19 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.app.okhttputils.Model.Result;
 import com.app.watermeter.R;
 import com.app.watermeter.common.CommonParams;
+import com.app.watermeter.eventBus.SuccessEvent;
+import com.app.watermeter.manager.UserManager;
 import com.app.watermeter.utils.AccountValidatorUtil;
 import com.app.watermeter.utils.EmptyUtil;
+import com.app.watermeter.utils.ProgressUtils;
 import com.app.watermeter.utils.ToastUtil;
 import com.app.watermeter.view.base.BaseActivity;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -76,13 +83,27 @@ public class RegisterPhoneActivity extends BaseActivity {
                    ToastUtil.showShort(getString(R.string.phone_number));
                  return;
                 }
+                UserManager.getInstance().sendSmsToCheck(phoneNumber, CommonParams.BUSS_REGISTER_TYPE);
 
-                startActivity(RegisterCodeActivity.makeIntent(this, countryCode, phoneNumber,fromType));
 
                 break;
         }
     }
 
-
+    /**
+     * 发送验证码结果接口返回
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onSuccessEvent(SuccessEvent event) {
+        ProgressUtils.getIntance().dismissProgress();
+        Result result = event.getResult();
+        int status_code = result.getStatus_code();
+        String message = result.getMessage();
+        int errCode = result.getErr_code();//业务码
+        ToastUtil.showShort(message);
+        if (status_code == 200 && errCode == 0) {
+            startActivity(RegisterCodeActivity.makeIntent(this, countryCode, phoneNumber,fromType));
+        }
+    }
 
 }

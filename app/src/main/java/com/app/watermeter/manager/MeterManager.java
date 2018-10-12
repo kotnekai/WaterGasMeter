@@ -318,9 +318,7 @@ public class MeterManager {
         params.put("offset", offset + "");
         params.put("count", count + "");
         params.put("type", type + "");
-        if (machine > 0) {
-            params.put("machine", machine + "");
-        }
+        params.put("machine", machine + "");
         dataInstance.sendGetRequestData(CommonUrl.METER_RECHARGE_LIST_URL, params)
                 .execute(new GenericsCallback<Result>(new JsonGenericsSerializator()) {
                     @Override
