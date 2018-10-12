@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.app.watermeter.R;
+import com.app.watermeter.common.CommonParams;
 import com.app.watermeter.model.MeterReChargeModel;
 import com.app.watermeter.model.MeterReadModel;
 
@@ -21,11 +22,14 @@ public class ReadAdapter extends Adapter<ReadAdapter.MyViewHolder> {
     private List<MeterReadModel> readList;
     private Context context;
     private LayoutInflater inflater;
+    private int meterType;
 
-    public ReadAdapter(Context context, List<MeterReadModel> readList) {
+    public ReadAdapter(Context context, List<MeterReadModel> readList, int meterType) {
         this.context = context;
         this.readList = readList;
+        this.meterType = meterType;
         inflater = LayoutInflater.from(context);
+
     }
 
     public void setData(List<MeterReadModel> list) {
@@ -45,10 +49,23 @@ public class ReadAdapter extends Adapter<ReadAdapter.MyViewHolder> {
         if (readModel == null) {
             return;
         }
-        holder.tvWaterSn.setText(String.format(context.getString(R.string.water_sn),readModel.getMachine_type_id()+""));
-        holder.tvSaveMeasure.setText(String.format(context.getString(R.string.measurement),readModel.getRead_degree()+""));
-        holder.tvSaveDate.setText(String.format(context.getString(R.string.payment_time),readModel.getCreated_at()));
-        holder.tvSaveMoney.setText("-"+readModel.getRead_fee() + context.getString(R.string.unit_yuan));
+        String typeStr = null;
+        String unitStr = null;
+        if (meterType == CommonParams.TYPE_ELECT) {
+            typeStr = context.getString(R.string.electricity_sn);
+            unitStr = "kw/h";
+        } else if (meterType == CommonParams.TYPE_GAS) {
+            typeStr = context.getString(R.string.gas_sn);
+            unitStr = "m³";
+        } else {
+            typeStr = context.getString(R.string.water_sn);
+            unitStr = "m³";
+        }
+
+        holder.tvWaterSn.setText(String.format(typeStr, readModel.getMachine_type_id() + ""));
+        holder.tvSaveMeasure.setText(String.format(context.getString(R.string.measurement), readModel.getRead_degree() + "")+unitStr);
+        holder.tvSaveDate.setText(String.format(context.getString(R.string.payment_time), readModel.getCreated_at()));
+        holder.tvSaveMoney.setText("-" + readModel.getRead_fee() + context.getString(R.string.unit_yuan));
 
     }
 

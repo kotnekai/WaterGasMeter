@@ -80,8 +80,7 @@ public class RegisterCodeActivity extends BaseActivity {
             countTimer = new CountTimer(millisInFuture, countDownInterval);
 
         }
-
-
+        countTimer.start();///开启倒计时
         scvEditText.setDefaultCount(MAX_CODE_LENGTH);
         scvEditText.setInputCompleteListener(new SecurityCodeView.InputCompleteListener() {
                  @Override
@@ -103,28 +102,9 @@ public class RegisterCodeActivity extends BaseActivity {
 
                  }
            });
-        UserManager.getInstance().sendSmsToCheck(phoneNumber, CommonParams.BUSS_REGISTER_TYPE);
 
     }
 
-
-
-
-    /**
-     * 发送验证码结果接口返回
-     */
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onSuccessEvent(SuccessEvent event) {
-        ProgressUtils.getIntance().dismissProgress();
-        Result result = event.getResult();
-        int status_code = result.getStatus_code();
-        String message = result.getMessage();
-        int errCode = result.getErr_code();//业务码
-        ToastUtil.showShort(message);
-        if (status_code == 200 && errCode == 0) {
-            countTimer.start();///开启倒计时
-        }
-    }
 
     /**
      * 校验验证码结果接口返回

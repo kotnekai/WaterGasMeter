@@ -104,14 +104,15 @@ public class ReadAndReChargeFragment extends BaseFragment {
             fromPage = bundle.getInt(KEY_PAGE, 1);
             if (fromPage == CommonParams.PAGE_TYPE_RECHARGE) {
                 totalChargeList.put(meterType, new ArrayList<MeterReChargeModel>());
-                totalChargeAdapters.put(meterType, new ReChargeAdapter(getActivity(), new ArrayList<MeterReChargeModel>()));
+                totalChargeAdapters.put(meterType, new ReChargeAdapter(getActivity(), new ArrayList<MeterReChargeModel>(),meterType));
             } else {
                 totalReadList.put(meterType, new ArrayList<MeterReadModel>());
-                totalReadAdapters.put(meterType, new ReadAdapter(getActivity(), new ArrayList<MeterReadModel>()));
+                totalReadAdapters.put(meterType, new ReadAdapter(getActivity(), new ArrayList<MeterReadModel>(),meterType));
 
             }
             totalCurrentPageSize.put(meterType, 0);
         }
+
     }
 
 
@@ -127,17 +128,15 @@ public class ReadAndReChargeFragment extends BaseFragment {
 
         mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         mLayoutManager.setOrientation(GridLayoutManager.VERTICAL);
-        mLayoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(mLayoutManager);
 
         //预存明细
         if (fromPage == CommonParams.PAGE_TYPE_RECHARGE) {
-            recyclerView.setAdapter(new ReChargeAdapter(getActivity(), new ArrayList<MeterReChargeModel>()));
+            recyclerView.setAdapter(new ReChargeAdapter(getActivity(), new ArrayList<MeterReChargeModel>(),meterType));
         } else {
             //缴费明细
-            recyclerView.setAdapter(new ReadAdapter(getActivity(), new ArrayList<MeterReadModel>()));
+            recyclerView.setAdapter(new ReadAdapter(getActivity(), new ArrayList<MeterReadModel>(),meterType));
         }
-        recyclerView.scrollToPosition(0);
 
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override

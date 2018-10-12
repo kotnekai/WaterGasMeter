@@ -108,11 +108,11 @@ public class GasReadAndReChargeFragment extends BaseFragment {
 
         //预存明细
         if (fromPage == CommonParams.PAGE_TYPE_RECHARGE) {
-            reChargeAdapter = new ReChargeAdapter(getActivity(), reChargeList);
+            reChargeAdapter = new ReChargeAdapter(getActivity(), reChargeList,meterType);
             recyclerView.setAdapter(reChargeAdapter);
         } else {
             //缴费明细
-            readAdapter = new ReadAdapter(getActivity(), perReadList);
+            readAdapter = new ReadAdapter(getActivity(), perReadList,meterType);
             recyclerView.setAdapter(readAdapter);
         }
         recyclerView.scrollToPosition(0);

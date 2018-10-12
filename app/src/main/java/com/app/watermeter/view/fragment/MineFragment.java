@@ -49,19 +49,23 @@ public class MineFragment extends BaseFragment {
 
     }
 
-    @OnClick({R.id.rlPreSave,R.id.rlPayDes,R.id.rlPersonInfo,R.id.rlOtherSet})
+    @OnClick({R.id.rlPreSave, R.id.rlPayDes, R.id.rlPersonInfo, R.id.rlOtherSet})
     public void onClick(View view) {
         switch (view.getId()) {
+            // 预存明细
             case R.id.rlPreSave:
                 startActivity(PreStorageSaveActivity.makeIntent(getContext(), CommonParams.PAGE_TYPE_RECHARGE));
                 break;
+            // 缴费明细
             case R.id.rlPayDes:
                 startActivity(PreStorageSaveActivity.makeIntent(getContext(), CommonParams.PAGE_TYPE_READ));
 
                 break;
+            // 个人资料
             case R.id.rlPersonInfo:
                 startActivity(PersonInfoActivity.makeIntent(getContext()));
                 break;
+            // 其他设置
             case R.id.rlOtherSet:
                 startActivity(SettingActivity.makeIntent(getContext()));
                 break;
