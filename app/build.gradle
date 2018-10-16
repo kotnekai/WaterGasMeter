@@ -4,6 +4,23 @@ apply plugin: 'com.jakewharton.butterknife'
 android {
     compileSdkVersion 26
     buildToolsVersion "27.0.2"
+    // 签名配置
+    signingConfigs {
+        release {
+            try {
+                storeFile file("./keystore/Key.jks")
+                storePassword "1234567890"
+                keyAlias "watermeter"
+                keyPassword "1234567890"
+            } catch (ex) {
+                throw new InvalidUserDataException(ex.toString())
+            }
+        }
+    }
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
     defaultConfig {
         applicationId "com.app.watermeter"
         minSdkVersion 19
@@ -16,6 +33,7 @@ android {
     buildTypes {
         release {
             minifyEnabled false
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -47,4 +65,5 @@ dependencies {
     compile project(':okhttputils')
 
 
+    compile project(path: ':hellocharts-library')
 }
