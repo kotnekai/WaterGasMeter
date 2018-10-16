@@ -18,6 +18,7 @@ import com.app.watermeter.eventBus.LoginEvent;
 import com.app.watermeter.manager.UserManager;
 import com.app.watermeter.model.LoginInfoModel;
 import com.app.watermeter.model.AccountExtraModel;
+import com.app.watermeter.utils.EmptyUtil;
 import com.app.watermeter.utils.PreferencesUtils;
 import com.app.watermeter.utils.ProgressUtils;
 import com.app.watermeter.utils.ToastUtil;
@@ -58,9 +59,10 @@ public class LoginActivity extends BaseActivity {
         setHeaderVisibility(View.GONE);
     }
 
-    public static Intent makeIntent(Context context){
-        return new Intent(context,LoginActivity.class);
+    public static Intent makeIntent(Context context) {
+        return new Intent(context, LoginActivity.class);
     }
+
     public static Intent makeIntent(Context context, boolean isExit) {
 
         Intent intent = new Intent(context, LoginActivity.class);
@@ -84,6 +86,7 @@ public class LoginActivity extends BaseActivity {
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onLoginInfoEvent(LoginEvent event) {
+        Log.d("admin", "onLoginInfoEvent: ");
         ProgressUtils.getIntance().dismissProgress();
         Result infoModel = event.getResult();
         int status_code = infoModel.getStatus_code();
@@ -91,18 +94,18 @@ public class LoginActivity extends BaseActivity {
         int err_code = infoModel.getErr_code();
         ToastUtil.showShort(message);
 
-        if (status_code == 200&&err_code==0) {
+        if (status_code == 200 && err_code == 0) {
             Gson gson = new Gson();
             String jsonString = gson.toJson(infoModel.getData());
-            AccountExtraModel data = gson.fromJson(jsonString,AccountExtraModel.class);
+            AccountExtraModel data = gson.fromJson(jsonString, AccountExtraModel.class);
 
-                if (data != null) {
-                    Log.d("admin", "onRegisterInfoEvent: data=" + data);
-                    PreferencesUtils.putString(CommonParams.USER_TOKEN, data.getAccess_token());
-                    PreferencesUtils.putInt(CommonParams.TOKEN_PERIOD, data.getExpires_in());
-                }
-                startActivity(MainActivity.makeIntent(this));
-                finish();
+            if (data != null) {
+                Log.d("admin", "onRegisterInfoEvent: data=" + data);
+                PreferencesUtils.putString(CommonParams.USER_TOKEN, data.getAccess_token());
+                PreferencesUtils.putInt(CommonParams.TOKEN_PERIOD, data.getExpires_in());
+            }
+            startActivity(MainActivity.makeIntent(this));
+            finish();
 
         }
     }
@@ -115,13 +118,17 @@ public class LoginActivity extends BaseActivity {
             case R.id.tvLoginBtn:
                 String phoneNumber = edtPhoneNumber.getText().toString();
                 String password = edtPassword.getText().toString();
-                UserManager.getInstance().login(phoneNumber,password);
+                if (EmptyUtil.isEmpty(phoneNumber) || EmptyUtil.isEmpty(password)) {
+                    ToastUtil.showShort(getString(R.string.account_or_psw_invalid));
+                    return;
+                }
+                UserManager.getInstance().login(phoneNumber, password);
                 break;
             case R.id.tvGoRegister:
-                startActivity(RegisterPhoneActivity.makeIntent(this,CommonParams.fromTypeRegister));
+                startActivity(RegisterPhoneActivity.makeIntent(this, CommonParams.fromTypeRegister));
                 break;
             case R.id.tvForgetPsw:
-                startActivity(RegisterPhoneActivity.makeIntent(this,CommonParams.fromTypeReset));
+                startActivity(RegisterPhoneActivity.makeIntent(this, CommonParams.fromTypeReset));
                 break;
 
         }
