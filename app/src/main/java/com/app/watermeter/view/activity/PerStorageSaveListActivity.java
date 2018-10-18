@@ -164,7 +164,7 @@ public class PerStorageSaveListActivity extends BaseActivity {
             MeterManager.getInstance().getReChargeList(currentPageSize, dataSize, meterType, meterId);
         } else {
             //缴费明细
-            MeterManager.getInstance().getRePayList(currentPageSize, dataSize, meterType, meterId,0);
+            MeterManager.getInstance().getRePayList(currentPageSize, dataSize, meterType, meterId,null);
         }
     }
 

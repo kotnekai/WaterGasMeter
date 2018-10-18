@@ -62,7 +62,7 @@ public class ReadAdapter extends Adapter<ReadAdapter.MyViewHolder> {
             unitStr = "m³";
         }
 
-        holder.tvWaterSn.setText(String.format(typeStr, readModel.getMachine_type_id() + ""));
+        holder.tvWaterSn.setText(String.format(typeStr, readModel.getMachine_sn()));
         holder.tvSaveMeasure.setText(String.format(context.getString(R.string.measurement), readModel.getRead_degree() + "")+unitStr);
         holder.tvSaveDate.setText(String.format(context.getString(R.string.payment_time), readModel.getCreated_at()));
         holder.tvSaveMoney.setText("-" + readModel.getRead_fee() + context.getString(R.string.unit_yuan));

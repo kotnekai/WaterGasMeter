@@ -25,11 +25,15 @@ public class ReChargeAdapter extends Adapter<ReChargeAdapter.MyViewHolder> {
     private Context context;
     private LayoutInflater inflater;
     private int mTabType;
+    private int meterType;
 
-    public ReChargeAdapter(Context context, List<MeterReChargeModel> reChargeList, int tabType) {
+
+    public ReChargeAdapter(Context context, List<MeterReChargeModel> reChargeList, int meterType) {
         this.context = context;
         this.reChargeList = reChargeList;
         inflater = LayoutInflater.from(context);
+        this.meterType = meterType;
+
     }
 
     public void setData(List<MeterReChargeModel> list) {
@@ -51,14 +55,14 @@ public class ReChargeAdapter extends Adapter<ReChargeAdapter.MyViewHolder> {
             return;
         }
         String typeStr;
-        if (mTabType == CommonParams.TYPE_ELECT) {
+        if (meterType == CommonParams.TYPE_ELECT) {
             typeStr = context.getString(R.string.electricity_sn);
         } else if (mTabType == CommonParams.TYPE_GAS) {
             typeStr = context.getString(R.string.gas_sn);
         } else {
             typeStr = context.getString(R.string.water_sn);
         }
-        holder.tvWaterSn.setText(String.format(typeStr, reChargeModel.getMachine_type_id() + ""));
+        holder.tvWaterSn.setText(String.format(typeStr, reChargeModel.getMachine_sn() + ""));
         holder.tvReChargeDate.setText(String.format(context.getString(R.string.storage_time), reChargeModel.getCreated_at()));
         holder.tvSaveMoney.setText("+" + reChargeModel.getRecharge_fee() + context.getString(R.string.unit_yuan));
     }

@@ -1,5 +1,6 @@
 package com.app.watermeter.manager;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.app.okhttputils.Model.Result;
@@ -251,7 +252,7 @@ public class MeterManager {
      * 获取缴费明细
      * https://www.showdoc.cc/web/#/137924192608060?page_id=789816901624533
      */
-    public void getRePayList(int offset, int count, final int type, final int machine, final long dateTime) {
+    public void getRePayList(int offset, int count, final int type, final int machine, final String dateTime) {
         Map<String, String> params = new HashMap<>();
         params.put("offset", offset + "");
         params.put("count", count + "");
@@ -259,8 +260,8 @@ public class MeterManager {
         if (machine > 0) {
             params.put("machine", machine + "");
         }
-        if (dateTime > 0) {
-            params.put("date", dateTime + "");
+        if (!TextUtils.isEmpty(dateTime)) {
+            params.put("date", dateTime);
         }
         dataInstance.sendGetRequestData(CommonUrl.METER_READ_LIST_URL, params)
                 .execute(new GenericsCallback<Result>(new JsonGenericsSerializator()) {
@@ -284,7 +285,7 @@ public class MeterManager {
                         }.getType());
 
                         if (machine > 0) {
-                            if (dateTime > 0) {
+                            if (!TextUtils.isEmpty(dateTime)) {
                                 EventBus.getDefault().post(new GetChartReadListEvent(list));
                             } else {
                                 EventBus.getDefault().post(new GetDetailReadListEvent(list));

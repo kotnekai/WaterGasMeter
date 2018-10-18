@@ -17,12 +17,14 @@ import com.app.watermeter.eventBus.GetChartReadListEvent;
 import com.app.watermeter.eventBus.GetDetailReadListEvent;
 import com.app.watermeter.eventBus.GetMeterInfoEvent;
 import com.app.watermeter.eventBus.GetOrderInfoEvent;
+import com.app.watermeter.eventBus.GetPayResultEvent;
 import com.app.watermeter.eventBus.UnBindErrEvent;
 import com.app.watermeter.eventBus.UnBindEvent;
 import com.app.watermeter.manager.MeterManager;
 import com.app.watermeter.model.MeterInfoModel;
 import com.app.watermeter.model.MeterReadModel;
 import com.app.watermeter.utils.DateUtils;
+import com.app.watermeter.utils.MyXFormatter;
 import com.app.watermeter.utils.PreferencesUtils;
 import com.app.watermeter.utils.ToastUtil;
 import com.app.watermeter.view.base.BaseActivity;
@@ -39,6 +41,7 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.github.mikephil.charting.utils.ColorTemplate;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -89,10 +92,16 @@ public class MeterDetailActivity extends BaseActivity {
     public final int MAX_REQUEST_COUNT = 6;
     private int meterId;
     private int meterType;
-    private long mTimeStamp;
+    private String mTimeStamp;
     private String meterSn;
     MeterInfoModel model;
     List<MeterReadModel> chartList = new ArrayList<>();
+
+    protected String[] values = new String[]{
+            "00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00", "08:00", "09:00", "10:00", "11:00",
+            "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "12:00", "23:00"
+    };
+
 
     public static Intent makeIntent(Context context, int meterId, String meterSn, String dateTime, int type) {
         Intent intent = new Intent(context, MeterDetailActivity.class);
@@ -275,7 +284,7 @@ public class MeterDetailActivity extends BaseActivity {
             lineSet.setDrawCircleHole(false);
             lineSet.setValueTextSize(13f);
             //设置允许填充
-            lineSet.setDrawFilled(false);
+            lineSet.setDrawFilled(true);
             lineSet.setFormLineWidth(1f);
             lineSet.setFormLineDashEffect(new DashPathEffect(new float[]{10f, 5f}, 0f));
             lineSet.setFormSize(15.f);
@@ -314,7 +323,7 @@ public class MeterDetailActivity extends BaseActivity {
         meterSn = intent.getStringExtra(CommonParams.METER_SN);
         String time = intent.getStringExtra(CommonParams.METER_TIME);
         if (!TextUtils.isEmpty(time)) {
-            mTimeStamp = DateUtils.getTimeStampByDate(time, DateUtils.DATE_FORMAT_DAY2);
+            mTimeStamp = DateUtils.getDateByDateTime(time);
 
         }
     }
@@ -372,6 +381,20 @@ public class MeterDetailActivity extends BaseActivity {
             tvCurrentValue.setText(model.getDegree() + "");
             tvCurrentDate.setText(model.getFinal_read_at());
             tvMoney.setText(model.getBalance() + "");
+
+            if (model.getStatus()==1)
+            {
+                //激活，可以点击充值
+                tvCharge.setEnabled(true);
+                tvCharge.setBackground(getResources().getDrawable(R.mipmap.anniu));
+            }
+            else
+            {
+                //禁用
+                tvCharge.setEnabled(false);
+                tvCharge.setBackground(getResources().getDrawable(R.mipmap.anniu_gray));
+
+            }
         }
     }
 
@@ -392,6 +415,12 @@ public class MeterDetailActivity extends BaseActivity {
      * @param chartList
      */
     private void setChartData(List<MeterReadModel> chartList) {
+
+        //自定义x轴显示
+        MyXFormatter formatter = new MyXFormatter(values);
+        XAxis xAxis = mChart.getXAxis();
+        xAxis.setValueFormatter(formatter);
+
         //X轴数据
         ArrayList<XAxisEntry> xVals = new ArrayList<>();
         //Y轴数据，用来算法最大最小值作为图表的边界
@@ -450,16 +479,18 @@ public class MeterDetailActivity extends BaseActivity {
             //设置线的颜色
             lineSet.setColor(getResources().getColor(R.color.main_blue_color));
             //设置数据点圆形的颜色
-            lineSet.setCircleColor(getResources().getColor(R.color.colorAccent));
+            lineSet.setCircleColor(getResources().getColor(R.color.white));
             //设置折线宽度
-            lineSet.setLineWidth(2f);
+            lineSet.setLineWidth(1f);
             //设置折现点圆点半径
-            lineSet.setCircleRadius(4f);
+            lineSet.setCircleRadius(3f);
             //设置是否在数据点中间显示一个孔
             lineSet.setDrawCircleHole(false);
             lineSet.setValueTextSize(13f);
             //设置允许填充
-            lineSet.setDrawFilled(false);
+            lineSet.setDrawFilled(true);
+            lineSet.setFillAlpha(65);
+            lineSet.setFillColor(ColorTemplate.getHoloBlue());
             lineSet.setFormLineWidth(1f);
             lineSet.setFormLineDashEffect(new DashPathEffect(new float[]{10f, 5f}, 0f));
             lineSet.setFormSize(15.f);

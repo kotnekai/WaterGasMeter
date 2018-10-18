@@ -137,13 +137,35 @@ public class DateUtils {
         Date date = null;
         try {
             date = simpleDateFormat.parse(dateTime);
-            long ts = date.getTime();
-            return ts;
+            long ts = date.getTime()/1000;
+            String timestamp =  String.format("%010d", ts);
+            return Long.valueOf(timestamp);
         } catch (ParseException e) {
             e.printStackTrace();
         }
         return 0;
     }
+
+    /**
+     * 截取时间 yyyy-MM-dd HH:mm:ss 变 yyyy-MM-dd
+     *
+     * @param dateTime
+     * @return
+     */
+    public static String getDateByDateTime(String dateTime) {
+        String res;
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATE_FORMAT_DAY2);
+        Date date = null;
+        try {
+            date = simpleDateFormat.parse(dateTime);
+            simpleDateFormat.format(date);
+            return simpleDateFormat.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
     /**
      * 获取小时

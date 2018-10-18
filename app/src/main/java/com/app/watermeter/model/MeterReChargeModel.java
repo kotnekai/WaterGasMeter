@@ -12,6 +12,7 @@ public class MeterReChargeModel {
     private String user_real_name;
     private int machine_id;
     private int machine_type_id;
+    private String machine_sn;
     private float recharge_fee;
     private float before_recharge_balance;
     private float after_recharge_balance;
@@ -57,6 +58,14 @@ public class MeterReChargeModel {
 
     public void setMachine_type_id(int machine_type_id) {
         this.machine_type_id = machine_type_id;
+    }
+
+    public String getMachine_sn() {
+        return machine_sn;
+    }
+
+    public void setMachine_sn(String machine_sn) {
+        this.machine_sn = machine_sn;
     }
 
     public float getRecharge_fee() {

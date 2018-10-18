@@ -9,6 +9,7 @@ public class MeterReadModel {
     private int id;
     private int machine_id;
     private int machine_type_id;
+    private String machine_sn;
     private float degree;
     private float read_fee;
     private float read_degree;
@@ -39,6 +40,14 @@ public class MeterReadModel {
 
     public void setMachine_type_id(int machine_type_id) {
         this.machine_type_id = machine_type_id;
+    }
+
+    public String getMachine_sn() {
+        return machine_sn;
+    }
+
+    public void setMachine_sn(String machine_sn) {
+        this.machine_sn = machine_sn;
     }
 
     public float getDegree() {
