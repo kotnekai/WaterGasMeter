@@ -5,6 +5,7 @@ import android.util.Log;
 import com.app.okhttputils.Model.Result;
 import com.app.okhttputils.callback.GenericsCallback;
 import com.app.okhttputils.request.JsonGenericsSerializator;
+import com.app.watermeter.common.CommonParams;
 import com.app.watermeter.common.CommonUrl;
 import com.app.watermeter.eventBus.CheckSmsCodeEvent;
 import com.app.watermeter.eventBus.LoginEvent;
@@ -15,6 +16,7 @@ import com.app.watermeter.model.AccountExtraModel;
 import com.app.watermeter.model.UserInfoModel;
 import com.app.watermeter.model.UserInfoParam;
 import com.app.watermeter.okhttp.DataManager;
+import com.app.watermeter.utils.PreferencesUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -227,7 +229,7 @@ public class UserManager {
 //                        UserInfoModel model =   new Gson().fromJson(jsonString,
 //                                new TypeToken<List<UserInfoModel>>() {
 //                                }.getType());
-                        UserInfoModel model = gson.fromJson(jsonString,UserInfoModel.class);
+                        UserInfoModel model = gson.fromJson(jsonString, UserInfoModel.class);
                         EventBus.getDefault().post(new PersonInfoEvent(model));
                     }
                 });
@@ -291,4 +293,5 @@ public class UserManager {
                     }
                 });
     }
+
 }

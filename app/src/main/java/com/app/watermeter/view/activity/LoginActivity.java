@@ -14,6 +14,7 @@ import com.app.okhttputils.Model.Result;
 import com.app.watermeter.R;
 import com.app.watermeter.common.ComApplication;
 import com.app.watermeter.common.CommonParams;
+import com.app.watermeter.common.UserCache;
 import com.app.watermeter.eventBus.LoginEvent;
 import com.app.watermeter.manager.UserManager;
 import com.app.watermeter.model.LoginInfoModel;
@@ -79,6 +80,7 @@ public class LoginActivity extends BaseActivity {
             ComApplication.getApp().removeAllActivity(ComApplication.getApp().getCurrentActivity());
             Toast.makeText(LoginActivity.this, UIUtils.getValueString(R.string.login_invalid_tip), Toast.LENGTH_SHORT).show();
         }
+
     }
 
     /**
@@ -101,9 +103,11 @@ public class LoginActivity extends BaseActivity {
 
             if (data != null) {
                 Log.d("admin", "onRegisterInfoEvent: data=" + data);
-                PreferencesUtils.putString(CommonParams.USER_TOKEN, data.getAccess_token());
+                UserCache.getInstance().setToken(data.getAccess_token());
                 PreferencesUtils.putInt(CommonParams.TOKEN_PERIOD, data.getExpires_in());
             }
+            String phoneNumber = edtPhoneNumber.getText().toString();
+            UserCache.getInstance().setPhoneNumber(phoneNumber);
             startActivity(MainActivity.makeIntent(this));
             finish();
 

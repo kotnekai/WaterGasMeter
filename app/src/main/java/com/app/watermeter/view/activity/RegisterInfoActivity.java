@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.app.okhttputils.Model.Result;
 import com.app.watermeter.R;
 import com.app.watermeter.common.CommonParams;
+import com.app.watermeter.common.UserCache;
 import com.app.watermeter.eventBus.RegisterInfoEvent;
 import com.app.watermeter.manager.UserManager;
 import com.app.watermeter.model.LoginInfoModel;
@@ -77,7 +78,7 @@ public class RegisterInfoActivity extends BaseActivity {
 
                 if (data != null) {
                     Log.d("admin", "onRegisterInfoEvent: data=" + data);
-                    PreferencesUtils.putString(CommonParams.USER_TOKEN, data.getAccess_token());
+                    UserCache.getInstance().setToken(data.getAccess_token());
                     PreferencesUtils.putInt(CommonParams.TOKEN_PERIOD, data.getExpires_in());
                 }
                 startActivity(MainActivity.makeIntent(this));
