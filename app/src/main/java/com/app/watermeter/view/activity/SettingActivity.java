@@ -9,6 +9,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.sdk.android.push.CommonCallback;
+import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory;
 import com.app.watermeter.R;
 import com.app.watermeter.common.ComApplication;
 import com.app.watermeter.common.CommonParams;
@@ -129,6 +131,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 bottomDialog.show();
                 break;
             case R.id.tvLoginOut:
+                checkOutPushBinding();
                 UserManager.getInstance().loginOut();
                 PreferencesUtils.putString(CommonParams.USER_TOKEN, null);
                 startActivity(LoginActivity.makeIntent(this));
@@ -174,6 +177,22 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 }
                 break;
         }
+    }
+
+    /**
+     * 解绑推送
+     */
+    private void checkOutPushBinding() {
+        PushServiceFactory.getCloudPushService().unbindAccount(new CommonCallback() {
+            @Override
+            public void onSuccess(String s) {
+            }
+
+            @Override
+            public void onFailed(String errorCode, String errorMsg) {
+
+            }
+        });
     }
 
     @Override

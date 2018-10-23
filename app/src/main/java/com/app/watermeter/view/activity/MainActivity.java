@@ -9,6 +9,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.alibaba.sdk.android.push.CloudPushService;
+import com.alibaba.sdk.android.push.CommonCallback;
+import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory;
 import com.app.watermeter.R;
 import com.app.watermeter.common.ApplicationHolder;
 import com.app.watermeter.common.ChangeLanguageHelper;
@@ -47,6 +50,7 @@ public class MainActivity extends BaseActivity {
     TextView tvFourthTab;
     private List<Fragment> fragmentList;
     private FragmentAdapter adapter;
+    private CloudPushService mPushService;
 
     Context mContext;
 
@@ -83,6 +87,25 @@ public class MainActivity extends BaseActivity {
         ChangeLanguageHelper.init(this);
         mContext = MainActivity.this;
         initData();
+        initPushBinding();
+    }
+
+    /**
+     * 推送绑定账号
+     */
+    private void initPushBinding() {
+        PushServiceFactory.getCloudPushService().bindAccount("", new CommonCallback() {
+            @Override
+            public void onSuccess(String s) {
+//                tvConsoleText.append("bind account " + "" + " success\n");
+            }
+
+            @Override
+            public void onFailed(String errorCode, String errorMsg) {
+//                tvConsoleText.append("bind account " + "" + " failed." +
+//                        "errorCode: " + errorCode + ", errorMsg:" + errorMsg);
+            }
+        });
     }
 
     public static Intent makeIntent(Context context){
