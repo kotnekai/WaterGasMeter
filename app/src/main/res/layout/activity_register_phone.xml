@@ -39,25 +39,34 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:drawablePadding="5dp"
-            android:drawableEnd="@mipmap/inside"
             android:layout_marginRight="25dp"
-            android:text="+86"
-            android:textSize="15sp" />
+            android:drawableEnd="@mipmap/inside"
+            android:drawablePadding="5dp"
+            android:text="86"
+            android:textSize="17sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/tvCountryCode"
+            android:text="+"
+            android:textSize="17sp" />
+
     </RelativeLayout>
 
     <EditText
         android:id="@+id/edtPhoneNumber"
         android:layout_width="300dp"
         android:layout_height="45dp"
-        android:inputType="number"
         android:layout_below="@id/rlSelectCode"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:textSize="15sp"
         android:background="@drawable/com_white_20r_shape"
         android:hint="@string/phone_tip"
-        android:paddingLeft="10dp" />
+        android:inputType="number"
+        android:paddingLeft="10dp"
+        android:textSize="15sp" />
 
     <TextView
         android:id="@+id/tvGoNext"

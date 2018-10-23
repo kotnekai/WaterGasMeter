@@ -19,7 +19,10 @@ import com.app.watermeter.eventBus.LoginEvent;
 import com.app.watermeter.manager.UserManager;
 import com.app.watermeter.model.LoginInfoModel;
 import com.app.watermeter.model.AccountExtraModel;
+import com.app.watermeter.model.SpinnerSelectModel;
 import com.app.watermeter.utils.EmptyUtil;
+import com.app.watermeter.utils.InitUtils;
+import com.app.watermeter.utils.PickViewUtil;
 import com.app.watermeter.utils.PreferencesUtils;
 import com.app.watermeter.utils.ProgressUtils;
 import com.app.watermeter.utils.ToastUtil;
@@ -29,6 +32,10 @@ import com.google.gson.Gson;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+import org.jaaksi.pickerview.dataset.OptionDataSet;
+import org.jaaksi.pickerview.picker.OptionPicker;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -118,15 +125,26 @@ public class LoginActivity extends BaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.llSerialNumber:
+                List<SpinnerSelectModel> cityCodeList = InitUtils.getCityCodeList();
+
+                PickViewUtil.showSelectPickDialog(this, cityCodeList, 1, new OptionPicker.OnOptionSelectListener() {
+                    @Override
+                    public void onOptionSelect(OptionPicker picker, int[] selectedPosition, OptionDataSet[] selectedOptions) {
+                        SpinnerSelectModel selectedOption = (SpinnerSelectModel) selectedOptions[0];
+                        tvSelectSerial.setText(selectedOption.getName());
+                    }
+                });
                 break;
             case R.id.tvLoginBtn:
                 String phoneNumber = edtPhoneNumber.getText().toString();
+                String cityCode = tvSelectSerial.getText().toString();
+
                 String password = edtPassword.getText().toString();
                 if (EmptyUtil.isEmpty(phoneNumber) || EmptyUtil.isEmpty(password)) {
                     ToastUtil.showShort(getString(R.string.account_or_psw_invalid));
                     return;
                 }
-                UserManager.getInstance().login(phoneNumber, password);
+                UserManager.getInstance().login(cityCode+phoneNumber, password);
                 break;
             case R.id.tvGoRegister:
                 startActivity(RegisterPhoneActivity.makeIntent(this, CommonParams.fromTypeRegister));

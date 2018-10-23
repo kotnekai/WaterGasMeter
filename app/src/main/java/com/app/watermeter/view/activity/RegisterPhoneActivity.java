@@ -15,14 +15,21 @@ import com.app.watermeter.common.CommonParams;
 import com.app.watermeter.common.UserCache;
 import com.app.watermeter.eventBus.SuccessEvent;
 import com.app.watermeter.manager.UserManager;
+import com.app.watermeter.model.SpinnerSelectModel;
 import com.app.watermeter.utils.AccountValidatorUtil;
 import com.app.watermeter.utils.EmptyUtil;
+import com.app.watermeter.utils.InitUtils;
+import com.app.watermeter.utils.PickViewUtil;
 import com.app.watermeter.utils.ProgressUtils;
 import com.app.watermeter.utils.ToastUtil;
 import com.app.watermeter.view.base.BaseActivity;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+import org.jaaksi.pickerview.dataset.OptionDataSet;
+import org.jaaksi.pickerview.picker.OptionPicker;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -38,8 +45,6 @@ public class RegisterPhoneActivity extends BaseActivity {
     @BindView(R.id.tvCountryCode)
     TextView tvCountryCode;
 
-    private String countryCode;
-    private String phoneNumber;
     private int fromType;
 
     @Override
@@ -48,9 +53,9 @@ public class RegisterPhoneActivity extends BaseActivity {
     }
 
 
-    public static Intent makeIntent(Context context,int fromType) {
+    public static Intent makeIntent(Context context, int fromType) {
         Intent intent = new Intent(context, RegisterPhoneActivity.class);
-        intent.putExtra(CommonParams.fromType,fromType);
+        intent.putExtra(CommonParams.fromType, fromType);
         return intent;
     }
 
@@ -58,10 +63,10 @@ public class RegisterPhoneActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
-        if(intent==null){
+        if (intent == null) {
             return;
         }
-        fromType = intent.getIntExtra(CommonParams.fromType,0);
+        fromType = intent.getIntExtra(CommonParams.fromType, 0);
 
     }
 
@@ -74,17 +79,25 @@ public class RegisterPhoneActivity extends BaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.rlSelectCode:
+                List<SpinnerSelectModel> cityCodeList = InitUtils.getCityCodeList();
 
+                PickViewUtil.showSelectPickDialog(this, cityCodeList, 1, new OptionPicker.OnOptionSelectListener() {
+                    @Override
+                    public void onOptionSelect(OptionPicker picker, int[] selectedPosition, OptionDataSet[] selectedOptions) {
+                        SpinnerSelectModel selectedOption = (SpinnerSelectModel) selectedOptions[0];
+                        tvCountryCode.setText(selectedOption.getName());
+                    }
+                });
                 break;
             case R.id.tvGoNext:
-                phoneNumber = edtPhoneNumber.getText().toString();
-                countryCode = tvCountryCode.getText().toString();
+                String phoneNumber = edtPhoneNumber.getText().toString();
+                String countryCode = tvCountryCode.getText().toString();
 //                boolean mobile = AccountValidatorUtil.isMobile(phoneNumber);
-               if (phoneNumber==null || EmptyUtil.isEmpty(phoneNumber)) {
-                   ToastUtil.showShort(getString(R.string.phone_number));
-                 return;
+                if (EmptyUtil.isEmpty(phoneNumber)) {
+                    ToastUtil.showShort(getString(R.string.phone_number));
+                    return;
                 }
-                UserManager.getInstance().sendSmsToCheck(phoneNumber, CommonParams.BUSS_REGISTER_TYPE);
+                UserManager.getInstance().sendSmsToCheck(countryCode + phoneNumber, CommonParams.BUSS_REGISTER_TYPE);
 
 
                 break;
@@ -104,8 +117,9 @@ public class RegisterPhoneActivity extends BaseActivity {
         ToastUtil.showShort(message);
         if (status_code == 200 && errCode == 0) {
             String phoneNumber = edtPhoneNumber.getText().toString();
+            String countryCode = tvCountryCode.getText().toString();
             UserCache.getInstance().setPhoneNumber(phoneNumber);
-            startActivity(RegisterCodeActivity.makeIntent(this, countryCode, phoneNumber,fromType));
+            startActivity(RegisterCodeActivity.makeIntent(this, countryCode, phoneNumber, fromType));
         }
     }
 
