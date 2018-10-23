@@ -51,5 +51,7 @@ public class CommonParams {
     public static final String SECURITY_KEY = "key_ace_uat_1819";
     public static final String PARTNER  = "1819";
 
+    public static final String PHONE_NUMBER  = "phone_number";
+
 
 }

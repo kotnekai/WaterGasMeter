@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.app.okhttputils.Model.Result;
 import com.app.watermeter.R;
 import com.app.watermeter.common.CommonParams;
+import com.app.watermeter.common.UserCache;
 import com.app.watermeter.eventBus.SuccessEvent;
 import com.app.watermeter.manager.UserManager;
 import com.app.watermeter.utils.AccountValidatorUtil;
@@ -102,6 +103,8 @@ public class RegisterPhoneActivity extends BaseActivity {
         int errCode = result.getErr_code();//业务码
         ToastUtil.showShort(message);
         if (status_code == 200 && errCode == 0) {
+            String phoneNumber = edtPhoneNumber.getText().toString();
+            UserCache.getInstance().setPhoneNumber(phoneNumber);
             startActivity(RegisterCodeActivity.makeIntent(this, countryCode, phoneNumber,fromType));
         }
     }
