@@ -186,10 +186,12 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         PushServiceFactory.getCloudPushService().unbindAccount(new CommonCallback() {
             @Override
             public void onSuccess(String s) {
+                System.out.print("===unbindAccount==success==");
             }
 
             @Override
             public void onFailed(String errorCode, String errorMsg) {
+                System.out.print("===unbindAccount==onFailed=="+errorCode+"===="+errorMsg);
 
             }
         });

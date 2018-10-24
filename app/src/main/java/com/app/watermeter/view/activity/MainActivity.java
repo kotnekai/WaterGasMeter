@@ -15,6 +15,7 @@ import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory;
 import com.app.watermeter.R;
 import com.app.watermeter.common.ApplicationHolder;
 import com.app.watermeter.common.ChangeLanguageHelper;
+import com.app.watermeter.common.UserCache;
 import com.app.watermeter.eventBus.LanguageChangedEvent;
 import com.app.watermeter.utils.LanguageUtils;
 import com.app.watermeter.view.adapter.FragmentAdapter;
@@ -94,16 +95,19 @@ public class MainActivity extends BaseActivity {
      * 推送绑定账号
      */
     private void initPushBinding() {
-        PushServiceFactory.getCloudPushService().bindAccount("", new CommonCallback() {
+
+        String account = UserCache.getInstance().getPhoneNumber();
+
+        PushServiceFactory.getCloudPushService().bindAccount(account, new CommonCallback() {
             @Override
             public void onSuccess(String s) {
-//                tvConsoleText.append("bind account " + "" + " success\n");
+                System.out.print("====bind account " + "" + " success\n");
             }
 
             @Override
             public void onFailed(String errorCode, String errorMsg) {
-//                tvConsoleText.append("bind account " + "" + " failed." +
-//                        "errorCode: " + errorCode + ", errorMsg:" + errorMsg);
+                System.out.print("===bind account " + "" + " failed." +
+                        "errorCode: " + errorCode + ", errorMsg:" + errorMsg);
             }
         });
     }
