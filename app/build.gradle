@@ -30,6 +30,11 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
+
+        ndk {
+            //选择要添加的对应cpu类型的.so库。
+            abiFilters 'armeabi', 'x86'
+        }
     }
     buildTypes {
         release {
@@ -82,6 +87,8 @@ dependencies {
     compile 'com.aliyun.ams:alicloud-android-third-push:3.0.5@aar'
 
     compile ('com.google.firebase:firebase-messaging:9.6.1')
+    compile 'com.aliyun.ams:alicloud-android-utils:1.1.1'
+    compile 'com.aliyun.ams:alicloud-android-beacon:1.0.1'
 
 //    compile project(path: ':hellocharts-library')
 }

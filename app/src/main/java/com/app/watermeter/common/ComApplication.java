@@ -103,13 +103,11 @@ public class ComApplication extends Application {
             @Override
             public void onSuccess(String response) {
                 Log.i(TAG, "init cloudchannel success");
-//                setConsoleText("init cloudchannel success");
             }
 
             @Override
             public void onFailed(String errorCode, String errorMessage) {
                 Log.e(TAG, "init cloudchannel failed -- errorcode:" + errorCode + " -- errorMessage:" + errorMessage);
-//                setConsoleText("init cloudchannel failed -- errorcode:" + errorCode + " -- errorMessage:" + errorMessage);
             }
         });
 
