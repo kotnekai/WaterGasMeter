@@ -66,7 +66,7 @@ public class PickViewUtil {
                     @Override
                     public void intercept(PickerView pickerView) {
                         pickerView.setColor(context.getResources().getColor(R.color.main_blue_color), pickerView.getOutColor());
-                        pickerView.setTextSize(12, 15);
+                        pickerView.setTextSize(14, 15);
                     }
                 })
                 .create();
