@@ -88,28 +88,6 @@ public class MainActivity extends BaseActivity {
         ChangeLanguageHelper.init(this);
         mContext = MainActivity.this;
         initData();
-        initPushBinding();
-    }
-
-    /**
-     * 推送绑定账号
-     */
-    private void initPushBinding() {
-
-        String account = UserCache.getInstance().getPhoneNumber();
-
-        PushServiceFactory.getCloudPushService().bindAccount(account, new CommonCallback() {
-            @Override
-            public void onSuccess(String s) {
-                System.out.print("====bind account " + "" + " success\n");
-            }
-
-            @Override
-            public void onFailed(String errorCode, String errorMsg) {
-                System.out.print("===bind account " + "" + " failed." +
-                        "errorCode: " + errorCode + ", errorMsg:" + errorMsg);
-            }
-        });
     }
 
     public static Intent makeIntent(Context context){

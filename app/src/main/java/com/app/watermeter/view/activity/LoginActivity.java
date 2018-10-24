@@ -10,6 +10,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.sdk.android.push.CommonCallback;
+import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory;
 import com.app.okhttputils.Model.Result;
 import com.app.watermeter.R;
 import com.app.watermeter.common.ComApplication;
@@ -104,6 +106,8 @@ public class LoginActivity extends BaseActivity {
         ToastUtil.showShort(message);
 
         if (status_code == 200 && err_code == 0) {
+            //推送
+            initPushBinding();
             Gson gson = new Gson();
             String jsonString = gson.toJson(infoModel.getData());
             AccountExtraModel data = gson.fromJson(jsonString, AccountExtraModel.class);
@@ -120,6 +124,28 @@ public class LoginActivity extends BaseActivity {
 
         }
     }
+
+    /**
+     * 推送绑定账号
+     */
+    private void initPushBinding() {
+
+        String account = UserCache.getInstance().getPhoneNumber();
+
+        PushServiceFactory.getCloudPushService().bindAccount(account, new CommonCallback() {
+            @Override
+            public void onSuccess(String s) {
+                System.out.print("====bind account " + "" + " success\n");
+            }
+
+            @Override
+            public void onFailed(String errorCode, String errorMsg) {
+                System.out.print("===bind account " + "" + " failed." +
+                        "errorCode: " + errorCode + ", errorMsg:" + errorMsg);
+            }
+        });
+    }
+
 
     @OnClick({R.id.llSerialNumber, R.id.tvLoginBtn, R.id.tvGoRegister, R.id.tvForgetPsw})
     public void onClick(View view) {
