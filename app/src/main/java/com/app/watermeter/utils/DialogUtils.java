@@ -3,6 +3,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AlertDialog;
+import android.text.method.ScrollingMovementMethod;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,8 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.app.watermeter.R;
+import com.app.watermeter.model.ApkInfoModel;
+import com.app.watermeter.model.NetVersionModel;
 
 public class DialogUtils {
 

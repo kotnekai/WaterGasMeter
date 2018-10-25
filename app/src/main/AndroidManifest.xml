@@ -24,8 +24,7 @@
     <uses-permission android:name="android.permission.REORDER_TASKS" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
-
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
 
     <application
         android:name=".common.ComApplication"
@@ -59,11 +58,9 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.LoginActivity"
-            android:screenOrientation="portrait"
             android:launchMode="singleTask"
-            android:theme="@style/AppTheme.Main">
-
-        </activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Main"></activity>
         <activity
             android:name=".view.activity.RegisterPhoneActivity"
             android:screenOrientation="portrait" />
@@ -86,10 +83,9 @@
         <activity
             android:name=".view.activity.PreStorageSaveActivity"
             android:screenOrientation="portrait" />
-
-        <activity android:name=".view.activity.PayBillActivity"
-            android:screenOrientation="portrait"/>
-
+        <activity
+            android:name=".view.activity.PayBillActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.MeterDetailActivity"
             android:screenOrientation="portrait" />
@@ -99,7 +95,8 @@
         <activity
             android:name=".view.activity.PayActionActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".view.activity.LaunchActivity"
+        <activity
+            android:name=".view.activity.LaunchActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -107,15 +104,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".view.activity.PreStorageSave2Activity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.base.WebViewActivity"
             android:screenOrientation="portrait" />
-
-
 
         <meta-data
             android:name="com.alibaba.app.appkey"
@@ -127,7 +121,7 @@
 
         <!-- 消息接收监听器 （用户可自主扩展） -->
         <receiver
-            android:name="com.app.watermeter.component.MyMessageReceiver"
+            android:name=".component.MyMessageReceiver"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.alibaba.push2.action.NOTIFICATION_OPENED" />
@@ -140,9 +134,7 @@
             </intent-filter>
         </receiver>
 
-
-
-        <!-- Push SDK 相关组件，required-->
+        <!-- Push SDK 相关组件，required -->
         <!-- 消息接收服务 -->
         <service
             android:name="com.alibaba.sdk.android.push.MsgService"
@@ -151,79 +143,91 @@
                 <action android:name="com.alibaba.sdk.android.push.NOTIFY_ACTION" />
             </intent-filter>
         </service>
-        <service android:name="com.alibaba.sdk.android.push.channel.CheckService"
+        <service
+            android:name="com.alibaba.sdk.android.push.channel.CheckService"
             android:process=":channel">
             <intent-filter>
                 <action android:name="com.alibaba.sdk.android.push.CHECK_SERVICE" />
             </intent-filter>
         </service>
-        <service android:name="com.taobao.accs.ChannelService"
-            android:exported="true" android:process=":channel">
+        <service
+            android:name="com.taobao.accs.ChannelService"
+            android:exported="true"
+            android:process=":channel">
             <intent-filter>
-                <action android:name="com.taobao.accs.intent.action.SERVICE"/>
+                <action android:name="com.taobao.accs.intent.action.SERVICE" />
             </intent-filter>
         </service>
         <service
             android:name="com.taobao.accs.ChannelService$KernelService"
             android:exported="false"
-            android:process=":channel" >
-        </service>
-        <service android:name="com.taobao.accs.data.MsgDistributeService"
+            android:process=":channel"></service>
+        <service
+            android:name="com.taobao.accs.data.MsgDistributeService"
             android:exported="true">
             <intent-filter>
                 <action android:name="com.taobao.accs.intent.action.RECEIVE" />
             </intent-filter>
         </service>
-        <receiver android:name="com.taobao.accs.EventReceiver"
+
+        <receiver
+            android:name="com.taobao.accs.EventReceiver"
             android:process=":channel">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
             <intent-filter>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
             <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_REMOVED"/>
-                <data android:scheme="package"/>
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+
+                <data android:scheme="package" />
             </intent-filter>
             <intent-filter>
-                <action android:name="android.intent.action.USER_PRESENT"/>
+                <action android:name="android.intent.action.USER_PRESENT" />
             </intent-filter>
         </receiver>
-        <receiver android:name="com.taobao.accs.ServiceReceiver"
+        <receiver
+            android:name="com.taobao.accs.ServiceReceiver"
             android:process=":channel">
             <intent-filter>
-                <action android:name="com.taobao.accs.intent.action.COMMAND"/>
+                <action android:name="com.taobao.accs.intent.action.COMMAND" />
             </intent-filter>
             <intent-filter>
-                <action android:name="com.taobao.accs.intent.action.START_FROM_AGOO"/>
+                <action android:name="com.taobao.accs.intent.action.START_FROM_AGOO" />
             </intent-filter>
         </receiver>
-        <service android:name="org.android.agoo.accs.AgooService"
-            android:exported="true" >
+
+        <service
+            android:name="org.android.agoo.accs.AgooService"
+            android:exported="true">
             <intent-filter>
                 <action android:name="com.taobao.accs.intent.action.RECEIVE" />
             </intent-filter>
         </service>
-        <service android:name="com.alibaba.sdk.android.push.AliyunPushIntentService"
-            android:exported="true"
-            >
+        <service
+            android:name="com.alibaba.sdk.android.push.AliyunPushIntentService"
+            android:exported="true">
             <intent-filter>
                 <action android:name="org.agoo.android.intent.action.RECEIVE" />
             </intent-filter>
         </service>
+
         <receiver
             android:name="com.taobao.agoo.AgooCommondReceiver"
-            android:process=":channel"
-            android:exported="true" >
+            android:exported="true"
+            android:process=":channel">
             <intent-filter>
                 <action android:name="${applicationId}.intent.action.COMMAND" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.PACKAGE_REMOVED" />
+
                 <data android:scheme="package" />
             </intent-filter>
         </receiver>
+
         <service
             android:name="com.alibaba.sdk.android.push.channel.TaobaoRecvService"
             android:exported="true"
@@ -236,17 +240,20 @@
         <service
             android:name="com.taobao.accs.internal.AccsJobService"
             android:permission="android.permission.BIND_JOB_SERVICE"
-            android:process=":channel"/>
+            android:process=":channel" />
         <!-- V3.0.7及以上版本需配置 -->
-        <service android:name="com.alibaba.sdk.android.push.channel.KeepChannelService"
+        <service
+            android:name="com.alibaba.sdk.android.push.channel.KeepChannelService"
             android:permission="android.permission.BIND_JOB_SERVICE"
             android:process=":channel" />
-        <receiver android:name="com.alibaba.sdk.android.push.SystemEventReceiver"
+
+        <receiver
+            android:name="com.alibaba.sdk.android.push.SystemEventReceiver"
             android:process=":channel">
             <intent-filter>
-                <action android:name="android.intent.action.MEDIA_MOUNTED"/>
-                <action android:name="android.intent.action.ACTION_POWER_CONNECTED"/>
-                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED"/>
+                <action android:name="android.intent.action.MEDIA_MOUNTED" />
+                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
+                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
             </intent-filter>
         </receiver>
         <!-- V3.0.9及以上版本需配置 -->
@@ -257,10 +264,9 @@
             android:exported="false"
             android:finishOnTaskLaunch="false"
             android:launchMode="singleInstance"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen"
             android:process=":channel"
-            >
-        </activity>
+            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen"></activity>
+        <activity android:name=".view.activity.VersionActivity"></activity>
     </application>
 
 </manifest>

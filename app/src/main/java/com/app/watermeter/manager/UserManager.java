@@ -7,12 +7,15 @@ import com.app.okhttputils.callback.GenericsCallback;
 import com.app.okhttputils.request.JsonGenericsSerializator;
 import com.app.watermeter.common.CommonParams;
 import com.app.watermeter.common.CommonUrl;
+import com.app.watermeter.eventBus.ApkInfoEvent;
 import com.app.watermeter.eventBus.CheckSmsCodeEvent;
 import com.app.watermeter.eventBus.LoginEvent;
 import com.app.watermeter.eventBus.PersonInfoEvent;
 import com.app.watermeter.eventBus.RegisterInfoEvent;
 import com.app.watermeter.eventBus.SuccessEvent;
 import com.app.watermeter.model.AccountExtraModel;
+import com.app.watermeter.model.ApkInfoModel;
+import com.app.watermeter.model.NetVersionModel;
 import com.app.watermeter.model.UserInfoModel;
 import com.app.watermeter.model.UserInfoParam;
 import com.app.watermeter.okhttp.DataManager;
@@ -293,5 +296,7 @@ public class UserManager {
                     }
                 });
     }
+
+
 
 }

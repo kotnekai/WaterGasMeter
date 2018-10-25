@@ -41,6 +41,8 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     TextView tvLanguage;
     @BindView(R.id.tvLoginOut)
     TextView tvLoginOut;
+    @BindView(R.id.rlVersionInfo)
+    RelativeLayout rlVersionInfo;
 
     View view;
     BottomDialogView bottomDialog;
@@ -89,6 +91,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         tvEnglish.setOnClickListener(this);
         tvKm.setOnClickListener(this);
         tvCancel.setOnClickListener(this);
+        rlVersionInfo.setOnClickListener(this);
 
         llModifyPwd.setOnClickListener(this);
         llChangedLanguage.setOnClickListener(this);
@@ -176,6 +179,9 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                     bottomDialog.dismiss();
                 }
                 break;
+            case R.id.rlVersionInfo:
+                startActivity(VersionActivity.makeIntent(this));
+                break;
         }
     }
 
@@ -191,7 +197,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
             @Override
             public void onFailed(String errorCode, String errorMsg) {
-                System.out.print("===unbindAccount==onFailed=="+errorCode+"===="+errorMsg);
+                System.out.print("===unbindAccount==onFailed==" + errorCode + "====" + errorMsg);
 
             }
         });

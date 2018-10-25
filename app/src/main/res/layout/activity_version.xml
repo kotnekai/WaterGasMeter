@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+    <TextView
+        android:id="@+id/tvCheckVersion"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:drawableRight="@mipmap/inside"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="20dp"
+        android:text="检查更新" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/main_bg_gray" />
+
+    <LinearLayout
+        android:id="@+id/llVersionLayout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="App版本号："
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/tvVersionCode"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:gravity="center"
+            android:text="1.0"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/main_bg_gray" />
+
+    <TextView
+        android:id="@+id/tvUpdateTime"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:text="更新时间：" />
+
+
+</LinearLayout>
