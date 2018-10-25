@@ -33,14 +33,38 @@
         android:id="@+id/rlVersionInfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/common_text_white_gray_click"
         android:layout_below="@id/llModifyPwd"
-        android:layout_marginTop="10dp"
-        android:orientation="vertical">
+        android:layout_marginTop="10dp">
 
         <TextView
-            style="@style/text_Item_style"
-            android:drawablePadding="10dp"
-            android:text="@string/other_version_info" />
+            android:id="@+id/tvTip"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:gravity="center_vertical"
+            android:paddingEnd="15dp"
+            android:paddingStart="15dp"
+            android:text="@string/other_version_info"
+            android:textColor="@color/normal_text_item_color"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tvCurrentVersion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/tvTip"
+            android:text="1.0.0"
+            android:textColor="@color/normal_text_item_color"
+            android:textSize="18dp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_marginRight="15dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:src="@mipmap/inside" />
     </RelativeLayout>
 
     <RelativeLayout

@@ -50,7 +50,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:text="暂无数据"
+                android:text="@string/have_no_data"
                 android:textColor="@color/text_gray"
                 android:textSize="16sp" />
         </RelativeLayout>
@@ -112,7 +112,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:text="暂无数据"
+                android:text="@string/have_no_data"
                 android:textColor="@color/text_gray"
                 android:textSize="16sp" />
         </RelativeLayout>
@@ -173,7 +173,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:text="暂无数据"
+                android:text="@string/have_no_data"
                 android:textColor="@color/text_gray"
                 android:textSize="16sp" />
         </RelativeLayout>

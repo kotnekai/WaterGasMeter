@@ -130,5 +130,6 @@
     <string name="login_invalid_tip">ការចូលមិនត្រឹមត្រូវទេសូមចូលម្តងទៀត</string>
     <string name="login_out">ចេញ</string>
     <string name="mine">ខ្ញុំ</string>
+    <string name="have_no_data">គ្មានទិន្នន័យ</string>
 
 </resources>

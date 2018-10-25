@@ -12,11 +12,13 @@ import android.widget.TextView;
 import com.alibaba.sdk.android.push.CommonCallback;
 import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory;
 import com.app.watermeter.R;
+import com.app.watermeter.common.ApplicationHolder;
 import com.app.watermeter.common.ComApplication;
 import com.app.watermeter.common.CommonParams;
 import com.app.watermeter.common.Constants;
 import com.app.watermeter.eventBus.LanguageChangedEvent;
 import com.app.watermeter.manager.UserManager;
+import com.app.watermeter.model.VersionModel;
 import com.app.watermeter.utils.LanguageUtils;
 import com.app.watermeter.utils.PreferencesUtils;
 import com.app.watermeter.utils.ToastUtil;
@@ -43,6 +45,8 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     TextView tvLoginOut;
     @BindView(R.id.rlVersionInfo)
     RelativeLayout rlVersionInfo;
+    @BindView(R.id.tvCurrentVersion)
+    TextView tvCurrentVersion;
 
     View view;
     BottomDialogView bottomDialog;
@@ -96,6 +100,8 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         llModifyPwd.setOnClickListener(this);
         llChangedLanguage.setOnClickListener(this);
         tvLoginOut.setOnClickListener(this);
+        VersionModel versionModel = ApplicationHolder.getInstance().getVersionModel();
+        tvCurrentVersion.setText(versionModel.getVersionName());
     }
 
     /**

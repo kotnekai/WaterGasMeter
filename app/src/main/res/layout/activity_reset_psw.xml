@@ -30,7 +30,7 @@
             android:background="@color/white"
             android:maxLength="20"
             android:gravity="center_vertical"
-            android:hint="密码"
+            android:hint="@string/person_password"
             android:inputType="textPassword"
             android:textSize="17sp" />
     </LinearLayout>
@@ -61,7 +61,7 @@
             android:layout_marginLeft="10dp"
             android:background="@color/white"
             android:gravity="center_vertical"
-            android:hint="确认密码"
+            android:hint="@string/confirm_password"
             android:maxLength="20"
             android:inputType="textPassword"
             android:textSize="17sp" />
@@ -86,7 +86,7 @@
         android:layout_marginTop="40dp"
         android:background="@mipmap/anniu"
         android:gravity="center"
-        android:text="提交"
+        android:text="@string/submit"
         android:textColor="@color/white"
         android:textSize="18sp" />
 </RelativeLayout>

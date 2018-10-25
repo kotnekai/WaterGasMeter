@@ -23,7 +23,7 @@
             android:layout_weight="1"
             android:drawableTop="@drawable/main_frag_home_icon_selector"
             android:gravity="center"
-            android:text="首页"
+            android:text="@string/main_home"
             android:textColor="@drawable/main_frag_text_selector" />
 
 
@@ -35,7 +35,7 @@
             android:drawableTop="@drawable/main_frag_meter_icon_selector"
             android:gravity="center"
 
-            android:text="绑定"
+            android:text="@string/binding"
             android:textColor="@drawable/main_frag_text_selector" />
 
         <TextView
@@ -46,7 +46,7 @@
             android:drawableTop="@drawable/main_frag_mine_icon_selector"
             android:gravity="center"
 
-            android:text="我的"
+            android:text="@string/mine"
             android:textColor="@drawable/main_frag_text_selector" />
 
         <TextView

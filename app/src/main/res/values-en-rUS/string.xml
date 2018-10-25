@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">WaterMeter</string>
 
-    <string name="main_home">Water Meter</string>
+    <string name="main_home">main</string>
     <string name="water_meter">Water Meter</string>
     <string name="electricity_meter">Electricity Meter</string>
     <string name="gas_meter">Gas Meter</string>
@@ -130,5 +130,6 @@
     <string name="login_out">sign out</string>
 
     <string name="mine">mine</string>
+    <string name="have_no_data">no data</string>
 
 </resources>

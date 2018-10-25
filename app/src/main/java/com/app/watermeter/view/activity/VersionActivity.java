@@ -65,7 +65,7 @@ public class VersionActivity extends BaseActivity {
         VersionModel versionModel = ApplicationHolder.getInstance().getVersionModel();
 
         tvVersionCode.setText(versionModel.getVersionName());
-        tvUpdateTime.setText(UIUtils.getValueString(R.string.act_ver_update_time) + DateUtils.getFormatSystemTime(versionModel.getLastUpdateTime()));
+        tvUpdateTime.setText(UIUtils.getValueString(R.string.act_ver_update_time)+"：" + DateUtils.getFormatSystemTime(versionModel.getLastUpdateTime()));
         tvCheckVersion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
