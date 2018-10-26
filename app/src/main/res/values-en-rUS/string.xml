@@ -40,11 +40,7 @@
     <string name="mine_per_storage_list">Pre storage detail</string>
     <string name="mine_pay_list">Payment details</string>
     <string name="mine_person_info">personal data</string>
-    <string name="other_version_info">current version</string>
-    <string name="act_ver_title">version info</string>
-    <string name="act_ver_update_time">update time</string>
-    <string name="act_ver_update_checking">version checking...</string>
-    <string name="act_is_new_ver">this version is latest</string>
+
 
     <string name="mine_other_setting">Setting</string>
     <string name="person_name">Name</string>
@@ -131,5 +127,14 @@
 
     <string name="mine">mine</string>
     <string name="have_no_data">no data</string>
+
+    <string name="other_version_info">current version</string>
+    <string name="act_ver_title">version info</string>
+    <string name="act_ver_update_time">update time</string>
+    <string name="act_ver_update_checking">version checking...</string>
+    <string name="act_is_new_ver">this version is latest</string>
+
+    <string name="version_update_title">version update prompt</string>
+    <string name="version_update_tip">the lasted version：</string>
 
 </resources>

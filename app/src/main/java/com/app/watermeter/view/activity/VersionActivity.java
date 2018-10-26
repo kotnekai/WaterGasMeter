@@ -70,7 +70,7 @@ public class VersionActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 ProgressUtils.getIntance().setProgressDialog(UIUtils.getValueString(R.string.act_ver_update_checking), VersionActivity.this);
-                AppUpdateManager.getInstance().getApkVersionInfo(true);
+                AppUpdateManager.getInstance().getApkVersionInfo(false);
             }
         });
     }
@@ -80,7 +80,7 @@ public class VersionActivity extends BaseActivity {
         ProgressUtils.getIntance().dismissProgress();
         final VersionData apkInfoModel = event.getApkInfoModel();
         boolean selfCheck = event.isSelfCheck();
-        if (!selfCheck) {
+        if (selfCheck) {
             return;
         }
         if (apkInfoModel == null) {
@@ -89,8 +89,12 @@ public class VersionActivity extends BaseActivity {
         }
         boolean needUpdateApk = AppUpdateManager.getInstance().needUpdateApk(apkInfoModel);
         if (needUpdateApk) {
-            AppUpdateManager.getInstance().updateNewApk(VersionActivity.this, apkInfoModel);
-
+            DialogUtils.showApkUpdateDialog(this, apkInfoModel, new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AppUpdateManager.getInstance().updateNewApk(VersionActivity.this, apkInfoModel);
+                }
+            });
         } else {
             ToastUtil.showShort(UIUtils.getValueString(R.string.act_is_new_ver));
         }

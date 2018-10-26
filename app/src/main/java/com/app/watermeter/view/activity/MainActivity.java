@@ -13,11 +13,18 @@ import com.alibaba.sdk.android.push.CloudPushService;
 import com.alibaba.sdk.android.push.CommonCallback;
 import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory;
 import com.app.watermeter.R;
+import com.app.watermeter.apkUpdate.AppUpdateManager;
 import com.app.watermeter.common.ApplicationHolder;
 import com.app.watermeter.common.ChangeLanguageHelper;
 import com.app.watermeter.common.UserCache;
+import com.app.watermeter.eventBus.ApkInfoEvent;
 import com.app.watermeter.eventBus.LanguageChangedEvent;
+import com.app.watermeter.model.VersionData;
+import com.app.watermeter.utils.DialogUtils;
 import com.app.watermeter.utils.LanguageUtils;
+import com.app.watermeter.utils.ProgressUtils;
+import com.app.watermeter.utils.ToastUtil;
+import com.app.watermeter.utils.UIUtils;
 import com.app.watermeter.view.adapter.FragmentAdapter;
 import com.app.watermeter.view.base.BaseActivity;
 import com.app.watermeter.view.fragment.HomeFragment;
@@ -81,18 +88,19 @@ public class MainActivity extends BaseActivity {
     }
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ChangeLanguageHelper.init(this);
         mContext = MainActivity.this;
         initData();
+
     }
 
-    public static Intent makeIntent(Context context){
-        return new Intent(context,MainActivity.class);
+    public static Intent makeIntent(Context context) {
+        return new Intent(context, MainActivity.class);
     }
+
     private void initData() {
         fragmentList = new ArrayList<>();
         fragmentList.add(new HomeFragment());
@@ -103,6 +111,7 @@ public class MainActivity extends BaseActivity {
         viewPager.setOffscreenPageLimit(2);
         viewPager.setAdapter(adapter);
         tvHomeTab.setSelected(true);
+        AppUpdateManager.getInstance().getApkVersionInfo(true);
 
     }
 
@@ -137,5 +146,28 @@ public class MainActivity extends BaseActivity {
                 break;
         }
 
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onApkInfoEvent(ApkInfoEvent event) {
+        ProgressUtils.getIntance().dismissProgress();
+        final VersionData apkInfoModel = event.getApkInfoModel();
+        boolean selfCheck = event.isSelfCheck();
+        if (!selfCheck) {
+            return;
+        }
+        if (apkInfoModel == null) {
+            ToastUtil.showShort(UIUtils.getValueString(R.string.request_data_error));
+            return;
+        }
+        boolean needUpdateApk = AppUpdateManager.getInstance().needUpdateApk(apkInfoModel);
+        if (needUpdateApk) {
+            DialogUtils.showApkUpdateDialog(this, apkInfoModel, new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AppUpdateManager.getInstance().updateNewApk(MainActivity.this, apkInfoModel);
+                }
+            });
+        }
     }
 }

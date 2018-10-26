@@ -40,12 +40,9 @@
     <string name="mine_per_storage_list">预存明细</string>
     <string name="mine_pay_list">缴费明细</string>
     <string name="mine_person_info">个人资料</string>
-    <string name="other_version_info">当前版本</string>
-    <string name="act_ver_title">版本信息</string>
-    <string name="act_ver_update_time">更新时间</string>
+
     <string name="mine_other_setting">其它设置</string>
-    <string name="act_ver_update_checking">版本检查中...</string>
-    <string name="act_is_new_ver">当前已是最新版本</string>
+
 
     <string name="person_name">姓名</string>
     <string name="person_email">邮箱</string>
@@ -133,4 +130,13 @@
     <string name="mine">我的</string>
     <string name="account_or_psw_invalid">账号或密码不合法</string>
     <string name="have_no_data">暂无数据</string>
+
+    <string name="other_version_info">当前版本</string>
+    <string name="act_ver_title">版本信息</string>
+    <string name="act_ver_update_time">更新时间</string>
+    <string name="act_ver_update_checking">版本检查中...</string>
+    <string name="act_is_new_ver">当前已是最新版本</string>
+    <string name="version_update_title">版本升级提示</string>
+    <string name="version_update_tip">最新版本：</string>
+
 </resources>

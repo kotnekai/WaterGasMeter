@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.app.watermeter.R;
 import com.app.watermeter.model.ApkInfoModel;
 import com.app.watermeter.model.NetVersionModel;
+import com.app.watermeter.model.VersionData;
 
 public class DialogUtils {
 
@@ -98,5 +99,40 @@ public class DialogUtils {
         });
 
     }
+
+    public static void showApkUpdateDialog(final Context context, VersionData  apkInfoModel, final View.OnClickListener listener) {
+        final AlertDialog dialog = new AlertDialog.Builder(context).create();
+        View view = LayoutInflater.from(context).inflate(R.layout.apk_update_layout, null);
+        TextView tvApkVersion = (TextView) view.findViewById(R.id.tvApkVersion);
+        TextView tvUpdateTime = (TextView) view.findViewById(R.id.tvUpdateTime);
+        TextView tvCancel = (TextView) view.findViewById(R.id.tvCancel);
+        TextView tvConfirm = (TextView) view.findViewById(R.id.tvConfirm);
+        tvApkVersion.setText(context.getString(R.string.version_update_tip) + apkInfoModel.getVersion());
+        tvUpdateTime.setText(context.getString(R.string.act_ver_update_time) + apkInfoModel.getUpdated_at());
+
+        dialog.setView(view);
+        dialog.setCancelable(true);
+        dialog.setCanceledOnTouchOutside(true);
+        dialog.show();
+        tvCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (dialog.isShowing()) {
+                    dialog.dismiss();
+                }
+            }
+        });
+        tvConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onClick(v);
+                if (dialog.isShowing()) {
+                    dialog.dismiss();
+                }
+            }
+        });
+
+    }
+
 
 }
