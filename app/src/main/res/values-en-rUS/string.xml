@@ -86,7 +86,7 @@
     <string name="immediately_save">Pre-stored immediately</string>
     <string name="storage_detail" formatted="true">Pre-stored details>></string>
     <string name="payment_detail" formatted="true">Payment details>></string>
-    <string name="unit_yuan">元</string>
+    <string name="unit_yuan">RMB</string>
 
     <string name="cancel_binding">Unbind</string>
 
@@ -101,6 +101,8 @@
 
 
     <string name="payed">Deducted</string>
+    <string name="waited_payed">To be deducted</string>
+
     <string name="no_pay" formatted="false">Insufficient balance of the table \n to be deducted %s yuan</string>
 
     <string name="payment_money_title">Pre-stored amount</string>

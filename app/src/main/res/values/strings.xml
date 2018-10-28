@@ -103,6 +103,8 @@
 
 
     <string name="payed">已扣除</string>
+    <string name="waited_payed">待扣除</string>
+
     <string name="no_pay" formatted="false">表余额不足\n待扣除%s元</string>
 
     <string name="payment_money_title">预存金额</string>
@@ -129,7 +131,7 @@
 
     <string name="mine">我的</string>
     <string name="account_or_psw_invalid">账号或密码不合法</string>
-    <string name="have_no_data">暂无数据</string>
+    <string name="have_no_data">暂无图表数据</string>
 
     <string name="other_version_info">当前版本</string>
     <string name="act_ver_title">版本信息</string>

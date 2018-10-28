@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.widget.ImageView;
 
 import com.app.watermeter.R;
 import com.app.watermeter.common.CommonParams;
@@ -43,6 +44,9 @@ public class PreStorageSaveActivity extends BaseActivity {
     TabLayout tabLayout;
     @BindView(R.id.viewPager)
     ViewPager viewPager;
+    @BindView(R.id.ivNothing)
+    ImageView ivNothing;
+
 
     private PerStorageFragmentAdapter adapter;
     private List<String> mTitles = new ArrayList<>();

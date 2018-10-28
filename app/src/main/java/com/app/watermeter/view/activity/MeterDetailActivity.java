@@ -32,6 +32,7 @@ import com.app.watermeter.view.marker.MeterChartMarkerView;
 import com.app.watermeter.view.marker.XAxisEntry;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.LimitLine;
@@ -40,12 +41,17 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.DefaultValueFormatter;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.formatter.IValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.github.mikephil.charting.utils.ViewPortHandler;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -87,6 +93,9 @@ public class MeterDetailActivity extends BaseActivity {
     TextView tvGotoPayment;
     @BindView(R.id.lineChart)
     LineChart mChart;
+    @BindView(R.id.tvNoData)
+    TextView tvNoData;
+
 
     public int requestIndex = 0;
     public final int MAX_REQUEST_COUNT = 6;
@@ -96,7 +105,7 @@ public class MeterDetailActivity extends BaseActivity {
     private String meterSn;
     MeterInfoModel model;
     List<MeterReadModel> chartList = new ArrayList<>();
-
+    DecimalFormat decimalFormat = new DecimalFormat("0.00");
     protected String[] values = new String[]{
             "00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00", "08:00", "09:00", "10:00", "11:00",
             "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "12:00", "23:00"
@@ -181,7 +190,7 @@ public class MeterDetailActivity extends BaseActivity {
         mChart.setDoubleTapToZoomEnabled(false);
         mChart.setMinOffset(0);
 
-        mChart.setExtraOffsets(10f, 10f, 10f, 10f);
+        mChart.setExtraOffsets(5f, 5f, 5f, 5f);
         mChart.getAxisRight().setEnabled(false);
         // 拖拽时能否高亮（十字瞄准触摸到的点），默认true
         mChart.setHighlightPerDragEnabled(true);
@@ -246,72 +255,6 @@ public class MeterDetailActivity extends BaseActivity {
 //        setData(24, 10);
     }
 
-    private void setData(int count, float range) {
-
-        ArrayList<Entry> values = new ArrayList<Entry>();
-
-        for (int i = 0; i < count; i++) {
-
-            float val = (float) (Math.random() * range) + 3;
-            values.add(new Entry(i, val));
-        }
-
-        LineDataSet lineSet;
-
-        if (mChart.getData() != null && mChart.getData().getDataSetCount() > 0) {
-            lineSet = (LineDataSet) mChart.getData().getDataSetByIndex(0);
-            lineSet.setValues(values);
-            mChart.getData().notifyDataChanged();
-            mChart.notifyDataSetChanged();
-        } else {
-            lineSet = new LineDataSet(values, "DataSet 1");
-            //设置图标不显示
-            lineSet.setDrawIcons(false);
-            //设置Y值使用左边Y轴的坐标值
-            lineSet.setAxisDependency(YAxis.AxisDependency.LEFT);
-            //画虚线
-//            set1.enableDashedLine(10f, 5f, 0f);
-//            set1.enableDashedHighlightLine(10f, 5f, 0f);
-            //设置线的颜色
-            lineSet.setColor(getResources().getColor(R.color.main_blue_color));
-            //设置数据点圆形的颜色
-            lineSet.setCircleColor(getResources().getColor(R.color.colorAccent));
-            //设置折线宽度
-            lineSet.setLineWidth(2f);
-            //设置折现点圆点半径
-            lineSet.setCircleRadius(4f);
-            //设置是否在数据点中间显示一个孔
-            lineSet.setDrawCircleHole(false);
-            lineSet.setValueTextSize(13f);
-            //设置允许填充
-            lineSet.setDrawFilled(true);
-            lineSet.setFormLineWidth(1f);
-            lineSet.setFormLineDashEffect(new DashPathEffect(new float[]{10f, 5f}, 0f));
-            lineSet.setFormSize(15.f);
-            lineSet.setHighlightEnabled(true);
-            lineSet.setDrawHorizontalHighlightIndicator(false);
-            lineSet.setDrawVerticalHighlightIndicator(true);
-
-            ArrayList<ILineDataSet> dataSets = new ArrayList<ILineDataSet>();
-            dataSets.add(lineSet);
-
-            // create a data object with the datasets
-            LineData data = new LineData(dataSets);
-
-            //设置一页最大显示个数为6，超出部分就滑动
-            float ratio = (float) count / (float) 6;
-            //显示的时候是按照多大的比率缩放显示,1f表示不放大缩小
-            mChart.zoom(ratio, 1f, 0, 0);
-            //设置从X轴出来的动画时间
-//            mChart.animateX(1500);
-            //设置XY轴动画
-            mChart.animateXY(1500, 1500, Easing.EasingOption.EaseInSine, Easing.EasingOption.EaseInSine);
-            // set data
-            mChart.setData(data);
-            mChart.invalidate();
-        }
-    }
-
 
     /**
      * 获取类型
@@ -324,7 +267,11 @@ public class MeterDetailActivity extends BaseActivity {
         String time = intent.getStringExtra(CommonParams.METER_TIME);
         if (!TextUtils.isEmpty(time)) {
             mTimeStamp = DateUtils.getDateByDateTime(time);
-
+        }
+        else
+        {
+            tvNoData.setVisibility(View.VISIBLE);
+            mChart.setVisibility(View.GONE);
         }
     }
 
@@ -350,7 +297,7 @@ public class MeterDetailActivity extends BaseActivity {
      * 图表数据
      */
     private void initChartData() {
-        MeterManager.getInstance().getRePayList(0, 0, meterType, meterId, mTimeStamp);
+        MeterManager.getInstance().getRePayList(0, 24, meterType, meterId, mTimeStamp);
     }
 
     /**
@@ -407,6 +354,11 @@ public class MeterDetailActivity extends BaseActivity {
             chartList = event.getList();
             setChartData(chartList);
         }
+        else
+        {
+            tvNoData.setVisibility(View.VISIBLE);
+            mChart.setVisibility(View.GONE);
+        }
     }
 
     /**
@@ -432,8 +384,9 @@ public class MeterDetailActivity extends BaseActivity {
 
         float minY, maxY;
 
+
         for (int j = 0; j < 24; j++) {
-            yVals.add(new Entry(j, -5));
+            yVals.add(new Entry(j, 0f));
         }
 
 
@@ -451,7 +404,7 @@ public class MeterDetailActivity extends BaseActivity {
         }
 
 
-        minY = 0;//getMin(tempXvals)-50;
+        minY = getMin(tempYvals) - 2;
         maxY = getMax(tempYvals) + 2;
 
 
@@ -467,6 +420,16 @@ public class MeterDetailActivity extends BaseActivity {
             YAxis leftAxis = mChart.getAxisLeft();
             leftAxis.setAxisMaxValue(maxY);
             leftAxis.setAxisMinValue(minY);
+            leftAxis.setSpaceTop(5f);
+
+//            leftAxis.setValueFormatter(new IAxisValueFormatter() {
+//                @Override
+//                public String getFormattedValue(float value, AxisBase axis) {
+//                    return "" + (int) value;//这句是重点!
+//                }
+//
+//            });
+
 
             lineSet = new LineDataSet(yVals, "DataSet 1");
             //设置图标不显示
@@ -493,7 +456,7 @@ public class MeterDetailActivity extends BaseActivity {
             lineSet.setFillColor(ColorTemplate.getHoloBlue());
             lineSet.setFormLineWidth(1f);
             lineSet.setFormLineDashEffect(new DashPathEffect(new float[]{10f, 5f}, 0f));
-            lineSet.setFormSize(15.f);
+            lineSet.setFormSize(15f);
             lineSet.setHighlightEnabled(true);
             lineSet.setDrawHorizontalHighlightIndicator(false);
             lineSet.setDrawVerticalHighlightIndicator(true);
@@ -504,6 +467,13 @@ public class MeterDetailActivity extends BaseActivity {
             // create a data object with the datasets
             LineData data = new LineData(dataSets);
 
+            data.setValueFormatter(new IValueFormatter() {
+                @Override
+                public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
+                    return decimalFormat.format(value);
+                }
+            });
+
             //设置一页最大显示个数为6，超出部分就滑动
             float ratio = (float) 24 / (float) 6;
             //显示的时候是按照多大的比率缩放显示,1f表示不放大缩小
@@ -513,6 +483,9 @@ public class MeterDetailActivity extends BaseActivity {
             //设置XY轴动画
             mChart.animateXY(1500, 1500, Easing.EasingOption.EaseInSine, Easing.EasingOption.EaseInSine);
             // set data
+
+
+
             mChart.setData(data);
             mChart.invalidate();
         }

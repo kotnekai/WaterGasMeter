@@ -34,7 +34,8 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:clipChildren="false">
 
             <android.support.v4.view.ViewPager
                 android:id="@+id/vpWater"
@@ -52,7 +53,7 @@
                 android:layout_centerInParent="true"
                 android:text="@string/have_no_data"
                 android:textColor="@color/text_gray"
-                android:textSize="16sp" />
+                android:textSize="16dp" />
         </RelativeLayout>
 
 
@@ -96,7 +97,8 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:clipChildren="false">
 
             <android.support.v4.view.ViewPager
                 android:id="@+id/vpElectricity"
@@ -114,7 +116,7 @@
                 android:layout_centerInParent="true"
                 android:text="@string/have_no_data"
                 android:textColor="@color/text_gray"
-                android:textSize="16sp" />
+                android:textSize="16dp" />
         </RelativeLayout>
 
 
@@ -157,7 +159,8 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:clipChildren="false">
 
             <android.support.v4.view.ViewPager
                 android:id="@+id/vpGas"
@@ -175,7 +178,7 @@
                 android:layout_centerInParent="true"
                 android:text="@string/have_no_data"
                 android:textColor="@color/text_gray"
-                android:textSize="16sp" />
+                android:textSize="16dp" />
         </RelativeLayout>
 
 

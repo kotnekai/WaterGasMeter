@@ -7,6 +7,8 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.app.watermeter.R;
 import com.app.watermeter.common.CommonParams;
@@ -48,6 +50,9 @@ public class MeterListActivity extends BaseActivity {
     SmartRefreshLayout refreshLayout;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
+    @BindView(R.id.ivNothing)
+    ImageView ivNothing;
+
 
     Context mContext;
     MeterRecyclerAdapter adapter;
@@ -151,7 +156,15 @@ public class MeterListActivity extends BaseActivity {
         } else {
             meterLists = event.getList();
         }
-        adapter.setData(meterLists);
-        adapter.notifyDataSetChanged();
-    }
+
+        if (meterLists.size()>0) {
+            adapter.setData(meterLists);
+            adapter.notifyDataSetChanged();
+        }
+        else
+        {
+            ivNothing.setVisibility(View.VISIBLE);
+            refreshLayout.setVisibility(View.GONE);
+        }
+        }
 }

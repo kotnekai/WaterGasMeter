@@ -101,6 +101,8 @@
 
 
     <string name="payed">ដកចេញ</string>
+    <string name="waited_payed">នឹងត្រូវដក</string>
+
     <string name="no_pay" formatted="false">តុល្យភាពមិនគ្រប់គ្រាន់នៃតារាង \ n នឹងត្រូវកាត់% s យន់</string>
 
     <string name="payment_money_title">ចំនួនទឹកប្រាក់ដែលទុកជាមុន</string>

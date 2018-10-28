@@ -17,8 +17,20 @@
         app:tabSelectedTextColor="@color/main_page_number_color"
         app:tabIndicatorHeight="3dp"
         app:tabIndicatorColor="@color/main_blue_color"/>
-    <android.support.v4.view.ViewPager
-        android:id="@+id/viewPager"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content">
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <ImageView
+            android:id="@+id/ivNothing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:src="@mipmap/ic_nothing" android:layout_centerInParent="true"/>
+    </RelativeLayout>
+
 </LinearLayout>

@@ -65,8 +65,18 @@ public class ReadAdapter extends Adapter<ReadAdapter.MyViewHolder> {
         holder.tvWaterSn.setText(String.format(typeStr, readModel.getMachine_sn()));
         holder.tvSaveMeasure.setText(String.format(context.getString(R.string.measurement), readModel.getRead_degree() + "")+unitStr);
         holder.tvSaveDate.setText(String.format(context.getString(R.string.payment_time), readModel.getCreated_at()));
-        holder.tvSaveMoney.setText("-" + readModel.getRead_fee() + context.getString(R.string.unit_yuan));
 
+        float fee = readModel.getRead_fee();
+        holder.tvSaveMoney.setText(fee + context.getString(R.string.unit_yuan));
+        holder.tvSaveMoney.setText(fee + context.getString(R.string.unit_yuan));
+        if (fee > 0) {
+            holder.tvSaveHints.setText(context.getString(R.string.payed));
+            holder.tvSaveHints.setTextColor(context.getResources().getColor(R.color.text_color_green));
+
+        } else {
+            holder.tvSaveHints.setText(context.getString(R.string.waited_payed));
+            holder.tvSaveHints.setTextColor(context.getResources().getColor(R.color.text_color_red));
+        }
     }
 
 

@@ -7,18 +7,18 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.app.watermeter.R;
 import com.app.watermeter.common.CommonParams;
 import com.app.watermeter.eventBus.GetDetailReChargeListEvent;
 import com.app.watermeter.eventBus.GetDetailReadListEvent;
-import com.app.watermeter.eventBus.GetReChargeListEvent;
-import com.app.watermeter.eventBus.GetReadListEvent;
 import com.app.watermeter.manager.MeterManager;
 import com.app.watermeter.model.MeterReChargeModel;
 import com.app.watermeter.model.MeterReadModel;
-import com.app.watermeter.view.adapter.ReadAdapter;
 import com.app.watermeter.view.adapter.ReChargeAdapter;
+import com.app.watermeter.view.adapter.ReadAdapter;
 import com.app.watermeter.view.base.BaseActivity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -38,6 +38,8 @@ import butterknife.BindView;
  */
 public class PerStorageSaveListActivity extends BaseActivity {
 
+    @BindView(R.id.ivNothing)
+    ImageView ivNothing;
     //默认值
     private int fromPage;
     private int meterType;
@@ -94,7 +96,7 @@ public class PerStorageSaveListActivity extends BaseActivity {
         Intent intent = getIntent();
         fromPage = intent.getIntExtra(CommonParams.PAGE_TYPE, 1);
         meterType = intent.getIntExtra(CommonParams.METER_TYPE, CommonParams.TYPE_WATER);
-        meterId = intent.getIntExtra(CommonParams.METER_ID,0);
+        meterId = intent.getIntExtra(CommonParams.METER_ID, 0);
 
     }
 
@@ -117,10 +119,10 @@ public class PerStorageSaveListActivity extends BaseActivity {
 
 
         if (fromPage == CommonParams.PAGE_TYPE_RECHARGE) {
-            reChargeAdapter = new ReChargeAdapter(mContext, reChargeList,meterType);
+            reChargeAdapter = new ReChargeAdapter(mContext, reChargeList, meterType);
             recyclerView.setAdapter(reChargeAdapter);
         } else {
-            readAdapter = new ReadAdapter(mContext, perSaveList,meterType);
+            readAdapter = new ReadAdapter(mContext, perSaveList, meterType);
             recyclerView.setAdapter(readAdapter);
         }
         recyclerView.scrollToPosition(0);
@@ -164,7 +166,7 @@ public class PerStorageSaveListActivity extends BaseActivity {
             MeterManager.getInstance().getReChargeList(currentPageSize, dataSize, meterType, meterId);
         } else {
             //缴费明细
-            MeterManager.getInstance().getRePayList(currentPageSize, dataSize, meterType, meterId,null);
+            MeterManager.getInstance().getRePayList(currentPageSize, dataSize, meterType, meterId, null);
         }
     }
 
@@ -180,8 +182,13 @@ public class PerStorageSaveListActivity extends BaseActivity {
             reChargeList = event.getList();
         }
 
-        reChargeAdapter.setData(reChargeList);
-        reChargeAdapter.notifyDataSetChanged();
+        if (reChargeList.size() > 0) {
+            reChargeAdapter.setData(reChargeList);
+            reChargeAdapter.notifyDataSetChanged();
+        } else {
+            smartRefreshLayout.setVisibility(View.GONE);
+            ivNothing.setVisibility(View.VISIBLE);
+        }
 
     }
 
@@ -196,8 +203,13 @@ public class PerStorageSaveListActivity extends BaseActivity {
         } else {
             perSaveList = event.getList();
         }
-        readAdapter.setData(perSaveList);
-        readAdapter.notifyDataSetChanged();
+        if (perSaveList.size() > 0) {
+            readAdapter.setData(perSaveList);
+            readAdapter.notifyDataSetChanged();
+        } else {
+            smartRefreshLayout.setVisibility(View.GONE);
+            ivNothing.setVisibility(View.VISIBLE);
+        }
     }
 
 }
