@@ -32,6 +32,7 @@ public class MyMessageIntentService extends AliyunMessageIntentService {
     @Override
     protected void onNotification(Context context, String title, String summary, Map<String, String> extraMap) {
         Log.i(REC_TAG,"收到一条推送通知 ： " + title + ", summary:" + summary);
+
 //        MainApplication.setConsoleText("收到一条推送通知 ： " + title + ", summary:" + summary);
     }
 

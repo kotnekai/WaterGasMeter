@@ -83,7 +83,7 @@ public class GasPagerAdapter extends PagerAdapter {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                context.startActivity(MeterDetailActivity.makeIntent(context,info.getId(), info.getMachine_sn(),info.getFinal_read_at(), CommonParams.TYPE_GAS));
+                context.startActivity(MeterDetailActivity.makeIntent(context,CommonParams.TYPE_GAS, info.getMachine_sn()));
             }
         });
         return view;

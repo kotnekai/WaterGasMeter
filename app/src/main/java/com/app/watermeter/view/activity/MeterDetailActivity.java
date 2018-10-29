@@ -120,12 +120,10 @@ public class MeterDetailActivity extends BaseActivity {
     };
 
 
-    public static Intent makeIntent(Context context, int meterId, String meterSn, String dateTime, int type) {
+    public static Intent makeIntent(Context context, int type, String meterSn) {
         Intent intent = new Intent(context, MeterDetailActivity.class);
-        intent.putExtra(CommonParams.METER_ID, meterId);
         intent.putExtra(CommonParams.METER_TYPE, type);
         intent.putExtra(CommonParams.METER_SN, meterSn);
-        intent.putExtra(CommonParams.METER_TIME, dateTime);
         return intent;
     }
 
@@ -151,7 +149,6 @@ public class MeterDetailActivity extends BaseActivity {
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(UnBindEvent event) {
-
         switch (event.getResult().getErr_code()) {
             case UNBIND_SUCCESS:
                 EventBus.getDefault().post(new BindingStatusEvent(BindingStatusEvent.UNBINDING_SUCCESS));
@@ -186,8 +183,6 @@ public class MeterDetailActivity extends BaseActivity {
         initIntent();
         initData();
         initMPAndroidChart();
-        initChartData();
-
     }
 
 
@@ -286,18 +281,8 @@ public class MeterDetailActivity extends BaseActivity {
      */
     private void initIntent() {
         Intent intent = getIntent();
-        meterId = intent.getIntExtra(CommonParams.METER_ID, 0);
         meterType = intent.getIntExtra(CommonParams.METER_TYPE, CommonParams.TYPE_WATER);
         meterSn = intent.getStringExtra(CommonParams.METER_SN);
-        String time = intent.getStringExtra(CommonParams.METER_TIME);
-        if (!TextUtils.isEmpty(time)) {
-            mTimeStamp = DateUtils.getDateByDateTime(time);
-        }
-        else
-        {
-            tvNoData.setVisibility(View.VISIBLE);
-            mChart.setVisibility(View.GONE);
-        }
     }
 
     /**
@@ -321,7 +306,7 @@ public class MeterDetailActivity extends BaseActivity {
     /**
      * 图表数据
      */
-    private void initChartData() {
+    private void initChartData(int meterType, int meterId,String mTimeStamp) {
         MeterManager.getInstance().getRePayList(0, 24, meterType, meterId, mTimeStamp);
     }
 
@@ -332,6 +317,21 @@ public class MeterDetailActivity extends BaseActivity {
     public void onEvent(GetMeterInfoEvent event) {
         model = event.getModelInfo();
         if (model != null) {
+
+            if (!TextUtils.isEmpty(model.getFinal_read_at())) {
+                mTimeStamp = DateUtils.getDateByDateTime(model.getFinal_read_at());
+            }
+            else
+            {
+                tvNoData.setVisibility(View.VISIBLE);
+                mChart.setVisibility(View.GONE);
+            }
+            //表ID，用于跳到充值
+            meterId = model.getId();
+
+            //读取表数据
+            initChartData(meterType,model.getId(),mTimeStamp);
+
             tvSn.setText(model.getMachine_sn());
 
             switch (ComApplication.currentLanguage) {
@@ -365,7 +365,6 @@ public class MeterDetailActivity extends BaseActivity {
                 //禁用
                 tvCharge.setEnabled(false);
                 tvCharge.setBackground(getResources().getDrawable(R.mipmap.anniu_gray));
-
             }
         }
     }
