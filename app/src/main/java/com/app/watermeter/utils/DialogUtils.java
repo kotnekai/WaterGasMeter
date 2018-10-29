@@ -187,7 +187,6 @@ public class DialogUtils {
                 .setPositiveButton(activity.getString(R.string.sure), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        activity.finish();
                         dialog.dismiss();
                     }
                 }).create();
