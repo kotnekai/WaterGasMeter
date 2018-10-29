@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.app.okhttputils.Model.Result;
 import com.app.watermeter.R;
 import com.app.watermeter.common.CommonParams;
+import com.app.watermeter.common.UserCache;
 import com.app.watermeter.eventBus.CheckSmsCodeEvent;
 import com.app.watermeter.eventBus.SuccessEvent;
 import com.app.watermeter.manager.UserManager;
@@ -94,7 +95,7 @@ public class RegisterCodeActivity extends BaseActivity {
 
                      String code = scvEditText.getEditContent();
                      ProgressUtils.getIntance().setProgressDialog(getString(R.string.com_loading_tips), RegisterCodeActivity.this);
-                     UserManager.getInstance().checkSmsCode(phoneNumber, CommonParams.BUSS_REGISTER_TYPE, code);
+                     UserManager.getInstance().checkSmsCode(countryCode+phoneNumber, CommonParams.BUSS_REGISTER_TYPE, code);
                  }
 
                  @Override
@@ -119,7 +120,7 @@ public class RegisterCodeActivity extends BaseActivity {
         ToastUtil.showShort(message);
         if (status_code == 200 && errCode == 0) {
             if (fromType == CommonParams.fromTypeRegister) {
-                startActivity(RegisterInfoActivity.makeIntent(this, phoneNumber));
+                startActivity(RegisterInfoActivity.makeIntent(this, countryCode+phoneNumber));
             } else if (fromType == CommonParams.fromTypeReset) {
                 startActivity(ResetPswActivity.makeIntent(this, ResetPswActivity.TYPE_MODIFY));
             }
@@ -136,7 +137,10 @@ public class RegisterCodeActivity extends BaseActivity {
 
     @OnClick({R.id.tvGoNext})
     public void getCode() {
-        startActivity(RegisterInfoActivity.makeIntent(this, phoneNumber));
+        countTimer.start();///开启倒计时
+        UserManager.getInstance().sendSmsToCheck(countryCode + phoneNumber, CommonParams.BUSS_REGISTER_TYPE);
+
+
     }
 
     @Override
@@ -145,6 +149,19 @@ public class RegisterCodeActivity extends BaseActivity {
         if (countTimer != null) {
             countTimer.cancel();
         }
+    }
+
+    /**
+     * 发送验证码结果接口返回
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onSuccessEvent(SuccessEvent event) {
+        ProgressUtils.getIntance().dismissProgress();
+        Result result = event.getResult();
+        int status_code = result.getStatus_code();
+        String message = result.getMessage();
+        int errCode = result.getErr_code();//业务码
+        ToastUtil.showShort(message);
     }
 
 
@@ -174,7 +191,7 @@ public class RegisterCodeActivity extends BaseActivity {
         @Override
         public void onFinish() {
             tvGoNext.setEnabled(true);
-            tvGoNext.setText(getString(R.string.register_next_step));
+            tvGoNext.setText(getString(R.string.re_send_code));
         }
     }
 }

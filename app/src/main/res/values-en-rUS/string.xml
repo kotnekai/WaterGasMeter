@@ -61,6 +61,8 @@
     <string name="register_verify_phone">%s-%s</string>
     <string name="register_next_step">Next step</string>
     <string name="register_count_time">%ssResend</string>
+    <string name="re_send_code">resend code</string>
+
     <string name="com_loading_tips">please wait..</string>
     <string name="com_input_complete_tips">Please complete your personal information</string>
 

@@ -124,7 +124,6 @@ public class LoginActivity extends BaseActivity {
 
         }
     }
-
     /**
      * 推送绑定账号
      */
