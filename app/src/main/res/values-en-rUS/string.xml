@@ -128,6 +128,8 @@
     <string name="login_out">sign out</string>
 
     <string name="mine">mine</string>
+    <string name="account_or_psw_invalid">Account or password is illegal</string>
+
     <string name="have_no_data">no data</string>
 
     <string name="other_version_info">current version</string>
@@ -138,5 +140,6 @@
 
     <string name="version_update_title">version update prompt</string>
     <string name="version_update_tip">the lasted version：</string>
+    <string name="sure">yes</string>
 
 </resources>

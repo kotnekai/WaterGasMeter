@@ -1,5 +1,7 @@
 package com.app.watermeter.utils;
+import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AlertDialog;
@@ -135,4 +137,22 @@ public class DialogUtils {
     }
 
 
+
+    /**
+     * 网络未连接
+     *
+     * @param activity
+     */
+    public static void showUnBingHints(final Activity activity,String message) {
+        AlertDialog dialog = new AlertDialog.Builder(activity)
+                .setMessage(message)
+                .setPositiveButton(activity.getString(R.string.sure), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        activity.finish();
+                        dialog.dismiss();
+                    }
+                }).create();
+        dialog.show();
+    }
 }

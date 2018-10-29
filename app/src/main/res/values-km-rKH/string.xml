@@ -127,14 +127,19 @@
     <string name="login_invalid_tip">ការចូលមិនត្រឹមត្រូវទេសូមចូលម្តងទៀត</string>
     <string name="login_out">ចេញ</string>
     <string name="mine">ខ្ញុំ</string>
+    <string name="account_or_psw_invalid">គណនីឬពាក្យសម្ងាត់គឺខុសច្បាប់</string>
+
     <string name="have_no_data">គ្មានទិន្នន័យ</string>
 
     <string name="other_version_info">កំណែបច្ចុប្បន្ន</string>
     <string name="mine_other_setting">ការកំណត់ផ្សេងៗ</string>
+
     <string name="act_ver_title">ព័ត៌មានកំណែ</string>
     <string name="act_ver_update_time">ធ្វើបច្ចុប្បន្នភាពពេលវេលា</string>
     <string name="act_ver_update_checking">ពិនិត្យមើលកំណែ...</string>
     <string name="act_is_new_ver">បច្ចុប្បន្ននេះគឺជាកំណែថ្មីបំផុត</string>
     <string name="version_update_title">ការដំឡើងកំណែជំនាន់</string>
     <string name="version_update_tip">កំណែថ្មីបំផុត：</string>
+    <string name="sure">កំណត់</string>
+
 </resources>

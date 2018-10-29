@@ -12,6 +12,7 @@ import android.widget.ImageView;
 
 import com.app.watermeter.R;
 import com.app.watermeter.common.CommonParams;
+import com.app.watermeter.eventBus.BindingStatusEvent;
 import com.app.watermeter.eventBus.GetMeterListEvent;
 import com.app.watermeter.manager.MeterManager;
 import com.app.watermeter.model.MeterInfoModel;
@@ -111,7 +112,7 @@ public class MeterListActivity extends BaseActivity {
         }
 
 
-        adapter = new MeterRecyclerAdapter(mContext, meterLists,typeValue);
+        adapter = new MeterRecyclerAdapter(mContext, meterLists, typeValue);
         mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mLayoutManager.setOrientation(GridLayoutManager.VERTICAL);
         mLayoutManager.setStackFromEnd(true);
@@ -142,7 +143,7 @@ public class MeterListActivity extends BaseActivity {
     }
 
     private void addListData() {
-        MeterManager.getInstance().getMeterList(typeValue,currentPageSize, dataSize,false);
+        MeterManager.getInstance().getMeterList(typeValue, currentPageSize, dataSize, false);
     }
 
     /**
@@ -157,14 +158,23 @@ public class MeterListActivity extends BaseActivity {
             meterLists = event.getList();
         }
 
-        if (meterLists.size()>0) {
+        if (meterLists.size() > 0) {
             adapter.setData(meterLists);
             adapter.notifyDataSetChanged();
-        }
-        else
-        {
+        } else {
             ivNothing.setVisibility(View.VISIBLE);
             refreshLayout.setVisibility(View.GONE);
         }
-        }
+    }
+
+    /**
+     * 接口返回--绑定解绑
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(BindingStatusEvent event) {
+        meterLists.clear();
+        currentPageSize = 0;
+        addListData();
+        refreshLayout.finishRefresh();
+    }
 }

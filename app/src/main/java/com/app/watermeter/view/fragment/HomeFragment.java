@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.app.watermeter.R;
 import com.app.watermeter.common.CommonParams;
+import com.app.watermeter.eventBus.BindingStatusEvent;
 import com.app.watermeter.eventBus.GetHomeMeterListEvent;
 import com.app.watermeter.eventBus.GetMeterListEvent;
 import com.app.watermeter.eventBus.GetMeterTypeEvent;
@@ -106,7 +107,7 @@ public class HomeFragment extends BaseFragment {
     }
 
     /**
-     * 接口返回
+     * 接口返回--首页数据
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(GetHomeMeterListEvent event) {
@@ -114,6 +115,15 @@ public class HomeFragment extends BaseFragment {
         Log.d("admin", "onEvent: list=" + list.size());
         initListData(list, event.getMeterType());
     }
+
+    /**
+     * 接口返回--绑定解绑
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(BindingStatusEvent event) {
+        MeterManager.getInstance().getMeterType();
+    }
+
 
     /**
      * 水表数据

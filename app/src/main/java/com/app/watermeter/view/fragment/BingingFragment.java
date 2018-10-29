@@ -11,7 +11,9 @@ import android.widget.Toast;
 
 import com.app.watermeter.R;
 import com.app.watermeter.eventBus.BindEvent;
+import com.app.watermeter.eventBus.BindingStatusEvent;
 import com.app.watermeter.eventBus.GetMeterTypeEvent;
+import com.app.watermeter.eventBus.UnBindEvent;
 import com.app.watermeter.manager.MeterManager;
 import com.app.watermeter.utils.ToastUtil;
 import com.app.watermeter.utils.UIUtils;
@@ -19,6 +21,7 @@ import com.app.watermeter.view.base.BaseFragment;
 import com.uuzuche.lib_zxing.activity.CaptureActivity;
 import com.uuzuche.lib_zxing.activity.CodeUtils;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -87,6 +90,7 @@ public class BingingFragment extends BaseFragment {
         switch (event.getResult().getErr_code()) {
             case BIND_SUCCESS:
                 ToastUtil.showLong(getString(R.string.bind_success));
+                EventBus.getDefault().post(new BindingStatusEvent(BindingStatusEvent.BINDING_SUCCESS));
                 break;
             case METER_EMPTY:
                 ToastUtil.showLong(getString(R.string.bind_empty));

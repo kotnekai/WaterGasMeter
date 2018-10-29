@@ -193,9 +193,13 @@ public class MeterManager {
      * 表解绑
      */
     public void unbindMeter(final String sn) {
-        Map<String, String> params = new HashMap<>();
-        params.put("sn", sn);
-        dataInstance.sendGetRequestData(CommonUrl.METER_UNBIND_URL, params)
+        JSONObject params = new JSONObject();
+        try {
+            params.put("sn", sn);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        dataInstance.sendPostRequestData(CommonUrl.METER_UNBIND_URL, params)
                 .execute(new GenericsCallback<Result>(new JsonGenericsSerializator()) {
                     @Override
                     public void onError(Response response, Call call, Exception e, int id) {
@@ -223,9 +227,14 @@ public class MeterManager {
      * 表绑定
      */
     public void bindMeter(final String sn) {
-        Map<String, String> params = new HashMap<>();
-        params.put("sn", sn);
-        dataInstance.sendGetRequestData(CommonUrl.METER_BIND_URL, params)
+        JSONObject params = new JSONObject();
+        try {
+            params.put("sn", sn);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        dataInstance.sendPostRequestData(CommonUrl.METER_BIND_URL, params)
                 .execute(new GenericsCallback<Result>(new JsonGenericsSerializator()) {
                     @Override
                     public void onError(Response response, Call call, Exception e, int id) {

@@ -13,6 +13,7 @@ import com.app.watermeter.R;
 import com.app.watermeter.common.ComApplication;
 import com.app.watermeter.common.CommonParams;
 import com.app.watermeter.common.Constants;
+import com.app.watermeter.eventBus.BindingStatusEvent;
 import com.app.watermeter.eventBus.GetChartReadListEvent;
 import com.app.watermeter.eventBus.GetDetailReadListEvent;
 import com.app.watermeter.eventBus.GetMeterInfoEvent;
@@ -24,6 +25,7 @@ import com.app.watermeter.manager.MeterManager;
 import com.app.watermeter.model.MeterInfoModel;
 import com.app.watermeter.model.MeterReadModel;
 import com.app.watermeter.utils.DateUtils;
+import com.app.watermeter.utils.DialogUtils;
 import com.app.watermeter.utils.MyXFormatter;
 import com.app.watermeter.utils.PreferencesUtils;
 import com.app.watermeter.utils.ToastUtil;
@@ -48,6 +50,7 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.ViewPortHandler;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -62,6 +65,11 @@ import butterknife.OnClick;
  * @author admin
  */
 public class MeterDetailActivity extends BaseActivity {
+
+    private final int UNBIND_SUCCESS = 0;
+    private final int METER_EMPTY = 1;
+    private final int BINDED = 2;
+    private final int SERVER_ERR = 5;
 
 
     Context mContext;
@@ -143,7 +151,24 @@ public class MeterDetailActivity extends BaseActivity {
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(UnBindEvent event) {
-        ToastUtil.showLong(event.getResult().getMessage());
+
+        switch (event.getResult().getErr_code()) {
+            case UNBIND_SUCCESS:
+                EventBus.getDefault().post(new BindingStatusEvent(BindingStatusEvent.UNBINDING_SUCCESS));
+                DialogUtils.showUnBingHints(MeterDetailActivity.this,event.getResult().getMessage());
+                break;
+            case METER_EMPTY:
+                ToastUtil.showLong(getString(R.string.bind_empty));
+                break;
+            case BINDED:
+                ToastUtil.showLong(getString(R.string.bind_already));
+                break;
+            case SERVER_ERR:
+                ToastUtil.showLong(getString(R.string.bind_server_error));
+                break;
+        }
+
+
     }
 
     /**
