@@ -141,7 +141,7 @@ public class MeterDetailActivity extends BaseActivity {
         setHeader_RightTextClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MeterManager.getInstance().unbindMeter(model.getMachine_sn());
+                DialogUtils.showUnBingHints(MeterDetailActivity.this,model.getMachine_sn());
             }
         });
     }
@@ -155,7 +155,7 @@ public class MeterDetailActivity extends BaseActivity {
         switch (event.getResult().getErr_code()) {
             case UNBIND_SUCCESS:
                 EventBus.getDefault().post(new BindingStatusEvent(BindingStatusEvent.UNBINDING_SUCCESS));
-                DialogUtils.showUnBingHints(MeterDetailActivity.this,event.getResult().getMessage());
+                DialogUtils.showUnBingSuccessHints(MeterDetailActivity.this,event.getResult().getMessage());
                 break;
             case METER_EMPTY:
                 ToastUtil.showLong(getString(R.string.bind_empty));

@@ -141,5 +141,6 @@
     <string name="version_update_title">ការដំឡើងកំណែជំនាន់</string>
     <string name="version_update_tip">កំណែថ្មីបំផុត：</string>
     <string name="sure">កំណត់</string>
+    <string name="meter_unbind_hints">តើអ្នកប្រាកដថាអ្នកចង់លែងកូន?</string>
 
 </resources>

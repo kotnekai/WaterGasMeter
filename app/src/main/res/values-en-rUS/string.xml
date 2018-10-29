@@ -141,5 +141,6 @@
     <string name="version_update_title">version update prompt</string>
     <string name="version_update_tip">the lasted version：</string>
     <string name="sure">yes</string>
+    <string name="meter_unbind_hints">Are you sure you want to unbind?</string>
 
 </resources>

@@ -14,6 +14,7 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.app.watermeter.R;
+import com.app.watermeter.manager.MeterManager;
 import com.app.watermeter.model.ApkInfoModel;
 import com.app.watermeter.model.NetVersionModel;
 import com.app.watermeter.model.VersionData;
@@ -139,11 +140,30 @@ public class DialogUtils {
 
 
     /**
-     * 网络未连接
+     * 解绑提醒
      *
      * @param activity
      */
-    public static void showUnBingHints(final Activity activity,String message) {
+    public static void showUnBingHints(final Activity activity, final String sn) {
+        AlertDialog dialog = new AlertDialog.Builder(activity)
+                .setMessage(activity.getString(R.string.meter_unbind_hints))
+                .setNegativeButton(activity.getString(R.string.cancel),null)
+                .setPositiveButton(activity.getString(R.string.sure), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        MeterManager.getInstance().unbindMeter(sn);
+                        dialog.dismiss();
+                    }
+                }).create();
+        dialog.show();
+    }
+
+    /**
+     * 解绑成功
+     *
+     * @param activity
+     */
+    public static void showUnBingSuccessHints(final Activity activity,String message) {
         AlertDialog dialog = new AlertDialog.Builder(activity)
                 .setMessage(message)
                 .setPositiveButton(activity.getString(R.string.sure), new DialogInterface.OnClickListener() {

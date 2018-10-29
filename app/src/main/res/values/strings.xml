@@ -142,4 +142,6 @@
     <string name="version_update_tip">最新版本：</string>
     <string name="sure">确定</string>
 
+    <string name="meter_unbind_hints">确定要解除绑定吗？</string>
+
 </resources>
