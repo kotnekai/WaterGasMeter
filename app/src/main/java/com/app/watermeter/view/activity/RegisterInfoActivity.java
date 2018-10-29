@@ -94,10 +94,10 @@ public class RegisterInfoActivity extends BaseActivity {
         String emails = edtEmails.getText().toString();
         String password = edtPassword.getText().toString();
         String confirmPsw = edtConfirmPsw.getText().toString();
-        if (!AccountValidatorUtil.isMobile(phoneNumber)) {
-            ToastUtil.showShort(getString(R.string.phone_number));
-            return;
-        }
+//        if (!AccountValidatorUtil.isMobile(phoneNumber)) {
+//            ToastUtil.showShort(getString(R.string.phone_number));
+//            return;
+//        }
         if (EmptyUtil.isEmpty(userName) || EmptyUtil.isEmpty(emails) || EmptyUtil.isEmpty(password) || EmptyUtil.isEmpty(confirmPsw)) {
             ToastUtil.showShort(getString(R.string.com_input_complete_tips));
             return;
