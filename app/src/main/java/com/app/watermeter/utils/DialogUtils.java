@@ -144,7 +144,7 @@ public class DialogUtils {
      *
      * @param activity
      */
-    public static void showUnBingHints(final Activity activity, final String sn) {
+    public static void showUnBindingHints(final Activity activity, final String sn) {
         AlertDialog dialog = new AlertDialog.Builder(activity)
                 .setMessage(activity.getString(R.string.meter_unbind_hints))
                 .setNegativeButton(activity.getString(R.string.cancel),null)
@@ -163,9 +163,27 @@ public class DialogUtils {
      *
      * @param activity
      */
-    public static void showUnBingSuccessHints(final Activity activity,String message) {
+    public static void showUnBindingSuccessHints(final Activity activity) {
         AlertDialog dialog = new AlertDialog.Builder(activity)
-                .setMessage(message)
+                .setMessage(activity.getString(R.string.meter_unbind_success))
+                .setPositiveButton(activity.getString(R.string.sure), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        activity.finish();
+                        dialog.dismiss();
+                    }
+                }).create();
+        dialog.show();
+    }
+
+    /**
+     * 绑定成功
+     *
+     * @param activity
+     */
+    public static void showBindingSuccessHints(final Activity activity) {
+        AlertDialog dialog = new AlertDialog.Builder(activity)
+                .setMessage(activity.getString(R.string.meter_bind_success))
                 .setPositiveButton(activity.getString(R.string.sure), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

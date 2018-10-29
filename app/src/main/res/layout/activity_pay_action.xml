@@ -39,7 +39,7 @@
                 android:background="@color/white"
                 android:gravity="center_vertical"
                 android:hint="@string/payment_money_title"
-                android:inputType="number"
+                android:inputType="number|numberDecimal"
                 android:textSize="17sp" />
         </LinearLayout>
 

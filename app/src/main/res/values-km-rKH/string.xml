@@ -38,7 +38,7 @@
     <string name="modify_language">ប្តូរភាសា</string>
 
     <string name="mine_per_storage_list">ពត៌មានលំអិតទុកជាមុន</string>
-        <string name="mine_pay_list">ព័ត៌មានលម្អិតនៃការទូទាត់</string>
+    <string name="mine_pay_list">ការវិភាគចំណាយ</string>
     <string name="mine_person_info">ព័ត៌មានផ្ទាល់ខ្លួន</string>
 
 
@@ -85,7 +85,7 @@
 
     <string name="immediately_save">ទុកជាមុនទុកជាមុន</string>
     <string name="storage_detail" formatted="true">ពត៌មានលំអិតទុកជាមុន>></string>
-    <string name="payment_detail" formatted="true">ព័ត៌មានលម្អិតនៃការទូទាត់>></string>
+    <string name="payment_detail" formatted="true">ការវិភាគចំណាយ>></string>
     <string name="unit_yuan">យាន</string>
 
     <string name="cancel_binding">មិនភ្ជាប់</string>
@@ -142,5 +142,7 @@
     <string name="version_update_tip">កំណែថ្មីបំផុត：</string>
     <string name="sure">កំណត់</string>
     <string name="meter_unbind_hints">តើអ្នកប្រាកដថាអ្នកចង់លែងកូន?</string>
+    <string name="meter_bind_success">ការផ្សារភ្ជាប់ភាពជោគជ័យ</string>
+    <string name="meter_unbind_success">មិនភ្ជាប់ដោយជោគជ័យ</string>
 
 </resources>

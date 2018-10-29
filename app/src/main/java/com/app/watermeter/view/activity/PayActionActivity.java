@@ -25,6 +25,8 @@ import com.app.watermeter.view.base.WebViewActivity;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.text.DecimalFormat;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -89,11 +91,18 @@ public class PayActionActivity extends BaseActivity {
 
 
                 String money = etMoney.getText().toString().trim();
-                if (TextUtils.isEmpty(money)) {
+                if (!TextUtils.isEmpty(money)) {
+                    try {
+                        float payMoney = Float.valueOf(money);
 
-                } else {
-                    long payMoney = Long.valueOf(money);
-                    MeterManager.getInstance().saveMoney(meterId, payMoney, CommonParams.USD);
+                        DecimalFormat decimalFormat = new DecimalFormat(".00");//构造方法的字符格式这里如果小数不足2位,会以0补足.
+                        String payValue = decimalFormat.format(payMoney);
+
+                        MeterManager.getInstance().saveMoney(meterId, Float.valueOf(payValue), CommonParams.USD);
+                    } catch (Exception ei) {
+                        ei.printStackTrace();
+                    }
+
                 }
                 break;
         }
@@ -107,14 +116,14 @@ public class PayActionActivity extends BaseActivity {
         if (event.getModelInfo() != null) {
             String tradeId = event.getModelInfo().getTrade_id() + "";
             String orderNo = event.getModelInfo().getOut_trade_no();
-            PreferencesUtils.putString("orderNo",orderNo);
+            PreferencesUtils.putString("orderNo", orderNo);
 
             String callTime = DateUtils.getGMT7PayTime();
 
             String security = DataUtils.getRandomStr() + DataUtils.MD5(CommonParams.PARTNER + CommonParams.SECURITY_KEY + tradeId + callTime) + DataUtils.getRandomStr();
 
             String html = "<!DOCTYPE><html><head><title>ACE API</title><meta charset=\"UTF-8\"/></head><body><form action=\"https://uat-api.asiaweiluy.com/gateway.php?method=ace.trade.pay\" method=\"post\" id=\"awl_post\" target=\"_self\"><input type=\"hidden\" name=\"partner\" value=\"" + CommonParams.PARTNER + "\"/><input type=\"hidden\" name=\"trade_id\" value=\"" + tradeId + "\"/><input type=\"hidden\" name=\"call_time\" value=\"" + callTime + "\"/><input type=\"hidden\" name=\"security\" value=\"" + security.toLowerCase() + "\"/></form></body><script>window.onload=function(){document.getElementById(\"awl_post\").submit();}</script></html>\n";
-            startActivityForResult(WebViewActivity.makeIntent(mContext, html),CommonParams.PAY_RESULT);
+            startActivityForResult(WebViewActivity.makeIntent(mContext, html), CommonParams.PAY_RESULT);
 //            MeterManager.getInstance().paymentAction(event.getModelInfo().getTrade_id(), callTime, security.toLowerCase());
         }
     }
@@ -135,7 +144,7 @@ public class PayActionActivity extends BaseActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(resultCode == CommonParams.PAY_RESULT) {
+        if (resultCode == CommonParams.PAY_RESULT) {
             setResult(CommonParams.PAY_RESULT);
             finish();
         }

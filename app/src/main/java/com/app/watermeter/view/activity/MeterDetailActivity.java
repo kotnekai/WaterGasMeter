@@ -15,10 +15,8 @@ import com.app.watermeter.common.CommonParams;
 import com.app.watermeter.common.Constants;
 import com.app.watermeter.eventBus.BindingStatusEvent;
 import com.app.watermeter.eventBus.GetChartReadListEvent;
-import com.app.watermeter.eventBus.GetDetailReadListEvent;
 import com.app.watermeter.eventBus.GetMeterInfoEvent;
 import com.app.watermeter.eventBus.GetOrderInfoEvent;
-import com.app.watermeter.eventBus.GetPayResultEvent;
 import com.app.watermeter.eventBus.UnBindErrEvent;
 import com.app.watermeter.eventBus.UnBindEvent;
 import com.app.watermeter.manager.MeterManager;
@@ -34,7 +32,6 @@ import com.app.watermeter.view.marker.MeterChartMarkerView;
 import com.app.watermeter.view.marker.XAxisEntry;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.LimitLine;
@@ -43,8 +40,6 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.formatter.DefaultValueFormatter;
-import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.IValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
@@ -139,7 +134,7 @@ public class MeterDetailActivity extends BaseActivity {
         setHeader_RightTextClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DialogUtils.showUnBingHints(MeterDetailActivity.this,model.getMachine_sn());
+                DialogUtils.showUnBindingHints(MeterDetailActivity.this,model.getMachine_sn());
             }
         });
     }
@@ -152,7 +147,7 @@ public class MeterDetailActivity extends BaseActivity {
         switch (event.getResult().getErr_code()) {
             case UNBIND_SUCCESS:
                 EventBus.getDefault().post(new BindingStatusEvent(BindingStatusEvent.UNBINDING_SUCCESS));
-                DialogUtils.showUnBingSuccessHints(MeterDetailActivity.this,event.getResult().getMessage());
+                DialogUtils.showUnBindingSuccessHints(MeterDetailActivity.this);
                 break;
             case METER_EMPTY:
                 ToastUtil.showLong(getString(R.string.bind_empty));
@@ -292,12 +287,18 @@ public class MeterDetailActivity extends BaseActivity {
         switch (meterType) {
             case CommonParams.TYPE_WATER:
                 setHeaderTitle(getString(R.string.water_meter_detail_title));
+                tvMeterName.setText(getString(R.string.water_meter_reading));
+                tvBalance.setText(getString(R.string.water_meter_reading));
                 break;
             case CommonParams.TYPE_ELECT:
                 setHeaderTitle(getString(R.string.elect_meter_detail_title));
+                tvMeterName.setText(getString(R.string.elect_meter_reading));
+                tvBalance.setText(getString(R.string.elect_meter_balance));
                 break;
             case CommonParams.TYPE_GAS:
                 setHeaderTitle(getString(R.string.gas_meter_detail_title));
+                tvMeterName.setText(getString(R.string.gas_meter_reading));
+                tvBalance.setText(getString(R.string.gas_meter_balance));
                 break;
         }
         MeterManager.getInstance().getMeterDetail(meterSn);
@@ -419,12 +420,12 @@ public class MeterDetailActivity extends BaseActivity {
             for (int k = 0; k < yVals.size(); k++) {
                 if (k == hour) {
                     Entry entry = yVals.get(k);
-                    entry.setY(chartList.get(i).getDegree());
+                    entry.setY(chartList.get(i).getRead_degree());
 
                 }
             }
 
-            tempYvals.add(chartList.get(i).getDegree());
+            tempYvals.add(chartList.get(i).getRead_degree());
         }
 
 

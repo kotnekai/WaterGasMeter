@@ -38,7 +38,7 @@
     <string name="modify_language">Language</string>
 
     <string name="mine_per_storage_list">Pre storage detail</string>
-    <string name="mine_pay_list">Payment details</string>
+    <string name="mine_pay_list">Charge Details</string>
     <string name="mine_person_info">personal data</string>
 
 
@@ -85,7 +85,7 @@
 
     <string name="immediately_save">Pre-stored immediately</string>
     <string name="storage_detail" formatted="true">Pre-stored details>></string>
-    <string name="payment_detail" formatted="true">Payment details>></string>
+    <string name="payment_detail" formatted="true">Charge Details>></string>
     <string name="unit_yuan">RMB</string>
 
     <string name="cancel_binding">Unbind</string>
@@ -142,5 +142,7 @@
     <string name="version_update_tip">the lasted version：</string>
     <string name="sure">yes</string>
     <string name="meter_unbind_hints">Are you sure you want to unbind?</string>
+    <string name="meter_bind_success">Binding successfully</string>
+    <string name="meter_unbind_success">Unbind successfully</string>
 
 </resources>

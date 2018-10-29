@@ -15,6 +15,7 @@ import com.app.watermeter.eventBus.BindingStatusEvent;
 import com.app.watermeter.eventBus.GetMeterTypeEvent;
 import com.app.watermeter.eventBus.UnBindEvent;
 import com.app.watermeter.manager.MeterManager;
+import com.app.watermeter.utils.DialogUtils;
 import com.app.watermeter.utils.ToastUtil;
 import com.app.watermeter.utils.UIUtils;
 import com.app.watermeter.view.base.BaseFragment;
@@ -89,7 +90,7 @@ public class BingingFragment extends BaseFragment {
     public void onEvent(BindEvent event) {
         switch (event.getResult().getErr_code()) {
             case BIND_SUCCESS:
-                ToastUtil.showLong(getString(R.string.bind_success));
+                DialogUtils.showBindingSuccessHints(getActivity());
                 EventBus.getDefault().post(new BindingStatusEvent(BindingStatusEvent.BINDING_SUCCESS));
                 break;
             case METER_EMPTY:
