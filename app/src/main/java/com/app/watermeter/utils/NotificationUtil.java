@@ -2,16 +2,22 @@ package com.app.watermeter.utils;
 
 import android.app.AppOpsManager;
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Build;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.FileProvider;
 
 
 import com.app.watermeter.R;
 
+import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -23,13 +29,29 @@ import java.lang.reflect.Method;
 public class NotificationUtil {
     private static final String CHECK_OP_NO_THROW = "checkOpNoThrow";
     private static final String OP_POST_NOTIFICATION = "OP_POST_NOTIFICATION";
+
+    private static final String CHANNEL_ID = "push";
+    private static final String CHANNEL_NAME = "push";  // 渠道名会在通知栏权限的分类中显示
     /**
      * 显示一个普通的通知
      *
      * @param context 上下文
      */
     public static void showNotification(Context context, int imgId, String title, String content, PendingIntent pendingIntent) {
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
+        Notification.Builder builder ;
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+            builder = new Notification.Builder(context.getApplicationContext());
+        } else {
+            NotificationManager notificationManager = (NotificationManager) context.getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
+            if (notificationManager == null) {
+                return  ;
+            }
+            // 渠道名会在通知栏权限的分类中显示
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT);
+            notificationManager.createNotificationChannel(channel);
+            builder = new Notification.Builder(context.getApplicationContext(), CHANNEL_ID);
+        }
+
         if (imgId != 0) {
             /**设置通知左边的大图标**/
             builder.setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher));
@@ -95,10 +117,25 @@ public class NotificationUtil {
 
     public static Notification getLoadNotification(Context context, String title, int progress, PendingIntent pendingIntent) {
         //进度条通知
-        final NotificationCompat.Builder builderProgress = new NotificationCompat.Builder(context);
+        final Notification.Builder builderProgress;
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+            builderProgress = new Notification.Builder(context.getApplicationContext());
+        } else {
+            NotificationManager notificationManager = (NotificationManager) context.getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
+            if (notificationManager == null) {
+                return  null;
+            }
+            // 渠道名会在通知栏权限的分类中显示
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT);
+            notificationManager.createNotificationChannel(channel);
+            builderProgress = new Notification.Builder(context.getApplicationContext(), CHANNEL_ID);
+        }
         builderProgress.setContentTitle(title);
         builderProgress.setSmallIcon(R.mipmap.ic_launcher);
         builderProgress.setTicker("下载通知");
+        builderProgress.setAutoCancel(true);
+
         builderProgress.setProgress(100, progress, false);
         if(pendingIntent!=null){
             //当通知被点击的时候，跳转到pendingIntent中
@@ -106,6 +143,7 @@ public class NotificationUtil {
         }
         return builderProgress.build();
     }
+
 
     /**
      * 悬挂式，支持6.0以上系统
