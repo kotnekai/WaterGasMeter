@@ -1,8 +1,14 @@
 package com.app.watermeter.view.base;
 
+import android.Manifest;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
+import android.provider.Settings;
+import android.support.annotation.RequiresApi;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -23,6 +29,7 @@ import com.app.watermeter.common.CommonParams;
 import com.app.watermeter.eventBus.DefaultEvent;
 import com.app.watermeter.manager.UserManager;
 import com.app.watermeter.utils.DateUtils;
+import com.app.watermeter.utils.DialogUtils;
 import com.app.watermeter.utils.PreferencesUtils;
 import com.app.watermeter.view.activity.LoginActivity;
 
@@ -30,9 +37,15 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import me.weyye.hipermission.HiPermission;
+import me.weyye.hipermission.PermissionCallback;
+import me.weyye.hipermission.PermissionItem;
 
 public abstract class BaseActivity extends AppCompatActivity implements DrawerLayout.DrawerListener {
 
@@ -78,6 +91,7 @@ public abstract class BaseActivity extends AppCompatActivity implements DrawerLa
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(getVew());
 
+
         // 全部绑定ButterKnife
         ButterKnife.bind(this);
         // 全局注册EventBus ，，EventBus貌似不能重复注册，这里判断一下
@@ -85,9 +99,83 @@ public abstract class BaseActivity extends AppCompatActivity implements DrawerLa
             EventBus.getDefault().register(this);
         }
         ComApplication.getApp().addActivity(this);
-
+        checkPermission();
         updateBaseData();
+        checkInstallPermission();
+    }
+    protected  void checkInstallPermission(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            //先获取是否有安装未知来源应用的权限
+            boolean    haveInstallPermission = getPackageManager().canRequestPackageInstalls();
+            if (!haveInstallPermission) {//没有权限
+                DialogUtils.showPermissionDialog(this, new View.OnClickListener() {
+                    @TargetApi(Build.VERSION_CODES.O)
+                    @Override
+                    public void onClick(View v) {
+                        startInstallPermissionSettingActivity();
+                    }
+                });
+            }
+        }
+    }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void startInstallPermissionSettingActivity() {
+        Uri packageURI = Uri.parse("package:" + getPackageName());
+        //注意这个是8.0新API
+        Intent intent = new Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES, packageURI);
+        startActivityForResult(intent, 10086);
+    }
+
+    /**
+     * 安卓6.0动态检查权限
+     *
+     * @param
+     */
+    private void checkPermission() {
+        List<PermissionItem> permissionItems = initPermissionList();
+        if (permissionItems == null || permissionItems.size() == 0) {
+            return;
+        }
+        HiPermission.create(this)
+                .title("权限申请")
+                .permissions(permissionItems)
+                .msg("权限申请")
+                .animStyle(R.style.PermissionAnimScale)
+                .style(R.style.PermissionDefaultBlueStyle)
+                .checkMutiPermission(new PermissionCallback() {
+                    @Override
+                    public void onClose() {
+                        Log.d("xyc", "onClose: 1");
+                    }
+
+                    @Override
+                    public void onFinish() {
+                    }
+
+                    @Override
+                    public void onDeny(String permission, int position) {
+                        Log.d("xyc", "onDeny:1 ");
+                    }
+
+                    @Override
+                    public void onGuarantee(String permission, int position) {
+                        Log.d("xyc", "onGuarantee:1 ");
+                    }
+                });
+    }
+
+    /**
+     * 初始化需要申请的权限
+     *
+     * @return
+     */
+    private List<PermissionItem> initPermissionList() {
+        List<PermissionItem> permissionItems = new ArrayList<>();
+        permissionItems.add(new PermissionItem(Manifest.permission.WRITE_EXTERNAL_STORAGE, getResources().getString(R.string.permission_storage), R.drawable.permission_ic_storage));
+        permissionItems.add(new PermissionItem(Manifest.permission.CAMERA,  getResources().getString(R.string.permission_camera), R.drawable.permission_ic_camera));
+
+        return permissionItems;
     }
 
     boolean isShow = false;

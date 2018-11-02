@@ -83,7 +83,6 @@ public class ComApplication extends Application {
         ApplicationHolder.getInstance().setAppContext(this);
         mzjApplication = this;
 //         CrashManager.getInstance().init(this); //初始化本地崩溃日志收集
-        checkPermission();
         MyOkhttpUtils.initOkhttp(this);
         PickViewUtil.initTimePickOptions(this);
         LanguageUtils.applyChange(this);
@@ -148,56 +147,9 @@ public class ComApplication extends Application {
         return mzjApplication;
     }
 
-    /**
-     * 初始化需要申请的权限
-     *
-     * @return
-     */
-    private List<PermissionItem> initPermissionList() {
-        List<PermissionItem> permissionItems = new ArrayList<>();
-        permissionItems.add(new PermissionItem(Manifest.permission.WRITE_EXTERNAL_STORAGE, getResources().getString(R.string.permission_storage), R.drawable.permission_ic_storage));
-        permissionItems.add(new PermissionItem(Manifest.permission.CAMERA,  getResources().getString(R.string.permission_camera), R.drawable.permission_ic_camera));
 
-        return permissionItems;
-    }
 
-    /**
-     * 安卓6.0动态检查权限
-     *
-     * @param
-     */
-    private void checkPermission() {
-        List<PermissionItem> permissionItems = initPermissionList();
-        if (permissionItems == null || permissionItems.size() == 0) {
-            return;
-        }
-        HiPermission.create(this)
-                .title("权限申请")
-                .permissions(permissionItems)
-                .msg("权限申请")
-                .animStyle(R.style.PermissionAnimScale)
-                .style(R.style.PermissionDefaultBlueStyle)
-                .checkMutiPermission(new PermissionCallback() {
-                    @Override
-                    public void onClose() {
-                        Log.d("xyc", "onClose: 1");
-                    }
 
-                    @Override
-                    public void onFinish() {
-                    }
-
-                    @Override
-                    public void onDeny(String permission, int position) {
-                        Log.d("xyc", "onDeny:1 ");
-                    }
-
-                    @Override
-                    public void onGuarantee(String permission, int position) {
-                        Log.d("xyc", "onGuarantee:1 ");
-                    }
-                });
-    }
 
     /**
      * 添加activity
