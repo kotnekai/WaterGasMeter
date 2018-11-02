@@ -301,7 +301,7 @@ public class MeterDetailActivity extends BaseActivity {
                 tvBalance.setText(getString(R.string.gas_meter_balance));
                 break;
         }
-        MeterManager.getInstance().getMeterDetail(meterSn);
+        MeterManager.getInstance().getMeterDetail(meterSn,false);
     }
 
     /**
@@ -568,7 +568,7 @@ public class MeterDetailActivity extends BaseActivity {
                 startActivity(PerStorageSaveListActivity.makeIntent(mContext, model.getId(), meterType, CommonParams.PAGE_TYPE_RECHARGE));
                 break;
             case R.id.tvCharge:
-                startActivityForResult(PayActionActivity.makeIntent(mContext, meterId), CommonParams.PAY_RESULT);
+                startActivityForResult(PayActionActivity.makeIntent(mContext, meterId,false,null), CommonParams.PAY_RESULT);
                 break;
 
         }
@@ -603,7 +603,7 @@ public class MeterDetailActivity extends BaseActivity {
                 case CommonParams.PAY_RESULT_SUCCESS:
                     //todo 支付成功，刷新数据
                     PreferencesUtils.putString("orderNo", "");
-                    MeterManager.getInstance().getMeterDetail(meterSn);
+                    MeterManager.getInstance().getMeterDetail(meterSn,false);
                     break;
                 case CommonParams.PAY_RESULT_CANCEL:
                     //todo 支付取消

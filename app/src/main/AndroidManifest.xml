@@ -105,6 +105,9 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".view.activity.ScanBillListActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".view.activity.PreStorageSave2Activity"
             android:screenOrientation="portrait" />
         <activity

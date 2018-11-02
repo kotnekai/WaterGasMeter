@@ -192,4 +192,36 @@ public class DialogUtils {
                 }).create();
         dialog.show();
     }
+
+    /**
+     * 表已停用，不能充值
+     * @param activity
+     */
+    public static void showMeterDisEnabledHints(final Activity activity) {
+        AlertDialog dialog = new AlertDialog.Builder(activity)
+                .setMessage(activity.getString(R.string.scan_meter_disabled))
+                .setPositiveButton(activity.getString(R.string.sure), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                }).create();
+        dialog.show();
+    }
+
+    /**
+     * 表不存在
+     * @param activity
+     */
+    public static void showScanMeterFailHints(final Activity activity) {
+        AlertDialog dialog = new AlertDialog.Builder(activity)
+                .setMessage(activity.getString(R.string.scan_meter_fail))
+                .setPositiveButton(activity.getString(R.string.sure), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                }).create();
+        dialog.show();
+    }
 }

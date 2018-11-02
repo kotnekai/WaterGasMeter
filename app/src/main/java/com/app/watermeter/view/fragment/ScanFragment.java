@@ -7,17 +7,19 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.app.watermeter.R;
 import com.app.watermeter.eventBus.BindEvent;
 import com.app.watermeter.eventBus.BindingStatusEvent;
-import com.app.watermeter.eventBus.GetMeterTypeEvent;
-import com.app.watermeter.eventBus.UnBindEvent;
+import com.app.watermeter.eventBus.GetMeterInfoEvent;
+import com.app.watermeter.eventBus.GetScanMeterInfoEvent;
+import com.app.watermeter.eventBus.GetScanMeterInfoFailEvent;
 import com.app.watermeter.manager.MeterManager;
+import com.app.watermeter.model.MeterInfoModel;
 import com.app.watermeter.utils.DialogUtils;
 import com.app.watermeter.utils.ToastUtil;
 import com.app.watermeter.utils.UIUtils;
+import com.app.watermeter.view.activity.PayActionActivity;
 import com.app.watermeter.view.base.BaseFragment;
 import com.uuzuche.lib_zxing.activity.CaptureActivity;
 import com.uuzuche.lib_zxing.activity.CodeUtils;
@@ -29,19 +31,15 @@ import org.greenrobot.eventbus.ThreadMode;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class BingingFragment extends BaseFragment {
+public class ScanFragment extends BaseFragment {
 
     private final int BIND_SUCCESS = 0;
     private final int METER_EMPTY = 1;
     private final int BINDED = 2;
     private final int SERVER_ERR = 5;
 
-    @BindView(R.id.llScanQrCode)
-    LinearLayout llScanQrCode;
-    @BindView(R.id.edtDeviceNumber)
-    EditText edtDeviceNumber;
-    @BindView(R.id.tvAddNumber)
-    TextView tvAddNumber;
+    @BindView(R.id.llScan)
+    LinearLayout llScan;
     private final int REQUEST_CODE = 101;
 
     @Override
@@ -61,25 +59,17 @@ public class BingingFragment extends BaseFragment {
 
     @Override
     protected int setFrgContainView() {
-        return R.layout.fragment_binding;
+        return R.layout.fragment_scan;
 
     }
 
-    @OnClick({R.id.llScanQrCode, R.id.tvAddNumber})
+    @OnClick({R.id.llScan})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.llScanQrCode:
+            case R.id.llScan:
                 Intent intent = new Intent(getActivity(), CaptureActivity.class);
                 startActivityForResult(intent, REQUEST_CODE);
                 break;
-            case R.id.tvAddNumber:
-                String sn = edtDeviceNumber.getText().toString().trim();
-                if (TextUtils.isEmpty(sn)) {
-                    ToastUtil.showLong(getString(R.string.bind_sn_empty));
-                }
-                MeterManager.getInstance().bindMeter(sn);
-                break;
-
         }
     }
 
@@ -87,23 +77,29 @@ public class BingingFragment extends BaseFragment {
      * 接口返回
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(BindEvent event) {
-        switch (event.getResult().getErr_code()) {
-            case BIND_SUCCESS:
-                DialogUtils.showBindingSuccessHints(getActivity());
-                EventBus.getDefault().post(new BindingStatusEvent(BindingStatusEvent.BINDING_SUCCESS));
-                break;
-            case METER_EMPTY:
-                ToastUtil.showLong(getString(R.string.bind_empty));
-                break;
-            case BINDED:
-                ToastUtil.showLong(getString(R.string.bind_already));
-                break;
-            case SERVER_ERR:
-                ToastUtil.showLong(getString(R.string.bind_server_error));
-                break;
+    public void onEvent(GetScanMeterInfoEvent event) {
+       MeterInfoModel model = event.getModelInfo();
+        if (model != null) {
+            switch (model.getStatus())
+            {
+                case 1:
+                    getActivity().startActivity(PayActionActivity.makeIntent(getContext(), model.getId(),true,model.getMachine_sn()));
+                    break;
+                case 0:
+                    //表已被停用，不能进行充值
+                    DialogUtils.showMeterDisEnabledHints(getActivity());
+                    break;
+            }
         }
     }
+    /**
+     * 接口返回
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(GetScanMeterInfoFailEvent event) {
+        DialogUtils.showScanMeterFailHints(getActivity());
+    }
+
 
 
     @Override
@@ -123,7 +119,7 @@ public class BingingFragment extends BaseFragment {
                     String result = bundle.getString(CodeUtils.RESULT_STRING);
 
                     if (result != null) {
-                        MeterManager.getInstance().bindMeter(result);
+                        MeterManager.getInstance().getMeterDetail(result,true);
                     }
                 } else if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_FAILED) {
                     ToastUtil.showShort(UIUtils.getValueString(R.string.scan_code));

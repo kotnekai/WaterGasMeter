@@ -25,7 +25,10 @@ import com.app.watermeter.eventBus.GetOrderInfoEvent;
 import com.app.watermeter.eventBus.GetPayResultEvent;
 import com.app.watermeter.eventBus.GetPerPayEvent;
 import com.app.watermeter.eventBus.GetReChargeListEvent;
+import com.app.watermeter.eventBus.GetReChargeListFromScanEvent;
 import com.app.watermeter.eventBus.GetReadListEvent;
+import com.app.watermeter.eventBus.GetScanMeterInfoEvent;
+import com.app.watermeter.eventBus.GetScanMeterInfoFailEvent;
 import com.app.watermeter.eventBus.GetWaterReChargeListEvent;
 import com.app.watermeter.eventBus.GetWaterReadListEvent;
 import com.app.watermeter.eventBus.UnBindErrEvent;
@@ -161,7 +164,7 @@ public class MeterManager {
     /**
      * 获取表详细
      */
-    public void getMeterDetail(final String sn) {
+    public void getMeterDetail(final String sn, final boolean isScan) {
         Map<String, String> params = new HashMap<>();
         params.put("sn", sn);
         dataInstance.sendGetRequestData(CommonUrl.METER_DETAIL_URL, params)
@@ -177,6 +180,11 @@ public class MeterManager {
                     @Override
                     public void onNetWorkError(Response response, String errorMsg, int NetWorkCode) {
                         Log.d("admin", "onError: errorMsg=" + errorMsg);
+                        if (isScan) {
+                            EventBus.getDefault().post(new GetScanMeterInfoFailEvent());
+                        } else {
+
+                        }
                     }
 
                     @Override
@@ -184,7 +192,12 @@ public class MeterManager {
                         Log.d("admin", "getMeterDetail====onResponse: response=" + result);
                         String jsonString = gson.toJson(result.getData());
                         MeterInfoModel model = gson.fromJson(jsonString.toString(), MeterInfoModel.class);
-                        EventBus.getDefault().post(new GetMeterInfoEvent(model));
+                        if (isScan) {
+                            EventBus.getDefault().post(new GetScanMeterInfoEvent(model));
+
+                        } else {
+                            EventBus.getDefault().post(new GetMeterInfoEvent(model));
+                        }
                     }
                 });
     }
@@ -466,12 +479,13 @@ public class MeterManager {
     /**
      * 下单充钱
      */
-    public void saveMoney(final int machine_id, float amount, String currency) {
+    public void saveMoney(final int machine_id, float amount, String currency, String from) {
         JSONObject params = new JSONObject();
         try {
             params.put("machine_id", machine_id + "");
             params.put("amount", amount + "");
             params.put("currency", currency);
+            params.put("from", from);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -566,6 +580,42 @@ public class MeterManager {
                         String jsonString = gson.toJson(result.getData());
                         OrderInfoModel model = gson.fromJson(jsonString.toString(), OrderInfoModel.class);
                         EventBus.getDefault().post(new GetOrderInfoEvent(model));
+                    }
+                });
+    }
+
+
+    /**
+     * 扫一扫充值记录
+     * https://www.showdoc.cc/137924192608060?page_id=1080778821819081
+     */
+    public void getReChargeListFromScan(int offset, int count) {
+        Map<String, String> params = new HashMap<>();
+        params.put("offset", offset + "");
+        params.put("count", count + "");
+
+        dataInstance.sendGetRequestData(CommonUrl.METER_RECHARGE_LIST_FROM_SCAN_URL, params)
+                .execute(new GenericsCallback<Result>(new JsonGenericsSerializator()) {
+                    @Override
+                    public void onError(Response response, Call call, Exception e, int id) {
+                        String message = e.getMessage();
+                      /*  String errorMsg = JsonUtils.getErrorMsg(response);
+                        EventBus.getDefault().post(new ErrorResponseEvent(errorMsg, CommonPageState.login_page));*/
+                        Log.d("admin", "onError: message=" + message);
+                    }
+
+                    @Override
+                    public void onNetWorkError(Response response, String errorMsg, int NetWorkCode) {
+                        Log.d("admin", "onError: errorMsg=" + errorMsg);
+                    }
+
+                    @Override
+                    public void onResponse(Result result, int id) {
+                        String jsonString = gson.toJson(result.getData());
+                        List<MeterReChargeModel> list = gson.fromJson(jsonString.toString(), new TypeToken<List<MeterReChargeModel>>() {
+                        }.getType());
+                        EventBus.getDefault().post(new GetReChargeListFromScanEvent(list));
+
                     }
                 });
     }

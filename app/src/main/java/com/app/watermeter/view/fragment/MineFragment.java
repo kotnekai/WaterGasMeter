@@ -1,18 +1,23 @@
 package com.app.watermeter.view.fragment;
 
+import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import com.app.watermeter.R;
 import com.app.watermeter.common.CommonParams;
 import com.app.watermeter.view.activity.PersonInfoActivity;
-import com.app.watermeter.view.activity.PreStorageSave2Activity;
 import com.app.watermeter.view.activity.PreStorageSaveActivity;
+import com.app.watermeter.view.activity.ScanBillListActivity;
 import com.app.watermeter.view.activity.SettingActivity;
 import com.app.watermeter.view.base.BaseFragment;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 
 public class MineFragment extends BaseFragment {
 
@@ -27,6 +32,8 @@ public class MineFragment extends BaseFragment {
 
     @BindView(R.id.rlOtherSet)
     RelativeLayout rlOtherSet;
+    @BindView(R.id.rlScanBill)
+    RelativeLayout rlScanBill;
 
     @Override
     protected void initView() {
@@ -49,7 +56,7 @@ public class MineFragment extends BaseFragment {
 
     }
 
-    @OnClick({R.id.rlPreSave, R.id.rlPayDes, R.id.rlPersonInfo, R.id.rlOtherSet})
+    @OnClick({R.id.rlPreSave, R.id.rlPayDes, R.id.rlPersonInfo, R.id.rlScanBill,R.id.rlOtherSet})
     public void onClick(View view) {
         switch (view.getId()) {
             // 预存明细
@@ -59,7 +66,10 @@ public class MineFragment extends BaseFragment {
             // 缴费明细
             case R.id.rlPayDes:
                 startActivity(PreStorageSaveActivity.makeIntent(getContext(), CommonParams.PAGE_TYPE_READ));
-
+                break;
+            // 扫码充值明细
+            case R.id.rlScanBill:
+                startActivity(ScanBillListActivity.makeIntent(getContext()));
                 break;
             // 个人资料
             case R.id.rlPersonInfo:
@@ -71,5 +81,17 @@ public class MineFragment extends BaseFragment {
                 break;
 
         }
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // TODO: inflate a fragment view
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        return rootView;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
     }
 }

@@ -15,7 +15,7 @@
     <string name="last_value">Last value：</string>
     <string name="balance">balance：</string>
     <string name="yuan">%s rmb</string>
-    <string name="scan">Scan</string>
+    <string name="scan">Scan code binding</string>
     <string name="or">- Or -</string>
     <string name="add">Add</string>
     <string name="sn_hints">sn</string>
@@ -39,6 +39,7 @@
 
     <string name="mine_per_storage_list">Pre storage detail</string>
     <string name="mine_pay_list">Charge Details</string>
+    <string name="mine_scan_bill_info">Scan Recharge details</string>
     <string name="mine_person_info">personal data</string>
 
 
@@ -46,6 +47,10 @@
     <string name="person_name">Name</string>
     <string name="person_email">Email</string>
     <string name="person_phone">Phone</string>
+
+    <string name="scan_code">Scan code failed, please try again</string>
+    <string name="permission_storage">Storage permission</string>
+    <string name="permission_camera">Camera permissions</string>
 
     <string name="language_cn">简体中文</string>
     <string name="language_en">English</string>
@@ -97,9 +102,13 @@
     <string name="electricity_sn" formatted="false">Meter coding：%s</string>
     <string name="gas_sn" formatted="false">Gas meter coding：%s</string>
 
+    <string name="meter_sn" formatted="false">Meter coding：%s</string>
+
+
     <string name="measurement"> Payment measurement：%s</string>
     <string name="payment_time">Payment time：%s</string>
     <string name="storage_time">Pre-stored time：%s</string>
+    <string name="recharge_time">Recharge time：%s</string>
 
 
     <string name="payed">Deducted</string>
@@ -146,5 +155,11 @@
     <string name="meter_unbind_hints">Are you sure you want to unbind?</string>
     <string name="meter_bind_success">Binding successfully</string>
     <string name="meter_unbind_success">Unbind successfully</string>
+
+    <string name="scan_scan">Recharge</string>
+    <string name="scan_meter_sn" formatted="false">Meter Coding：%s</string>
+    <string name="scan_meter_disabled">The meter has been deactivated and cannot be recharged</string>
+    <string name="scan_meter_fail">The meter does not exist, please contact the administrator</string>
+    <string name="scan_recharge">Scan code recharge</string>
 
 </resources>

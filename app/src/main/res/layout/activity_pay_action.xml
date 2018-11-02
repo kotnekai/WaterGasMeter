@@ -10,15 +10,24 @@
     <LinearLayout
         android:id="@+id/llPayStart"
         android:layout_width="match_parent"
-        android:layout_height="130dp"
+        android:layout_height="170dp"
         android:layout_marginTop="100dp"
         android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvSn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp"
+            android:layout_marginBottom="20dp"
+            android:textSize="16dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginEnd="25dp"
             android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp"
             android:background="@drawable/com_white_35r_shape"
             android:clickable="true"
             android:orientation="horizontal">
@@ -47,8 +56,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginBottom="20dp"
             android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
             android:gravity="center"
             android:text="@string/pay_hints"
             android:textColor="@color/normal_gray_color"
@@ -59,8 +68,8 @@
         android:id="@+id/llPayEnd"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="30dp"
         android:layout_marginTop="100dp"
+        android:layout_marginBottom="30dp"
         android:gravity="center_horizontal"
         android:orientation="vertical"
         android:visibility="gone">
@@ -113,11 +122,11 @@
         android:layout_height="50dp"
         android:layout_centerHorizontal="true"
         android:layout_gravity="center"
-        android:layout_marginEnd="25dp"
         android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
         android:background="@mipmap/anniu"
         android:gravity="center"
         android:text="@string/pay_action"
         android:textColor="@color/white"
-        android:textSize="18sp" />
+        android:textSize="18dp" />
 </LinearLayout>

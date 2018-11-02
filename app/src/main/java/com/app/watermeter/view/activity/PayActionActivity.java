@@ -46,17 +46,24 @@ public class PayActionActivity extends BaseActivity {
     LinearLayout llPayEnd;
     @BindView(R.id.tvPayAction)
     TextView tvPayAction;
+    @BindView(R.id.tvSn)
+    TextView tvSn;
     private Context mContext;
     private int meterId;
+    private boolean fromScen = false;
+    private String meterSn;
 
     @Override
     protected int getCenterView() {
         return R.layout.activity_pay_action;
     }
 
-    public static Intent makeIntent(Context context, int meterId) {
+    public static Intent makeIntent(Context context, int meterId, boolean isFromScan, String meterSn) {
         Intent intent = new Intent(context, PayActionActivity.class);
         intent.putExtra(CommonParams.METER_ID, meterId);
+        intent.putExtra(CommonParams.FROM_SCAN, isFromScan);
+        intent.putExtra(CommonParams.METER_SN, meterSn);
+
         return intent;
     }
 
@@ -79,6 +86,14 @@ public class PayActionActivity extends BaseActivity {
     private void getIntentData() {
         Intent intent = getIntent();
         meterId = intent.getIntExtra(CommonParams.METER_ID, 0);
+        fromScen = intent.getBooleanExtra(CommonParams.FROM_SCAN, false);
+        meterSn = intent.getStringExtra(CommonParams.METER_SN);
+        if (fromScen) {
+            tvSn.setVisibility(View.VISIBLE);
+            tvSn.setText(String.format(getString(R.string.scan_meter_sn), meterSn));
+        } else {
+            tvSn.setVisibility(View.GONE);
+        }
     }
 
     @OnClick({R.id.tvPayAction})
@@ -97,8 +112,11 @@ public class PayActionActivity extends BaseActivity {
 
                         DecimalFormat decimalFormat = new DecimalFormat(".00");//构造方法的字符格式这里如果小数不足2位,会以0补足.
                         String payValue = decimalFormat.format(payMoney);
-
-                        MeterManager.getInstance().saveMoney(meterId, Float.valueOf(payValue), CommonParams.USD);
+                        if (fromScen) {
+                            MeterManager.getInstance().saveMoney(meterId, Float.valueOf(payValue), CommonParams.USD, CommonParams.ACTION_FROM_SCAN);
+                        } else {
+                            MeterManager.getInstance().saveMoney(meterId, Float.valueOf(payValue), CommonParams.USD, CommonParams.ACTION_FROM_DIRECT);
+                        }
                     } catch (Exception ei) {
                         ei.printStackTrace();
                     }

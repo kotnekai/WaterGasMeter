@@ -34,6 +34,8 @@ public class CommonParams {
     public static final String METER_ID = "meterId";
     public static final String METER_TIME = "meterTime";
 
+    public static final String FROM_SCAN = "fromScan";
+
 
     public static int mMeterWater;
     public static int mMeterElect;
@@ -52,6 +54,10 @@ public class CommonParams {
     public static final String PARTNER  = "1819";
 
     public static final String PHONE_NUMBER  = "phone_number";
+
+    //https://www.showdoc.cc/137924192608060?page_id=895267016994174
+    public static final String ACTION_FROM_SCAN = "scan";
+    public static final String ACTION_FROM_DIRECT = "direct";
 
 
 }

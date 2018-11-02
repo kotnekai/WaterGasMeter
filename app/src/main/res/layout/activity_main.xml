@@ -24,6 +24,7 @@
             android:drawableTop="@drawable/main_frag_home_icon_selector"
             android:gravity="center"
             android:text="@string/main_home"
+            android:textSize="14dp"
             android:textColor="@drawable/main_frag_text_selector" />
 
 
@@ -34,10 +35,20 @@
             android:layout_weight="1"
             android:drawableTop="@drawable/main_frag_meter_icon_selector"
             android:gravity="center"
-
             android:text="@string/binding"
-            android:textColor="@drawable/main_frag_text_selector" />
+            android:textSize="14dp"
 
+            android:textColor="@drawable/main_frag_text_selector" />
+        <TextView
+            android:id="@+id/tvScanTab"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/main_frag_scan_icon_selector"
+            android:gravity="center"
+            android:text="@string/scan_scan"
+            android:textSize="14dp"
+            android:textColor="@drawable/com_text_blue_gray_selector"/>
         <TextView
             android:id="@+id/tvMineTab"
             android:layout_width="0dp"
@@ -45,20 +56,12 @@
             android:layout_weight="1"
             android:drawableTop="@drawable/main_frag_mine_icon_selector"
             android:gravity="center"
-
             android:text="@string/mine"
+            android:textSize="14dp"
+
             android:textColor="@drawable/main_frag_text_selector" />
 
-        <TextView
-            android:id="@+id/tvFourthTab"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:drawableTop="@drawable/main_frag_home_icon_selector"
-            android:gravity="center"
-            android:text="库"
-            android:textColor="@drawable/com_text_blue_gray_selector"
-            android:visibility="gone" />
+
 
     </LinearLayout>
 

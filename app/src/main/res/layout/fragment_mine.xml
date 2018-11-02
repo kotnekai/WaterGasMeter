@@ -34,6 +34,21 @@
             android:text="@string/mine_pay_list" />
     </RelativeLayout>
 
+
+    <RelativeLayout
+        android:id="@+id/rlScanBill"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/text_Item_style"
+            android:drawablePadding="10dp"
+            android:drawableStart="@mipmap/mine_scan"
+            android:text="@string/mine_scan_bill_info" />
+    </RelativeLayout>
+
     <RelativeLayout
         android:id="@+id/rlPersonInfo"
         android:layout_width="match_parent"

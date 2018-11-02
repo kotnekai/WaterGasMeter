@@ -2,11 +2,9 @@ package com.app.watermeter.view.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.sdk.android.push.CloudPushService;
@@ -14,22 +12,20 @@ import com.alibaba.sdk.android.push.CommonCallback;
 import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory;
 import com.app.watermeter.R;
 import com.app.watermeter.apkUpdate.AppUpdateManager;
-import com.app.watermeter.common.ApplicationHolder;
 import com.app.watermeter.common.ChangeLanguageHelper;
-import com.app.watermeter.common.UserCache;
 import com.app.watermeter.eventBus.ApkInfoEvent;
 import com.app.watermeter.eventBus.LanguageChangedEvent;
 import com.app.watermeter.model.VersionData;
 import com.app.watermeter.utils.DialogUtils;
-import com.app.watermeter.utils.LanguageUtils;
 import com.app.watermeter.utils.ProgressUtils;
 import com.app.watermeter.utils.ToastUtil;
 import com.app.watermeter.utils.UIUtils;
 import com.app.watermeter.view.adapter.FragmentAdapter;
 import com.app.watermeter.view.base.BaseActivity;
 import com.app.watermeter.view.fragment.HomeFragment;
-import com.app.watermeter.view.fragment.BingingFragment;
+import com.app.watermeter.view.fragment.BindingFragment;
 import com.app.watermeter.view.fragment.MineFragment;
+import com.app.watermeter.view.fragment.ScanFragment;
 import com.app.watermeter.view.views.NoScrollViewPager;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -54,8 +50,8 @@ public class MainActivity extends BaseActivity {
     TextView tvMeterTab;
     @BindView(R.id.tvMineTab)
     TextView tvMineTab;
-    @BindView(R.id.tvFourthTab)
-    TextView tvFourthTab;
+    @BindView(R.id.tvScanTab)
+    TextView tvScanTab;
     private List<Fragment> fragmentList;
     private FragmentAdapter adapter;
     private CloudPushService mPushService;
@@ -104,24 +100,25 @@ public class MainActivity extends BaseActivity {
     private void initData() {
         fragmentList = new ArrayList<>();
         fragmentList.add(new HomeFragment());
-        fragmentList.add(new BingingFragment());
+        fragmentList.add(new BindingFragment());
+        fragmentList.add(new ScanFragment());
         fragmentList.add(new MineFragment());
-        tvFourthTab.setVisibility(View.GONE);
         adapter = new FragmentAdapter(fragmentList, getSupportFragmentManager());
-        viewPager.setOffscreenPageLimit(2);
+        viewPager.setOffscreenPageLimit(3);
         viewPager.setAdapter(adapter);
         tvHomeTab.setSelected(true);
         AppUpdateManager.getInstance().getApkVersionInfo(true);
 
     }
 
-    @OnClick({R.id.tvHomeTab, R.id.tvMeterTab, R.id.tvMineTab, R.id.tvFourthTab})
+    @OnClick({R.id.tvHomeTab, R.id.tvMeterTab, R.id.tvMineTab, R.id.tvScanTab})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tvHomeTab:
                 viewPager.setCurrentItem(0);
                 tvHomeTab.setSelected(true);
                 tvMeterTab.setSelected(false);
+                tvScanTab.setSelected(false);
                 tvMineTab.setSelected(false);
                 setHeaderTitle(getString(R.string.main_home));
 
@@ -130,19 +127,25 @@ public class MainActivity extends BaseActivity {
                 viewPager.setCurrentItem(1);
                 tvHomeTab.setSelected(false);
                 tvMeterTab.setSelected(true);
+                tvScanTab.setSelected(false);
                 tvMineTab.setSelected(false);
                 setHeaderTitle(getString(R.string.binding));
-
                 break;
-            case R.id.tvMineTab:
+            case R.id.tvScanTab:
                 viewPager.setCurrentItem(2);
                 tvHomeTab.setSelected(false);
                 tvMeterTab.setSelected(false);
+                tvMineTab.setSelected(false);
+                tvScanTab.setSelected(true);
+                setHeaderTitle(getString(R.string.scan_scan));
+                break;
+            case R.id.tvMineTab:
+                viewPager.setCurrentItem(3);
+                tvHomeTab.setSelected(false);
+                tvMeterTab.setSelected(false);
+                tvScanTab.setSelected(false);
                 tvMineTab.setSelected(true);
                 setHeaderTitle(getString(R.string.mine));
-
-                break;
-            case R.id.tvFourthTab:
                 break;
         }
 

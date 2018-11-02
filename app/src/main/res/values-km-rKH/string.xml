@@ -15,7 +15,7 @@
     <string name="last_value">តម្លៃចុងក្រោយ：</string>
     <string name="balance">តុល្យភាព：</string>
     <string name="yuan">%s យាន</string>
-    <string name="scan">វិភាគកូដ QR</string>
+    <string name="scan">វិភាគកូដចង</string>
     <string name="or">- ឬ -</string>
     <string name="add">បន្ថែម</string>
     <string name="sn_hints">បញ្ចូលលេខបង់បែបបទដោយដៃ</string>
@@ -39,6 +39,7 @@
 
     <string name="mine_per_storage_list">ពត៌មានលំអិតទុកជាមុន</string>
     <string name="mine_pay_list">ការវិភាគចំណាយ</string>
+    <string name="mine_scan_bill_info">វិភាគការបញ្ចូលទិន្នន័យលម្អិត</string>
     <string name="mine_person_info">ព័ត៌មានផ្ទាល់ខ្លួន</string>
 
 
@@ -49,6 +50,7 @@
     <string name="scan_code">កូដស្កេនបានបរាជ័យសូមព្យាយាមម្តងទៀត</string>
     <string name="permission_storage">សិទ្ធិផ្ទុក</string>
     <string name="permission_camera">សិទ្ធិកាមេរ៉ា</string>
+
     <string name="language_cn">简体中文</string>
     <string name="language_en">English</string>
     <string name="language_km">កម្ពុជា</string>
@@ -99,7 +101,9 @@
     <string name="measurement"> ការវាស់វែងនៃការទូទាត់：%s</string>
     <string name="payment_time">ពេលវេលាបង់ប្រាក់：%s</string>
     <string name="storage_time">ពេលវេលាទុកជាមុន：%s</string>
+    <string name="recharge_time">បញ្ចូលទឹកប្រាក់ឡើងវិញ：%s</string>
 
+    <string name="meter_sn" formatted="false">ពេលវេលាបង់ប្រាក់：%s</string>
 
     <string name="payed">ដកចេញ</string>
     <string name="waited_payed">នឹងត្រូវដក</string>
@@ -145,5 +149,11 @@
     <string name="meter_unbind_hints">តើអ្នកប្រាកដថាអ្នកចង់លែងកូន?</string>
     <string name="meter_bind_success">ការផ្សារភ្ជាប់ភាពជោគជ័យ</string>
     <string name="meter_unbind_success">មិនភ្ជាប់ដោយជោគជ័យ</string>
+
+    <string name="scan_scan">បញ្ចូលទឹកប្រាក់</string>
+    <string name="scan_meter_sn" formatted="false">តារាងកូដ：%s</string>
+    <string name="scan_meter_disabled">តារាងនេះត្រូវបានធ្វើឱ្យអសកម្មហើយមិនអាចបញ្ចូលថ្មបានទេ</string>
+    <string name="scan_meter_fail">តារាងមិនមានទេសូមទាក់ទងអ្នកគ្រប់គ្រង</string>
+    <string name="scan_recharge">ទាញយកលេខកូដបញ្ចូលឡើងវិញ</string>
 
 </resources>
