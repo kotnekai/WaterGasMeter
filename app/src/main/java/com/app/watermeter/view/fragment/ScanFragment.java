@@ -119,7 +119,17 @@ public class ScanFragment extends BaseFragment {
                     String result = bundle.getString(CodeUtils.RESULT_STRING);
 
                     if (result != null) {
-                        MeterManager.getInstance().getMeterDetail(result,true);
+
+                        String[] res = result.split("-");
+                        if (res.length>2)
+                        {
+                            MeterManager.getInstance().getMeterDetail(res[2],true);
+                        }
+                        else
+                        {
+                            DialogUtils.showScanMeterFailHints(getActivity());
+                        }
+
                     }
                 } else if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_FAILED) {
                     ToastUtil.showShort(UIUtils.getValueString(R.string.scan_code));
