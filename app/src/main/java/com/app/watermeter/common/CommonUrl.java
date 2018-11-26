@@ -1,7 +1,7 @@
 package com.app.watermeter.common;
 
 public class CommonUrl {
-    public static final String BASE_URL = "http://119.23.12.11/api"; // 14 测试 16开发
+    public static final String BASE_URL = "http://202.79.30.60/api"; // 14 测试 16开发
 
     public static final String BASE_PAY_URL = "https://uat-api.asiaweiluy.com/web/"; // 14 测试 16开发
     public static final String GET_APK_VERSION_INFO = BASE_URL + "/app/version/latest?type=android";

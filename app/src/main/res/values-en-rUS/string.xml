@@ -118,7 +118,7 @@
 
     <string name="payment_money_title">Pre-stored amount</string>
     <string name="pay_action">Pay</string>
-    <string name="pay_hints">*Please enter an integer, after the prepaid amount is successfully paid, no refund will be given</string>
+    <string name="pay_hints">*Please enter the amount, no refund will be given after the prepaid amount is successfully paid.</string>
     <string name="pay_success">payment successful！</string>
 
     <!--2018.9.3-->

@@ -116,7 +116,7 @@
 
     <string name="payment_money_title">预存金额</string>
     <string name="pay_action">支付</string>
-    <string name="pay_hints">*请输入整数，预存金额支付成功后，不给予退款</string>
+    <string name="pay_hints">*请输入金额，预存金额支付成功后，不给予退款</string>
     <string name="pay_success">支付成功！</string>
 
     <!--2018.9.3-->
