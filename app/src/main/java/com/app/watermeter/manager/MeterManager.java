@@ -619,4 +619,41 @@ public class MeterManager {
                     }
                 });
     }
+
+
+    /**
+     * 表解绑
+     */
+    public void deviceUpload(final String device_platform,final String device_token) {
+        JSONObject params = new JSONObject();
+        try {
+            params.put("device_platform", device_platform);
+            params.put("device_token", device_token);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        dataInstance.sendPostRequestData(CommonUrl.DEVICE_UPLOAD_URL, params)
+                .execute(new GenericsCallback<Result>(new JsonGenericsSerializator()) {
+                    @Override
+                    public void onError(Response response, Call call, Exception e, int id) {
+                        String message = e.getMessage();
+                      /*  String errorMsg = JsonUtils.getErrorMsg(response);
+                        EventBus.getDefault().post(new ErrorResponseEvent(errorMsg, CommonPageState.login_page));*/
+                        Log.d("admin", "onError: message=" + message);
+                    }
+
+                    @Override
+                    public void onNetWorkError(Response response, String errorMsg, int NetWorkCode) {
+                        Log.d("admin", "onError: errorMsg=" + errorMsg);
+                    }
+
+                    @Override
+                    public void onResponse(Result result, int id) {
+                        Log.d("admin", "unbindMeter====onResponse: response=" + result);
+
+                    }
+                });
+    }
+
 }

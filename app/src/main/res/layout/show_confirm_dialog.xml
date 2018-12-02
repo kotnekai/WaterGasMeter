@@ -41,7 +41,7 @@
                 android:layout_weight="1"
                 android:textColor="@color/main_page_number_color"
                 android:gravity="center"
-                android:text="取消"
+                android:text="@string/dialog_cancel"
                 android:textSize="18sp" />
 
             <View
@@ -56,7 +56,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="确定"
+                android:text="@string/dialog_yes"
                 android:textColor="#1eabe1"
                 android:textSize="18sp" />
 

@@ -14,7 +14,7 @@
     <string name="square">（ឯកតា：%s）</string>
     <string name="last_value">តម្លៃចុងក្រោយ：</string>
     <string name="balance">តុល្យភាព：</string>
-    <string name="yuan">%s យាន</string>
+    <string name="yuan">%s USD</string>
     <string name="scan">វិភាគកូដចង</string>
     <string name="or">- ឬ -</string>
     <string name="add">បន្ថែម</string>
@@ -89,7 +89,7 @@
     <string name="immediately_save">ទុកជាមុនទុកជាមុន</string>
     <string name="storage_detail" formatted="true">ពត៌មានលំអិតទុកជាមុន>></string>
     <string name="payment_detail" formatted="true">ការវិភាគចំណាយ>></string>
-    <string name="unit_yuan">យាន</string>
+    <string name="unit_yuan">USD</string>
 
     <string name="cancel_binding">មិនភ្ជាប់</string>
 
@@ -108,7 +108,7 @@
     <string name="payed">ដកចេញ</string>
     <string name="waited_payed">នឹងត្រូវដក</string>
 
-    <string name="no_pay" formatted="false">តុល្យភាពមិនគ្រប់គ្រាន់នៃតារាង \ n នឹងត្រូវកាត់% s យន់</string>
+    <string name="no_pay" formatted="false">តុល្យភាពមិនគ្រប់គ្រាន់នៃតារាង \ n នឹងត្រូវកាត់% s USD</string>
 
     <string name="payment_money_title">ចំនួនទឹកប្រាក់ដែលទុកជាមុន</string>
     <string name="pay_action">បង់</string>
@@ -155,5 +155,9 @@
     <string name="scan_meter_disabled">តារាងនេះត្រូវបានធ្វើឱ្យអសកម្មហើយមិនអាចបញ្ចូលថ្មបានទេ</string>
     <string name="scan_meter_fail">តារាងមិនមានទេសូមទាក់ទងអ្នកគ្រប់គ្រង</string>
     <string name="scan_recharge">ទាញយកលេខកូដបញ្ចូលឡើងវិញ</string>
+
+    <string name="dialog_cancel">បោះបង់</string>
+    <string name="dialog_yes">បាទ</string>
+    <string name="cancel_download">បោះបង់ការទាញយក</string>
 
 </resources>

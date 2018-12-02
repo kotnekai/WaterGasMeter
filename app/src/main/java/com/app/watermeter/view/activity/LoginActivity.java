@@ -18,6 +18,7 @@ import com.app.watermeter.common.ComApplication;
 import com.app.watermeter.common.CommonParams;
 import com.app.watermeter.common.UserCache;
 import com.app.watermeter.eventBus.LoginEvent;
+import com.app.watermeter.manager.MeterManager;
 import com.app.watermeter.manager.UserManager;
 import com.app.watermeter.model.LoginInfoModel;
 import com.app.watermeter.model.AccountExtraModel;
@@ -129,12 +130,13 @@ public class LoginActivity extends BaseActivity {
      */
     private void initPushBinding() {
 
-        String account = UserCache.getInstance().getPhoneNumber();
+        final String account = UserCache.getInstance().getPhoneNumber();
 
         PushServiceFactory.getCloudPushService().bindAccount(account, new CommonCallback() {
             @Override
             public void onSuccess(String s) {
                 System.out.print("====bind account " + "" + " success\n");
+                MeterManager.getInstance().deviceUpload("Android",account);
             }
 
             @Override

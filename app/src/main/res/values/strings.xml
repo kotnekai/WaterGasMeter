@@ -14,7 +14,7 @@
     <string name="square">（单位：%s）</string>
     <string name="last_value">上次表值：</string>
     <string name="balance">表余额：</string>
-    <string name="yuan">%s 元</string>
+    <string name="yuan">%s USD</string>
     <string name="scan">扫码绑定</string>
     <string name="or">- 或 -</string>
     <string name="add">添加</string>
@@ -90,7 +90,7 @@
     <string name="immediately_save">立即预存</string>
     <string name="storage_detail" formatted="true">预存明细>></string>
     <string name="payment_detail" formatted="true">费用明细>></string>
-    <string name="unit_yuan">元</string>
+    <string name="unit_yuan">USD</string>
 
     <string name="cancel_binding">取消绑定</string>
 
@@ -112,7 +112,7 @@
     <string name="payed">已扣除</string>
     <string name="waited_payed">待扣除</string>
 
-    <string name="no_pay" formatted="false">表余额不足\n待扣除%s元</string>
+    <string name="no_pay" formatted="false">表余额不足\n待扣除%sUSD</string>
 
     <string name="payment_money_title">预存金额</string>
     <string name="pay_action">支付</string>
@@ -159,5 +159,8 @@
     <string name="scan_meter_disabled">表已被停用，不能进行充值</string>
     <string name="scan_meter_fail">表不存在，请联系管理员</string>
     <string name="scan_recharge">扫码充值</string>
+    <string name="dialog_cancel">取消</string>
+    <string name="dialog_yes">确定</string>
+    <string name="cancel_download">取消下载</string>
 
 </resources>

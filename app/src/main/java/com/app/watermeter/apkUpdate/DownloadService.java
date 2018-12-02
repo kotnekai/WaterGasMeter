@@ -9,6 +9,7 @@ import android.os.IBinder;
 import android.widget.Toast;
 
 
+import com.app.watermeter.R;
 import com.app.watermeter.common.ApplicationHolder;
 import com.app.watermeter.common.CommonParams;
 import com.app.watermeter.utils.DateUtils;
@@ -145,7 +146,7 @@ public class DownloadService extends Service {
 
                     NotificationUtil.getNotificationManager(context).cancel(1);
                     stopForeground(true);
-                    Toast.makeText(DownloadService.this, "取消下载", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DownloadService.this, getString(R.string.cancel_download), Toast.LENGTH_SHORT).show();
                 }
             }
 

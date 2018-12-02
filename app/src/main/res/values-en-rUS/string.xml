@@ -14,7 +14,7 @@
     <string name="square">（unit：%s）</string>
     <string name="last_value">Last value：</string>
     <string name="balance">balance：</string>
-    <string name="yuan">%s rmb</string>
+    <string name="yuan">%s USD</string>
     <string name="scan">Scan code binding</string>
     <string name="or">- Or -</string>
     <string name="add">Add</string>
@@ -93,7 +93,7 @@
     <string name="immediately_save">Pre-stored immediately</string>
     <string name="storage_detail" formatted="true">Pre-stored details>></string>
     <string name="payment_detail" formatted="true">Charge Details>></string>
-    <string name="unit_yuan">RMB</string>
+    <string name="unit_yuan">USD</string>
 
     <string name="cancel_binding">Unbind</string>
 
@@ -114,7 +114,7 @@
     <string name="payed">Deducted</string>
     <string name="waited_payed">To be deducted</string>
 
-    <string name="no_pay" formatted="false">Insufficient balance of the table \n to be deducted %s yuan</string>
+    <string name="no_pay" formatted="false">Insufficient balance of the table \n to be deducted %s USD</string>
 
     <string name="payment_money_title">Pre-stored amount</string>
     <string name="pay_action">Pay</string>
@@ -161,5 +161,8 @@
     <string name="scan_meter_disabled">The meter has been deactivated and cannot be recharged</string>
     <string name="scan_meter_fail">The meter does not exist, please contact the administrator</string>
     <string name="scan_recharge">Scan code recharge</string>
+    <string name="dialog_cancel">cancel</string>
+    <string name="dialog_yes">yes</string>
+    <string name="cancel_download">Cancel download</string>
 
 </resources>
