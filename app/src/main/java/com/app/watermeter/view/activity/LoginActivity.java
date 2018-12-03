@@ -136,7 +136,7 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onSuccess(String s) {
                 System.out.print("====bind account " + "" + " success\n");
-                MeterManager.getInstance().deviceUpload("Android",account);
+                MeterManager.getInstance().deviceUpload( PushServiceFactory.getCloudPushService().getDeviceId());
             }
 
             @Override

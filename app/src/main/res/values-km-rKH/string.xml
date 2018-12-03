@@ -159,5 +159,6 @@
     <string name="dialog_cancel">បោះបង់</string>
     <string name="dialog_yes">បាទ</string>
     <string name="cancel_download">បោះបង់ការទាញយក</string>
+    <string name="reg_hints">ខ្ទង់ទីមួយនៃលេខទូរស័ព្ទគឺ "0" សូមដក "0"</string>
 
 </resources>

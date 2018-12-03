@@ -164,5 +164,6 @@
     <string name="dialog_cancel">cancel</string>
     <string name="dialog_yes">yes</string>
     <string name="cancel_download">Cancel download</string>
+    <string name="reg_hints">The first digit of the phone number is "0", \n please remove "0"</string>
 
 </resources>

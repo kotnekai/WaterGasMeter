@@ -11,6 +11,10 @@ public class CommonParams {
 
     public static final String BUSS_REGISTER_TYPE = "register";
 
+    public static final String BUSS_RESET_TYPE = "resetpasswd";
+
+
+
     public static final int PAY_RESULT = 100; //支付成功finish
 
 

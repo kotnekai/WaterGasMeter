@@ -624,10 +624,10 @@ public class MeterManager {
     /**
      * 表解绑
      */
-    public void deviceUpload(final String device_platform,final String device_token) {
+    public void deviceUpload(final String device_token) {
         JSONObject params = new JSONObject();
         try {
-            params.put("device_platform", device_platform);
+            params.put("device_platform", "android");
             params.put("device_token", device_token);
 
         } catch (JSONException e) {
