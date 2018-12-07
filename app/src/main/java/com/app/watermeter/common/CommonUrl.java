@@ -3,7 +3,7 @@ package com.app.watermeter.common;
 public class CommonUrl {
     public static final String BASE_URL = "http://202.79.30.60/api"; // 14 测试 16开发
 
-    public static final String BASE_PAY_URL = "https://uat-api.asiaweiluy.com/web/"; // 14 测试 16开发
+    public static final String BASE_PAY_URL = "https://api.asiaweiluy.com/web/"; // 14 测试 16开发
     public static final String GET_APK_VERSION_INFO = BASE_URL + "/app/version/latest?type=android";
     public static final String LOGIN = BASE_URL + "/auth/login";
     public static final String SEND_SMS = BASE_URL + "/sms/send";
@@ -25,5 +25,5 @@ public class CommonUrl {
     public static final String METER_RECHARGE_LIST_FROM_SCAN_URL = BASE_URL + "/record/recharge_from_scan";
     public static final String DEVICE_UPLOAD_URL = BASE_URL + "/device/update";
 
-   public static final String PAY_URL = "https://uat-api.asiaweiluy.com/gateway.php?method=ace.trade.pay";
+   public static final String PAY_URL = "https://api.asiaweiluy.com/gateway.php?method=ace.trade.pay";
 }

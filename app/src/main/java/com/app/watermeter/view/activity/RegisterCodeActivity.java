@@ -95,7 +95,15 @@ public class RegisterCodeActivity extends BaseActivity {
 
                      String code = scvEditText.getEditContent();
                      ProgressUtils.getIntance().setProgressDialog(getString(R.string.com_loading_tips), RegisterCodeActivity.this);
-                     UserManager.getInstance().checkSmsCode(countryCode+phoneNumber, CommonParams.BUSS_REGISTER_TYPE, code);
+
+                     if (fromType==1)
+                     {
+                         UserManager.getInstance().checkSmsCode(countryCode+phoneNumber, CommonParams.BUSS_REGISTER_TYPE, code);
+                     }
+                     else
+                     {
+                         UserManager.getInstance().checkSmsCode(countryCode+phoneNumber, CommonParams.BUSS_RESET_TYPE, code);
+                     }
                  }
 
                  @Override

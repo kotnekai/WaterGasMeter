@@ -97,8 +97,14 @@ public class RegisterPhoneActivity extends BaseActivity {
                     ToastUtil.showShort(getString(R.string.phone_number));
                     return;
                 }
-                UserManager.getInstance().sendSmsToCheck(countryCode + phoneNumber, CommonParams.BUSS_RESET_TYPE);
-
+                if (fromType==1)
+                {
+                    UserManager.getInstance().sendSmsToCheck(countryCode + phoneNumber, CommonParams.BUSS_REGISTER_TYPE);
+                }
+                else
+                {
+                    UserManager.getInstance().sendSmsToCheck(countryCode + phoneNumber, CommonParams.BUSS_RESET_TYPE);
+                }
 
                 break;
         }
