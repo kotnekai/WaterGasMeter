@@ -51,6 +51,8 @@ public class PickViewUtil {
                 .create();
         DefaultTopBar topBar = (DefaultTopBar) timePicker.getTopBar();
         topBar.getTopBarView().setBackgroundColor(activity.getResources().getColor(R.color.main_blue_color));
+        topBar.getBtnConfirm().setText(activity.getString(R.string.dialog_yes));
+        topBar.getBtnCancel().setText(activity.getString(R.string.dialog_cancel));
         timePicker.show();
     }
 
@@ -74,6 +76,8 @@ public class PickViewUtil {
         optionPicker.setDataWithValues(selectModel);
         optionPicker.setPadding(10, 0, 10, 0);
         topBar.getTopBarView().setBackgroundColor(context.getResources().getColor(R.color.main_blue_color));
+        topBar.getBtnConfirm().setText(context.getString(R.string.dialog_yes));
+        topBar.getBtnCancel().setText(context.getString(R.string.dialog_cancel));
         optionPicker.show();
     }
 }
