@@ -48,12 +48,13 @@ public class GasPagerAdapter extends PagerAdapter {
 
 
         TextView tvMeterName = (TextView)view.findViewById(R.id.tvMeterName);
+        TextView  tvOpen = (TextView)view.findViewById(R.id.tvOpen);
+
         TextView tvMeterAddress = (TextView)view.findViewById(R.id.tvMeterAddress);
         TextView tvSquare = (TextView)view.findViewById(R.id.tvSquare);
         TextView  tvUnit = (TextView)view.findViewById(R.id.tvUnit);
         TextView  tvLastValue = (TextView)view.findViewById(R.id.tvLastValue);
         TextView  tvBalanceValue = (TextView)view.findViewById(R.id.tvBalanceValue);
-
         final MeterInfoModel info = list.get(position);
         if (info != null) {
 
@@ -69,6 +70,15 @@ public class GasPagerAdapter extends PagerAdapter {
                     break;
                 default:
                     tvMeterAddress.setText(info.getLocation_zh()+info.getPosition_zh());
+            }
+
+            if (info.getIs_opened()==0)
+            {
+                tvOpen.setText(context.getString(R.string.meter_close));
+            }
+            else
+            {
+                tvOpen.setText(context.getString(R.string.meter_open));
             }
 
             tvMeterName.setText(info.getMachine_sn());

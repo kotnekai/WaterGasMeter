@@ -90,7 +90,7 @@
     <string name="elect_meter_balance">Meter balance</string>
     <string name="gas_meter_balance">Gas meter balance</string>
 
-    <string name="immediately_save">Pre-stored immediately</string>
+    <string name="immediately_save">TOP UP</string>
     <string name="storage_detail" formatted="true">Pre-stored details>></string>
     <string name="payment_detail" formatted="true">Charge Details>></string>
     <string name="unit_yuan">USD</string>
@@ -116,7 +116,7 @@
 
     <string name="no_pay" formatted="false">Insufficient balance of the table \n to be deducted %s USD</string>
 
-    <string name="payment_money_title">Pre-stored amount</string>
+    <string name="payment_money_title">prepay</string>
     <string name="pay_action">Pay</string>
     <string name="pay_hints">*Please enter the amount, no refund will be given after the prepaid amount is successfully paid.</string>
     <string name="pay_success">payment successful！</string>
@@ -165,5 +165,6 @@
     <string name="dialog_yes">yes</string>
     <string name="cancel_download">Cancel download</string>
     <string name="reg_hints">The first digit of the phone number is "0", \n please remove "0"</string>
-
+    <string name="meter_open">open</string>
+    <string name="meter_close">close</string>
 </resources>

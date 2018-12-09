@@ -32,6 +32,17 @@
                 android:text="水表详细地址" />
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/tvOpen"
+            style="@style/cardViewTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:textSize="16dp"
+            android:text="@string/meter_open"/>
+
         <LinearLayout
             android:id="@+id/llAddress"
             android:layout_width="match_parent"
@@ -49,6 +60,7 @@
                 android:id="@+id/tvMeterAddress"
                 style="@style/cardViewTextStyle"
                 android:layout_width="wrap_content"
+                android:layout_marginRight="40dp"
                 android:layout_height="wrap_content"
                 android:text="水表详细水表详细地址水表详细地址水表详细地址水表详细地址水表详细地址地址" />
         </LinearLayout>

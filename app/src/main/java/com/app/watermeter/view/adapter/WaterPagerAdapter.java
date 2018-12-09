@@ -54,6 +54,8 @@ public class WaterPagerAdapter extends PagerAdapter {
         View view = LayoutInflater.from(context).inflate(R.layout.item_water_meter, null);
 
         TextView tvMeterName = (TextView)view.findViewById(R.id.tvMeterName);
+        TextView  tvOpen = (TextView)view.findViewById(R.id.tvOpen);
+
         TextView tvMeterAddress = (TextView)view.findViewById(R.id.tvMeterAddress);
         TextView tvSquare = (TextView)view.findViewById(R.id.tvSquare);
         TextView  tvUnit = (TextView)view.findViewById(R.id.tvUnit);
@@ -77,7 +79,14 @@ public class WaterPagerAdapter extends PagerAdapter {
             }
 
             tvMeterName.setText(info.getMachine_sn());
-
+            if (info.getIs_opened()==0)
+            {
+                tvOpen.setText(context.getString(R.string.meter_close));
+            }
+            else
+            {
+                tvOpen.setText(context.getString(R.string.meter_open));
+            }
             tvSquare.setText(info.getDegree()+"");
             tvUnit.setText(String.format(context.getString(R.string.square),info.getUnit()+""));
             tvLastValue.setText(info.getOld_degree()+"");

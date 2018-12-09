@@ -164,4 +164,7 @@
     <string name="cancel_download">取消下载</string>
 
     <string name="reg_hints">电话号码首位是”0“的电话号码，去掉”0“</string>
+    <string name="meter_open">开</string>
+    <string name="meter_close">关</string>
+
 </resources>

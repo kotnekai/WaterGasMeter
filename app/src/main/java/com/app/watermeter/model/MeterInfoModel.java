@@ -30,6 +30,7 @@ public class MeterInfoModel {
     String created_at;
     String updated_at;
     int status;
+    int is_opened;
 
     public int getId() {
         return id;
@@ -205,5 +206,21 @@ public class MeterInfoModel {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public void setBalance(float balance) {
+        this.balance = balance;
+    }
+
+    public void setDegree(float degree) {
+        this.degree = degree;
+    }
+
+    public int getIs_opened() {
+        return is_opened;
+    }
+
+    public void setIs_opened(int is_opened) {
+        this.is_opened = is_opened;
     }
 }

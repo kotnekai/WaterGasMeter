@@ -44,7 +44,8 @@ public class RegisterPhoneActivity extends BaseActivity {
     TextView tvGoNext;
     @BindView(R.id.tvCountryCode)
     TextView tvCountryCode;
-
+    @BindView(R.id.tvCountryName)
+    TextView tvCountryName;
     private int fromType;
 
     @Override
@@ -85,6 +86,14 @@ public class RegisterPhoneActivity extends BaseActivity {
                     @Override
                     public void onOptionSelect(OptionPicker picker, int[] selectedPosition, OptionDataSet[] selectedOptions) {
                         SpinnerSelectModel selectedOption = (SpinnerSelectModel) selectedOptions[0];
+                        if (selectedOption.getName().equals("86"))
+                        {
+                            tvCountryName.setVisibility(View.VISIBLE);
+                        }
+                        else
+                        {
+                            tvCountryName.setVisibility(View.INVISIBLE);
+                        }
                         tvCountryCode.setText(selectedOption.getName());
                     }
                 });
