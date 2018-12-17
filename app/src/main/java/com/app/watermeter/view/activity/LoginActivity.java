@@ -120,6 +120,8 @@ public class LoginActivity extends BaseActivity {
             }
             String phoneNumber = edtPhoneNumber.getText().toString();
             UserCache.getInstance().setPhoneNumber(phoneNumber);
+            PreferencesUtils.putString(CommonParams.USER_ACCOUNT, phoneNumber);
+
             startActivity(MainActivity.makeIntent(this));
             finish();
 
@@ -136,7 +138,7 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onSuccess(String s) {
                 System.out.print("====bind account " + "" + " success\n");
-                MeterManager.getInstance().deviceUpload( PushServiceFactory.getCloudPushService().getDeviceId());
+                MeterManager.getInstance().deviceUpload(PushServiceFactory.getCloudPushService().getDeviceId());
             }
 
             @Override

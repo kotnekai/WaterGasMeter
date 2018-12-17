@@ -6,11 +6,14 @@ import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.alibaba.sdk.android.push.CommonCallback;
+import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory;
 import com.app.okhttputils.Model.Result;
 import com.app.watermeter.R;
 import com.app.watermeter.common.CommonParams;
 import com.app.watermeter.common.UserCache;
 import com.app.watermeter.eventBus.RegisterInfoEvent;
+import com.app.watermeter.manager.MeterManager;
 import com.app.watermeter.manager.UserManager;
 import com.app.watermeter.model.LoginInfoModel;
 import com.app.watermeter.model.AccountExtraModel;
@@ -42,6 +45,8 @@ public class RegisterInfoActivity extends BaseActivity {
     @BindView(R.id.TvSubmitInfo)
     TextView TvSubmitInfo;
 
+    String phoneNumber;
+
     @Override
     protected int getCenterView() {
         return R.layout.activity_register_info;
@@ -72,6 +77,10 @@ public class RegisterInfoActivity extends BaseActivity {
 
         if (status_code == 200 && err_code == 0) {
 
+            PreferencesUtils.putString(CommonParams.USER_ACCOUNT, phoneNumber);
+            //绑定推送
+            initPushBinding(phoneNumber);
+
             Gson gson = new Gson();
             String jsonString = gson.toJson(infoModel.getData());
             AccountExtraModel data = gson.fromJson(jsonString,AccountExtraModel.class);
@@ -89,7 +98,7 @@ public class RegisterInfoActivity extends BaseActivity {
     @OnClick({R.id.TvSubmitInfo})
     public void submitUserInfo() {
         Intent intent = getIntent();
-        String phoneNumber = intent.getStringExtra("phoneNumber");
+        phoneNumber = intent.getStringExtra("phoneNumber");
         String userName = edtUserName.getText().toString();
         String emails = edtEmails.getText().toString();
         String password = edtPassword.getText().toString();
@@ -105,5 +114,27 @@ public class RegisterInfoActivity extends BaseActivity {
         UserInfoParam params = new UserInfoParam(phoneNumber, password, confirmPsw, emails, userName);
         ProgressUtils.getIntance().setProgressDialog(getString(R.string.com_loading_tips), this);
         UserManager.getInstance().register(params);
+    }
+
+
+    /**
+     * 推送绑定账号
+     */
+    private void initPushBinding(String phone) {
+
+
+        PushServiceFactory.getCloudPushService().bindAccount(phone, new CommonCallback() {
+            @Override
+            public void onSuccess(String s) {
+                System.out.print("====bind account " + "" + " success\n");
+                MeterManager.getInstance().deviceUpload( PushServiceFactory.getCloudPushService().getDeviceId());
+            }
+
+            @Override
+            public void onFailed(String errorCode, String errorMsg) {
+                System.out.print("===bind account " + "" + " failed." +
+                        "errorCode: " + errorCode + ", errorMsg:" + errorMsg);
+            }
+        });
     }
 }
