@@ -134,9 +134,11 @@ public class PayActionActivity extends BaseActivity {
         if (event.getModelInfo() != null) {
             String tradeId = event.getModelInfo().getTrade_id() + "";
             String orderNo = event.getModelInfo().getOut_trade_no();
+            long timestamp = event.getModelInfo().getTimestamp();
             PreferencesUtils.putString("orderNo", orderNo);
 
-            String callTime = DateUtils.getGMT7PayTime();
+//            String callTime = DateUtils.getGMT7PayTime();
+            String callTime = DateUtils.getTimeStr(timestamp);
 
             String security = DataUtils.getRandomStr() + DataUtils.MD5(CommonParams.PARTNER + CommonParams.SECURITY_KEY + tradeId + callTime) + DataUtils.getRandomStr();
 

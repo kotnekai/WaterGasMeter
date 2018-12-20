@@ -92,10 +92,10 @@ public class AppUpdateManager {
 
                     @Override
                     public void onResponse(Result result, int i) {
-                        Log.d("admin", "onResponse: result="+result);
+                        Log.d("admin", "onResponse: result=" + result);
                         Gson gson = new Gson();
                         String jsonString = gson.toJson(result.getData());
-                        Log.d("admin", "onResponse: jsonString="+jsonString);
+                        Log.d("admin", "onResponse: jsonString=" + jsonString);
                         VersionData apkInfoModel = gson.fromJson(jsonString, VersionData.class);
                         Log.d("admin", "onResponse: apkInfoModel=" + apkInfoModel);
                         EventBus.getDefault().post(new ApkInfoEvent(apkInfoModel, isSelfCheck));
@@ -109,17 +109,21 @@ public class AppUpdateManager {
         if (apkInfoModel == null) {
             return false;
         }
-        String apkVersion = apkInfoModel.getVersion();// 更新版本
+        String apkVersion = apkInfoModel.getVersion().replace(".", "");// 更新版本
 
         VersionModel versionModel = ApplicationHolder.getInstance().getVersionModel();
         if (versionModel == null || apkVersion == null) {
             return false;
         }
-        String versionName = versionModel.getVersionName();// 当前安装版本
+        String versionName = versionModel.getVersionName().replace(".", "");// 当前安装版本
 
-        if (!apkVersion.equals(versionName)) {
+        int current = Integer.valueOf(versionName);
+        int last = Integer.valueOf(apkVersion);
+
+        if (last > current) {
             return true;
         }
+
         return false;
     }
 
@@ -155,7 +159,7 @@ public class AppUpdateManager {
         appContext.startActivity(intent);
     }
 
-    public Intent getNotiItent(Context appContext, String filePath){
+    public Intent getNotiItent(Context appContext, String filePath) {
         File file = new File(filePath);
         if (!file.exists()) {
             return null;

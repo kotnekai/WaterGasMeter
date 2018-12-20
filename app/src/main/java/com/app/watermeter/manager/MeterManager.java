@@ -507,6 +507,11 @@ public class MeterManager {
                         Log.d("admin", "saveMoney====onResponse: response=" + result);
                         String jsonString = gson.toJson(result.getData());
                         PerPayModel model = gson.fromJson(jsonString.toString(), PerPayModel.class);
+
+                        if (model.getTimestamp() <= 0) {
+                            model.setTimestamp(result.getTimestamp());
+                        }
+
                         EventBus.getDefault().post(new GetPerPayEvent(model));
                     }
                 });

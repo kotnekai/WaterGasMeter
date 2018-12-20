@@ -8,6 +8,7 @@ package com.app.watermeter.model;
 public class PerPayModel {
     private int trade_id;// 消息标题
     private String out_trade_no;// 消息id
+    private long timestamp;// 消息id
 
     public int getTrade_id() {
         return trade_id;
@@ -23,5 +24,13 @@ public class PerPayModel {
 
     public void setOut_trade_no(String out_trade_no) {
         this.out_trade_no = out_trade_no;
+    }
+
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
     }
 }

@@ -511,4 +511,14 @@ public class DateUtils {
         String timeStr = sdf.format(calendar.getTime());
         return timeStr;
     }
+
+
+    public static String getTimeStr(long time) {
+        if (time == 0) {
+            return "";
+        }
+        SimpleDateFormat format = new SimpleDateFormat(DATE_FORMAT_YEAR);
+        Date date = new Date(time);
+        return format.format(date);
+    }
 }
