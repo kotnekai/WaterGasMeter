@@ -12,9 +12,9 @@ public class InitUtils {
 
     public static List<SpinnerSelectModel> getCityCodeList() {
         List<SpinnerSelectModel> datas = new ArrayList<>();
+        datas.add(new SpinnerSelectModel(0, "855"));
         datas.add(new SpinnerSelectModel(0, "86"));
         datas.add(new SpinnerSelectModel(0, "66"));
-        datas.add(new SpinnerSelectModel(0, "855"));
         return datas;
     }
 }

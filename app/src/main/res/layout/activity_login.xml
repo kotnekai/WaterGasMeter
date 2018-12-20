@@ -55,7 +55,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="2dp"
-            android:text="86"
+            android:text="855"
             android:textSize="17sp" />
     </LinearLayout>
 

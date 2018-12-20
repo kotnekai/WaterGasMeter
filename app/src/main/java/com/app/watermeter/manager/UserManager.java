@@ -191,10 +191,21 @@ public class UserManager {
                       /*  String errorMsg = JsonUtils.getErrorMsg(response);
                         EventBus.getDefault().post(new ErrorResponseEvent(errorMsg, CommonPageState.login_page));*/
                         Log.d("admin", "onError: message=" + message);
+                        Result result = new Result();
+                        result.setMessage(message);
+                        result.setErr_code(-1);
+                        result.setStatus_code(-1);
+                        EventBus.getDefault().post(new RegisterInfoEvent(result));
+
                     }
 
                     @Override
                     public void onNetWorkError(Response response, String errorMsg, int NetWorkCode) {
+                        Result result = new Result();
+                        result.setMessage(errorMsg);
+                        result.setErr_code(-1);
+                        result.setStatus_code(-1);
+                        EventBus.getDefault().post(new RegisterInfoEvent(result));
 
                     }
 

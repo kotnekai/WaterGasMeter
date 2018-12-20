@@ -20,6 +20,8 @@ public class Result<T> {
     private int err_code;
     private  T data;
 
+    private long timestamp;
+
 
     public Result() {
     }
@@ -90,6 +92,11 @@ public class Result<T> {
         return new Result();
     }
 
+    public long getTimestamp() {
+        return timestamp;
+    }
 
-
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
+    }
 }
