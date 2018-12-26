@@ -86,12 +86,9 @@ public class RegisterPhoneActivity extends BaseActivity {
                     @Override
                     public void onOptionSelect(OptionPicker picker, int[] selectedPosition, OptionDataSet[] selectedOptions) {
                         SpinnerSelectModel selectedOption = (SpinnerSelectModel) selectedOptions[0];
-                        if (selectedOption.getName().equals("86"))
-                        {
+                        if (selectedOption.getName().equals("86")) {
                             tvCountryName.setVisibility(View.VISIBLE);
-                        }
-                        else
-                        {
+                        } else {
                             tvCountryName.setVisibility(View.INVISIBLE);
                         }
                         tvCountryCode.setText(selectedOption.getName());
@@ -99,6 +96,7 @@ public class RegisterPhoneActivity extends BaseActivity {
                 });
                 break;
             case R.id.tvGoNext:
+                showLoadingDialog();
                 String phoneNumber = edtPhoneNumber.getText().toString();
                 String countryCode = tvCountryCode.getText().toString();
 //                boolean mobile = AccountValidatorUtil.isMobile(phoneNumber);
@@ -106,12 +104,9 @@ public class RegisterPhoneActivity extends BaseActivity {
                     ToastUtil.showShort(getString(R.string.phone_number));
                     return;
                 }
-                if (fromType==1)
-                {
+                if (fromType == 1) {
                     UserManager.getInstance().sendSmsToCheck(countryCode + phoneNumber, CommonParams.BUSS_REGISTER_TYPE);
-                }
-                else
-                {
+                } else {
                     UserManager.getInstance().sendSmsToCheck(countryCode + phoneNumber, CommonParams.BUSS_RESET_TYPE);
                 }
 
@@ -124,6 +119,7 @@ public class RegisterPhoneActivity extends BaseActivity {
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onSuccessEvent(SuccessEvent event) {
+        dismissLoadingDialog();
         ProgressUtils.getIntance().dismissProgress();
         Result result = event.getResult();
         int status_code = result.getStatus_code();

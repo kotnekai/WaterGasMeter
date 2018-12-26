@@ -12,11 +12,14 @@ import com.app.watermeter.R;
 import com.app.watermeter.common.CommonParams;
 import com.app.watermeter.eventBus.GetGasReChargeListEvent;
 import com.app.watermeter.eventBus.GetGasReadListEvent;
+import com.app.watermeter.eventBus.GetGasTransactionListEvent;
 import com.app.watermeter.manager.MeterManager;
 import com.app.watermeter.model.MeterReChargeModel;
 import com.app.watermeter.model.MeterReadModel;
+import com.app.watermeter.model.MeterTransactionModel;
 import com.app.watermeter.view.adapter.ReChargeAdapter;
 import com.app.watermeter.view.adapter.ReadAdapter;
+import com.app.watermeter.view.adapter.TransactionAdapter;
 import com.app.watermeter.view.base.BaseFragment;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -54,9 +57,13 @@ public class GasReadAndReChargeFragment extends BaseFragment {
     private List<MeterReChargeModel> reChargeList = new ArrayList<>();
     //缴费明细
     private List<MeterReadModel> perReadList = new ArrayList<>();
+    //费用明细
+    private List<MeterTransactionModel> transactionList = new ArrayList<>();
 
     private ReChargeAdapter reChargeAdapter;
     private ReadAdapter readAdapter;
+    private TransactionAdapter transactionAdapter;
+
     private LinearLayoutManager mLayoutManager;
 
 
@@ -108,12 +115,16 @@ public class GasReadAndReChargeFragment extends BaseFragment {
 
         //预存明细
         if (fromPage == CommonParams.PAGE_TYPE_RECHARGE) {
-            reChargeAdapter = new ReChargeAdapter(getActivity(), reChargeList,meterType);
+            reChargeAdapter = new ReChargeAdapter(getActivity(), reChargeList, meterType);
             recyclerView.setAdapter(reChargeAdapter);
-        } else {
+        } else if (fromPage == CommonParams.PAGE_TYPE_READ) {
             //缴费明细
-            readAdapter = new ReadAdapter(getActivity(), perReadList,meterType);
+            readAdapter = new ReadAdapter(getActivity(), perReadList, meterType);
             recyclerView.setAdapter(readAdapter);
+        } else {
+            //费用明细
+            transactionAdapter = new TransactionAdapter(getActivity(), transactionList, meterType);
+            recyclerView.setAdapter(transactionAdapter);
         }
         recyclerView.scrollToPosition(0);
 
@@ -170,10 +181,13 @@ public class GasReadAndReChargeFragment extends BaseFragment {
     private void initListData(int meterType, int pageType) {
         if (pageType == CommonParams.PAGE_TYPE_RECHARGE) {
             //预存明细
-            MeterManager.getInstance().getReChargeList(currentPageSize, dataSize, meterType,0);
-        } else {
+            MeterManager.getInstance().getReChargeList(currentPageSize, dataSize, meterType, 0);
+        } else if (pageType == CommonParams.PAGE_TYPE_READ) {
             //缴费明细
-            MeterManager.getInstance().getRePayList(currentPageSize, dataSize, meterType,0,null);
+            MeterManager.getInstance().getRePayList(currentPageSize, dataSize, meterType, 0, null);
+        } else {
+            //费用明细汇总
+            MeterManager.getInstance().getTransactionList(currentPageSize, dataSize, meterType, 0);
         }
     }
 
@@ -207,6 +221,19 @@ public class GasReadAndReChargeFragment extends BaseFragment {
         }
         readAdapter.setData(perReadList);
         readAdapter.notifyDataSetChanged();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(GetGasTransactionListEvent event) {
+        currentPageSize += event.getList().size();
+        if (transactionList.size() > 0) {
+            transactionList.addAll(event.getList());
+        } else {
+            transactionList = event.getList();
+        }
+        transactionAdapter.setData(transactionList);
+        transactionAdapter.notifyDataSetChanged();
+
     }
 }
 /*

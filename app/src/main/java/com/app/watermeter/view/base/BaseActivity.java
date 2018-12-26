@@ -3,8 +3,11 @@ package com.app.watermeter.view.base;
 import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
@@ -13,6 +16,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,6 +76,9 @@ public abstract class BaseActivity extends AppCompatActivity implements DrawerLa
     private boolean needTranslucent = true;
     private static final int INVALID_VAL = -1;
     private int mTitleColor = 0;
+
+    private AlertDialog alertDialog;
+
 
     /**
      * 外部布局页面统一从这里传进来
@@ -456,6 +463,27 @@ public abstract class BaseActivity extends AppCompatActivity implements DrawerLa
             return;
         }
         rlBaseTitleLayout.setVisibility(visibility);
+    }
+    public void showLoadingDialog() {
+        alertDialog = new AlertDialog.Builder(BaseActivity.this).create();
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable());
+        alertDialog.setCancelable(false);
+        alertDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+            @Override
+            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_SEARCH || keyCode == KeyEvent.KEYCODE_BACK)
+                    return true;
+                return false;
+            }
+        });
+        alertDialog.show();
+        alertDialog.setContentView(R.layout.loading_alert);
+        alertDialog.setCanceledOnTouchOutside(false);
+    }
+    public void dismissLoadingDialog() {
+        if (null != alertDialog && alertDialog.isShowing()) {
+            alertDialog.dismiss();
+        }
     }
 
 

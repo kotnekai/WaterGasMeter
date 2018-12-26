@@ -14,9 +14,10 @@
 
         <TextView
             style="@style/text_Item_style"
-            android:drawablePadding="10dp"
             android:drawableStart="@mipmap/yucun"
-            android:text="@string/mine_per_storage_list" />
+            android:drawablePadding="10dp"
+            android:text="@string/mine_per_storage_list"
+            android:visibility="gone" />
     </RelativeLayout>
 
 
@@ -29,11 +30,25 @@
 
         <TextView
             style="@style/text_Item_style"
-            android:drawablePadding="10dp"
             android:drawableStart="@mipmap/jiaofei"
-            android:text="@string/mine_pay_list" />
+            android:drawablePadding="10dp"
+            android:text="@string/mine_pay_list"
+            android:visibility="gone" />
     </RelativeLayout>
 
+    <RelativeLayout
+        android:id="@+id/rlTransaction"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/text_Item_style"
+            android:drawableStart="@mipmap/jiaofei"
+            android:drawablePadding="10dp"
+            android:text="@string/mine_transaction_list" />
+    </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/rlScanBill"
@@ -44,8 +59,8 @@
 
         <TextView
             style="@style/text_Item_style"
-            android:drawablePadding="10dp"
             android:drawableStart="@mipmap/mine_scan"
+            android:drawablePadding="10dp"
             android:text="@string/mine_scan_bill_info" />
     </RelativeLayout>
 
@@ -58,8 +73,8 @@
 
         <TextView
             style="@style/text_Item_style"
-            android:drawablePadding="10dp"
             android:drawableStart="@mipmap/ziliao"
+            android:drawablePadding="10dp"
             android:text="@string/mine_person_info" />
     </RelativeLayout>
 
@@ -72,8 +87,8 @@
 
         <TextView
             style="@style/text_Item_style"
-            android:drawablePadding="10dp"
             android:drawableStart="@mipmap/shezhi"
+            android:drawablePadding="10dp"
             android:text="@string/mine_other_setting" />
     </RelativeLayout>
 

@@ -15,9 +15,7 @@ import com.app.watermeter.view.activity.SettingActivity;
 import com.app.watermeter.view.base.BaseFragment;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 
 public class MineFragment extends BaseFragment {
 
@@ -34,6 +32,10 @@ public class MineFragment extends BaseFragment {
     RelativeLayout rlOtherSet;
     @BindView(R.id.rlScanBill)
     RelativeLayout rlScanBill;
+
+    @BindView(R.id.rlTransaction)
+    RelativeLayout rlTransaction;
+
 
     @Override
     protected void initView() {
@@ -56,7 +58,7 @@ public class MineFragment extends BaseFragment {
 
     }
 
-    @OnClick({R.id.rlPreSave, R.id.rlPayDes, R.id.rlPersonInfo, R.id.rlScanBill,R.id.rlOtherSet})
+    @OnClick({R.id.rlPreSave, R.id.rlPayDes, R.id.rlPersonInfo, R.id.rlScanBill, R.id.rlOtherSet, R.id.rlTransaction})
     public void onClick(View view) {
         switch (view.getId()) {
             // 预存明细
@@ -66,6 +68,9 @@ public class MineFragment extends BaseFragment {
             // 缴费明细
             case R.id.rlPayDes:
                 startActivity(PreStorageSaveActivity.makeIntent(getContext(), CommonParams.PAGE_TYPE_READ));
+                break;
+            case R.id.rlTransaction:
+                startActivity(PreStorageSaveActivity.makeIntent(getContext(), CommonParams.PAGE_TYPE_TRANSACTION));
                 break;
             // 扫码充值明细
             case R.id.rlScanBill:

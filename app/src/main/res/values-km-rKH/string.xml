@@ -40,6 +40,9 @@
     <string name="mine_per_storage_list">ពត៌មានលំអិតទុកជាមុន</string>
     <string name="mine_pay_list">ការវិភាគចំណាយ</string>
     <string name="mine_scan_bill_info">វិភាគការបញ្ចូលទិន្នន័យលម្អិត</string>
+    <string name="mine_transaction_list">ព័ត៌មានលម្អិតប្រតិបត្តិការ</string>
+    <string name="monthly_list">ព័ត៌មានលម្អិតប្រចាំខែ</string>
+
     <string name="mine_person_info">ព័ត៌មានផ្ទាល់ខ្លួន</string>
 
 
@@ -79,7 +82,10 @@
     <string name="elect_meter_reading">ការអានម៉ែត្រ</string>
     <string name="gas_meter_reading">ការអានម៉ែត្រឧស្ម័ន</string>
 
-    <string name="last_meter_value">តម្លៃតារាងចុងក្រោយ</string>
+    <string name="start_month_reading">ការអានឆាប់ៗ</string>
+
+
+    <string name="last_meter_value">កិតើនៅក្នុងខែនេះ</string>
     <string name="current_meter_value">តម្លៃតារាងបន្ទាន់</string>
 
     <string name="water_meter_balance">តុល្យភាពម៉ែត្រទឹក</string>
@@ -89,6 +95,9 @@
     <string name="immediately_save">ទុកជាមុនទុកជាមុន</string>
     <string name="storage_detail" formatted="true">ពត៌មានលំអិតទុកជាមុន>></string>
     <string name="payment_detail" formatted="true">ការវិភាគចំណាយ>></string>
+    <string name="monthly_detail" formatted="true">ព័ត៌មានលម្អិតប្រចាំខែ>></string>
+
+
     <string name="unit_yuan">USD</string>
 
     <string name="cancel_binding">មិនភ្ជាប់</string>
@@ -102,6 +111,14 @@
     <string name="payment_time">ពេលវេលាបង់ប្រាក់：%s</string>
     <string name="storage_time">ពេលវេលាទុកជាមុន：%s</string>
     <string name="recharge_time">បញ្ចូលទឹកប្រាក់ឡើងវិញ：%s</string>
+
+    <string name="payment_details">ព័ត៌មានលម្អិតនៃការទូទាត់：%s</string>
+    <string name="pre_payment_balance">សមតុល្យបង់មុន：%s</string>
+    <string name="balance_after_payment">សមតុល្យបន្ទាប់ពីការទូទាត់：%s</string>
+
+    <string name="pre_charge_balance">សមតុល្យបង់មុន：%s</string>
+    <string name="recharged_balance">សមតុល្យបញ្ចូល：%s</string>
+
 
     <string name="meter_sn" formatted="false">ពេលវេលាបង់ប្រាក់：%s</string>
 

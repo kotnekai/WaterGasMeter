@@ -2,30 +2,41 @@ package com.app.watermeter.view.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.Handler;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.app.watermeter.R;
 import com.app.watermeter.common.CommonParams;
 import com.app.watermeter.common.CommonUrl;
-import com.app.watermeter.eventBus.GetChartReadListEvent;
 import com.app.watermeter.eventBus.GetPayResultEvent;
 import com.app.watermeter.eventBus.GetPerPayEvent;
 import com.app.watermeter.manager.MeterManager;
 import com.app.watermeter.utils.DataUtils;
 import com.app.watermeter.utils.DateUtils;
 import com.app.watermeter.utils.PreferencesUtils;
+import com.app.watermeter.utils.ZxingUtils;
 import com.app.watermeter.view.base.BaseActivity;
 import com.app.watermeter.view.base.WebViewActivity;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.io.File;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -48,6 +59,10 @@ public class PayActionActivity extends BaseActivity {
     TextView tvPayAction;
     @BindView(R.id.tvSn)
     TextView tvSn;
+    @BindView(R.id.ivQR)
+    ImageView ivQR;
+
+
     private Context mContext;
     private int meterId;
     private boolean fromScen = false;
@@ -78,7 +93,9 @@ public class PayActionActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         mContext = PayActionActivity.this;
         getIntentData();
+        createQRImage();
     }
+
 
     /**
      * 获取类型
@@ -95,6 +112,54 @@ public class PayActionActivity extends BaseActivity {
             tvSn.setVisibility(View.GONE);
         }
     }
+
+
+    /**
+     * 生成二维码
+     */
+    private void createQRImage() {
+        ivQR.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        final File outputPic = makeTempFile(mContext, Environment.getExternalStorageDirectory().getPath() + "/SHR AMR/QRImage/", "qr_", ".jpg");
+
+                        boolean success = ZxingUtils.createQRImage(meterSn, ivQR.getWidth(), ivQR.getWidth(), null, outputPic.getAbsolutePath());
+
+                        if (success) {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    ivQR.setImageBitmap(BitmapFactory.decodeFile(outputPic.getAbsolutePath()));
+                                }
+                            });
+                        }
+                    }
+                },500);
+//                new Thread().ponew Runnable() {
+//                    @Override
+//                    public void run() {
+//
+//                    }
+//                }).start();
+            }
+        });
+
+
+    }
+
+    @SuppressWarnings({"ConstantConditions", "ResultOfMethodCallIgnored"})
+    public static File makeTempFile(@NonNull Context context, @Nullable String saveDir, String prefix, String extension) {
+        if (saveDir == null)
+            saveDir = context.getExternalCacheDir().getAbsolutePath();
+        final String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
+        final File dir = new File(saveDir);
+        dir.mkdirs();
+        return new File(dir, prefix + timeStamp + extension);
+    }
+
 
     @OnClick({R.id.tvPayAction})
     public void onClick(View view) {

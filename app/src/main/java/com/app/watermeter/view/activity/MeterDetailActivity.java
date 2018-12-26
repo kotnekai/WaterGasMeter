@@ -90,15 +90,16 @@ public class MeterDetailActivity extends BaseActivity {
     TextView tvMoney;
     @BindView(R.id.tvCharge)
     TextView tvCharge;
-    @BindView(R.id.tvGotoPerStorage)
-    TextView tvGotoPerStorage;
+    @BindView(R.id.tvGotoMonthBill)
+    TextView tvGotoMonthBill;
     @BindView(R.id.tvGotoPayment)
     TextView tvGotoPayment;
     @BindView(R.id.lineChart)
     LineChart mChart;
     @BindView(R.id.tvNoData)
     TextView tvNoData;
-
+    @BindView(R.id.tvStartMonth)
+    TextView tvStartMonth;
 
     public int requestIndex = 0;
     public final int MAX_REQUEST_COUNT = 6;
@@ -230,7 +231,7 @@ public class MeterDetailActivity extends BaseActivity {
         //设置显示X轴
         xAxis.setDrawAxisLine(false);
         xAxis.setTextSize(12);
-        xAxis.setYOffset(20f);
+        xAxis.setYOffset(8f);
         //设置线为虚线
         xAxis.enableGridDashedLine(5f, 5f, 0f);
         //设置X轴显示的位置
@@ -288,7 +289,7 @@ public class MeterDetailActivity extends BaseActivity {
             case CommonParams.TYPE_WATER:
                 setHeaderTitle(getString(R.string.water_meter_detail_title));
                 tvMeterName.setText(getString(R.string.water_meter_reading));
-                tvBalance.setText(getString(R.string.water_meter_reading));
+                tvBalance.setText(getString(R.string.water_meter_balance));
                 break;
             case CommonParams.TYPE_ELECT:
                 setHeaderTitle(getString(R.string.elect_meter_detail_title));
@@ -348,8 +349,11 @@ public class MeterDetailActivity extends BaseActivity {
                 default:
                     tvAddress.setText(model.getLocation_zh() + model.getPosition_zh());
             }
+
+
             tvUnit.setText(String.format(mContext.getString(R.string.square_detail), model.getUnit() + ""));
-            tvLastValue.setText(model.getOld_degree() + "");
+            tvLastValue.setText(model.getThis_month_degree() + "");
+            tvStartMonth.setText(model.getStart_month_degree()+"");
             tvLastDate.setText(model.getOld_read_at());
             tvCurrentValue.setText(model.getDegree() + "");
             tvCurrentDate.setText(model.getFinal_read_at());
@@ -556,19 +560,23 @@ public class MeterDetailActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.tvGotoPayment, R.id.tvGotoPerStorage, R.id.tvCharge})
+    @OnClick({R.id.tvGotoPayment, R.id.tvGotoMonthBill, R.id.tvCharge})
     public void onClick(View view) {
         switch (view.getId()) {
             // 缴费明细
             case R.id.tvGotoPayment:
                 startActivity(PerStorageSaveListActivity.makeIntent(mContext, model.getId(), meterType, CommonParams.PAGE_TYPE_READ));
                 break;
-            // 预存明细
-            case R.id.tvGotoPerStorage:
-                startActivity(PerStorageSaveListActivity.makeIntent(mContext, model.getId(), meterType, CommonParams.PAGE_TYPE_RECHARGE));
+//            // 预存明细
+//            case R.id.tvGotoPerStorage:
+//                startActivity(PerStorageSaveListActivity.makeIntent(mContext, model.getId(), meterType, CommonParams.PAGE_TYPE_RECHARGE));
+//                break;
+              // 月度明细
+            case R.id.tvGotoMonthBill:
+                startActivity(PerStorageSaveListActivity.makeIntent(mContext, model.getId(), meterType, CommonParams.PAGE_TYPE_TRANSACTION));
                 break;
             case R.id.tvCharge:
-                startActivityForResult(PayActionActivity.makeIntent(mContext, meterId,false,null), CommonParams.PAY_RESULT);
+                startActivityForResult(PayActionActivity.makeIntent(mContext, meterId,false,model.getMachine_sn()), CommonParams.PAY_RESULT);
                 break;
 
         }

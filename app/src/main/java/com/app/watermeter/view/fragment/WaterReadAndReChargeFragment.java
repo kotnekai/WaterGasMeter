@@ -10,15 +10,16 @@ import android.util.Log;
 
 import com.app.watermeter.R;
 import com.app.watermeter.common.CommonParams;
-import com.app.watermeter.eventBus.GetReChargeListEvent;
-import com.app.watermeter.eventBus.GetReadListEvent;
 import com.app.watermeter.eventBus.GetWaterReChargeListEvent;
 import com.app.watermeter.eventBus.GetWaterReadListEvent;
+import com.app.watermeter.eventBus.GetWaterTransactionListEvent;
 import com.app.watermeter.manager.MeterManager;
 import com.app.watermeter.model.MeterReChargeModel;
 import com.app.watermeter.model.MeterReadModel;
+import com.app.watermeter.model.MeterTransactionModel;
 import com.app.watermeter.view.adapter.ReChargeAdapter;
 import com.app.watermeter.view.adapter.ReadAdapter;
+import com.app.watermeter.view.adapter.TransactionAdapter;
 import com.app.watermeter.view.base.BaseFragment;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -57,8 +58,14 @@ public class WaterReadAndReChargeFragment extends BaseFragment {
     //缴费明细
     private List<MeterReadModel> perReadList = new ArrayList<>();
 
+    //费用明细
+    private List<MeterTransactionModel> transactionList = new ArrayList<>();
+
+
     private ReChargeAdapter reChargeAdapter;
     private ReadAdapter readAdapter;
+    private TransactionAdapter transactionAdapter;
+
     private LinearLayoutManager mLayoutManager;
 
 
@@ -98,6 +105,7 @@ public class WaterReadAndReChargeFragment extends BaseFragment {
     }
 
     private int tabType = 1;// 1,水表，2电表 ，3，燃气表
+
     @Override
     protected void initData() {
 
@@ -109,12 +117,16 @@ public class WaterReadAndReChargeFragment extends BaseFragment {
 
         //预存明细
         if (fromPage == CommonParams.PAGE_TYPE_RECHARGE) {
-            reChargeAdapter = new ReChargeAdapter(getActivity(), reChargeList,tabType);
+            reChargeAdapter = new ReChargeAdapter(getActivity(), reChargeList, tabType);
             recyclerView.setAdapter(reChargeAdapter);
-        } else {
+        } else if (fromPage == CommonParams.PAGE_TYPE_READ) {
             //缴费明细
-            readAdapter = new ReadAdapter(getActivity(), perReadList,meterType);
+            readAdapter = new ReadAdapter(getActivity(), perReadList, meterType);
             recyclerView.setAdapter(readAdapter);
+        } else {
+            //费用明细
+            transactionAdapter = new TransactionAdapter(getActivity(), transactionList, meterType);
+            recyclerView.setAdapter(transactionAdapter);
         }
 
 
@@ -165,16 +177,19 @@ public class WaterReadAndReChargeFragment extends BaseFragment {
     /**
      * 初始化获取数据
      *
-     * @param meterType  表类型
+     * @param meterType 表类型
      * @param pageType
      */
     private void initListData(int meterType, int pageType) {
         if (pageType == CommonParams.PAGE_TYPE_RECHARGE) {
             //预存明细
-            MeterManager.getInstance().getReChargeList(currentPageSize, dataSize, meterType,0);
-        } else {
+            MeterManager.getInstance().getReChargeList(currentPageSize, dataSize, meterType, 0);
+        } else if (pageType == CommonParams.PAGE_TYPE_READ) {
             //缴费明细
-            MeterManager.getInstance().getRePayList(currentPageSize, dataSize, meterType,0,null);
+            MeterManager.getInstance().getRePayList(currentPageSize, dataSize, meterType, 0, null);
+        } else {
+            //费用明细汇总
+            MeterManager.getInstance().getTransactionList(currentPageSize, dataSize, meterType, 0);
         }
     }
 
@@ -209,6 +224,21 @@ public class WaterReadAndReChargeFragment extends BaseFragment {
         }
         readAdapter.setData(perReadList);
         readAdapter.notifyDataSetChanged();
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(GetWaterTransactionListEvent event) {
+        currentPageSize += event.getList().size();
+        if (transactionList.size() > 0) {
+            transactionList.addAll(event.getList());
+        } else {
+            transactionList = event.getList();
+        }
+        tabType = meterType;
+        transactionAdapter.setData(transactionList);
+        transactionAdapter.notifyDataSetChanged();
+
     }
 }
 /*

@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/main_bg_gray"
-
     android:orientation="vertical">
 
 
@@ -11,7 +10,7 @@
         android:id="@+id/llPayStart"
         android:layout_width="match_parent"
         android:layout_height="170dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="40dp"
         android:orientation="vertical">
 
         <TextView
@@ -68,7 +67,7 @@
         android:id="@+id/llPayEnd"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="40dp"
         android:layout_marginBottom="30dp"
         android:gravity="center_horizontal"
         android:orientation="vertical"
@@ -129,4 +128,12 @@
         android:text="@string/pay_action"
         android:textColor="@color/white"
         android:textSize="18dp" />
+
+    <ImageView
+
+        android:id="@+id/ivQR"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_gravity="center|bottom"
+        android:layout_marginTop="30dp" />
 </LinearLayout>

@@ -14,11 +14,14 @@ import com.app.watermeter.R;
 import com.app.watermeter.common.CommonParams;
 import com.app.watermeter.eventBus.GetDetailReChargeListEvent;
 import com.app.watermeter.eventBus.GetDetailReadListEvent;
+import com.app.watermeter.eventBus.GetDetailTransactionListEvent;
 import com.app.watermeter.manager.MeterManager;
 import com.app.watermeter.model.MeterReChargeModel;
 import com.app.watermeter.model.MeterReadModel;
+import com.app.watermeter.model.MeterTransactionModel;
 import com.app.watermeter.view.adapter.ReChargeAdapter;
 import com.app.watermeter.view.adapter.ReadAdapter;
+import com.app.watermeter.view.adapter.TransactionAdapter;
 import com.app.watermeter.view.base.BaseActivity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -57,10 +60,13 @@ public class PerStorageSaveListActivity extends BaseActivity {
     Context mContext;
     private ReChargeAdapter reChargeAdapter;
     private ReadAdapter readAdapter;
+    private TransactionAdapter transactionAdapter;
+
     private LinearLayoutManager mLayoutManager;
 
     private List<MeterReChargeModel> reChargeList = new ArrayList<>();
     private List<MeterReadModel> perSaveList = new ArrayList<>();
+    private List<MeterTransactionModel> transactionList = new ArrayList<>();
 
 
     public static Intent makeIntent(Context context, int meterId, int meterType, int pageType) {
@@ -111,6 +117,9 @@ public class PerStorageSaveListActivity extends BaseActivity {
             case CommonParams.PAGE_TYPE_READ:
                 setHeaderTitle(getString(R.string.mine_pay_list));
                 break;
+            case CommonParams.PAGE_TYPE_TRANSACTION:
+                setHeaderTitle(getString(R.string.monthly_list));
+                break;
         }
         mLayoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
         mLayoutManager.setOrientation(GridLayoutManager.VERTICAL);
@@ -121,9 +130,14 @@ public class PerStorageSaveListActivity extends BaseActivity {
         if (fromPage == CommonParams.PAGE_TYPE_RECHARGE) {
             reChargeAdapter = new ReChargeAdapter(mContext, reChargeList, meterType);
             recyclerView.setAdapter(reChargeAdapter);
-        } else {
+        } else  if (fromPage == CommonParams.PAGE_TYPE_READ) {
             readAdapter = new ReadAdapter(mContext, perSaveList, meterType);
             recyclerView.setAdapter(readAdapter);
+        }
+        else
+        {
+            transactionAdapter = new TransactionAdapter(mContext, transactionList, meterType);
+            recyclerView.setAdapter(transactionAdapter);
         }
         recyclerView.scrollToPosition(0);
 
@@ -164,9 +178,14 @@ public class PerStorageSaveListActivity extends BaseActivity {
         if (type == CommonParams.PAGE_TYPE_RECHARGE) {
             //预存明细
             MeterManager.getInstance().getReChargeList(currentPageSize, dataSize, meterType, meterId);
-        } else {
+        } else if (type == CommonParams.PAGE_TYPE_RECHARGE) {
             //缴费明细
             MeterManager.getInstance().getRePayList(currentPageSize, dataSize, meterType, meterId, null);
+        }
+        else
+        {
+            MeterManager.getInstance().getTransactionList(currentPageSize, dataSize, meterType, meterId);
+
         }
     }
 
@@ -211,5 +230,26 @@ public class PerStorageSaveListActivity extends BaseActivity {
             ivNothing.setVisibility(View.VISIBLE);
         }
     }
+
+    /**
+     * 接口返回--月度
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(GetDetailTransactionListEvent event) {
+        currentPageSize += event.getList().size();
+        if (transactionList.size() > 0) {
+            transactionList.addAll(event.getList());
+        } else {
+            transactionList = event.getList();
+        }
+        if (transactionList.size() > 0) {
+            transactionAdapter.setData(transactionList);
+            transactionAdapter.notifyDataSetChanged();
+        } else {
+            smartRefreshLayout.setVisibility(View.GONE);
+            ivNothing.setVisibility(View.VISIBLE);
+        }
+    }
+
 
 }

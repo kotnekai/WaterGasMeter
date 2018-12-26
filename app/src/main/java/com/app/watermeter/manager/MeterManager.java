@@ -9,14 +9,16 @@ import com.app.okhttputils.request.JsonGenericsSerializator;
 import com.app.watermeter.common.CommonParams;
 import com.app.watermeter.common.CommonUrl;
 import com.app.watermeter.eventBus.BindEvent;
-import com.app.watermeter.eventBus.DefaultResultEvent;
 import com.app.watermeter.eventBus.GetChartReadListEvent;
 import com.app.watermeter.eventBus.GetDetailReChargeListEvent;
 import com.app.watermeter.eventBus.GetDetailReadListEvent;
+import com.app.watermeter.eventBus.GetDetailTransactionListEvent;
 import com.app.watermeter.eventBus.GetElectReChargeListEvent;
 import com.app.watermeter.eventBus.GetElectReadListEvent;
+import com.app.watermeter.eventBus.GetElectTransactionListEvent;
 import com.app.watermeter.eventBus.GetGasReChargeListEvent;
 import com.app.watermeter.eventBus.GetGasReadListEvent;
+import com.app.watermeter.eventBus.GetGasTransactionListEvent;
 import com.app.watermeter.eventBus.GetHomeMeterListEvent;
 import com.app.watermeter.eventBus.GetMeterInfoEvent;
 import com.app.watermeter.eventBus.GetMeterListEvent;
@@ -31,14 +33,15 @@ import com.app.watermeter.eventBus.GetScanMeterInfoEvent;
 import com.app.watermeter.eventBus.GetScanMeterInfoFailEvent;
 import com.app.watermeter.eventBus.GetWaterReChargeListEvent;
 import com.app.watermeter.eventBus.GetWaterReadListEvent;
+import com.app.watermeter.eventBus.GetWaterTransactionListEvent;
 import com.app.watermeter.eventBus.UnBindErrEvent;
 import com.app.watermeter.eventBus.UnBindEvent;
 import com.app.watermeter.model.MeterInfoModel;
-import com.app.watermeter.model.MeterTypeModel;
 import com.app.watermeter.model.MeterReChargeModel;
 import com.app.watermeter.model.MeterReadModel;
+import com.app.watermeter.model.MeterTransactionModel;
+import com.app.watermeter.model.MeterTypeModel;
 import com.app.watermeter.model.OrderInfoModel;
-import com.app.watermeter.model.PayResultModel;
 import com.app.watermeter.model.PerPayModel;
 import com.app.watermeter.okhttp.DataManager;
 import com.app.watermeter.utils.PreferencesUtils;
@@ -657,6 +660,56 @@ public class MeterManager {
                     public void onResponse(Result result, int id) {
                         Log.d("admin", "unbindMeter====onResponse: response=" + result);
 
+                    }
+                });
+    }
+
+
+    /**
+     * 新充值抄表合并记录
+     * https://www.showdoc.cc/137924192608060?page_id=1348398341523813
+     */
+    public void getTransactionList(int offset, int count, final int type, final int machine) {
+        Map<String, String> params = new HashMap<>();
+        params.put("offset", offset + "");
+        params.put("count", count + "");
+        params.put("type", type + "");
+        params.put("machine", machine + "");
+        dataInstance.sendGetRequestData(CommonUrl.METER_TRANSACTION_LIST_URL, params)
+                .execute(new GenericsCallback<Result>(new JsonGenericsSerializator()) {
+                    @Override
+                    public void onError(Response response, Call call, Exception e, int id) {
+                        String message = e.getMessage();
+                      /*  String errorMsg = JsonUtils.getErrorMsg(response);
+                        EventBus.getDefault().post(new ErrorResponseEvent(errorMsg, CommonPageState.login_page));*/
+                        Log.d("admin", "onError: message=" + message);
+                    }
+
+                    @Override
+                    public void onNetWorkError(Response response, String errorMsg, int NetWorkCode) {
+                        Log.d("admin", "onError: errorMsg=" + errorMsg);
+                    }
+
+                    @Override
+                    public void onResponse(Result result, int id) {
+                        String jsonString = gson.toJson(result.getData());
+                        List<MeterTransactionModel> list = gson.fromJson(jsonString.toString(), new TypeToken<List<MeterTransactionModel>>() {
+                        }.getType());
+                        if (machine > 0) {
+                            EventBus.getDefault().post(new GetDetailTransactionListEvent(list));
+                        } else {
+                            switch (type) {
+                                case CommonParams.TYPE_WATER:
+                                    EventBus.getDefault().post(new GetWaterTransactionListEvent(list));
+                                    break;
+                                case CommonParams.TYPE_ELECT:
+                                    EventBus.getDefault().post(new GetElectTransactionListEvent(list));
+                                    break;
+                                case CommonParams.TYPE_GAS:
+                                    EventBus.getDefault().post(new GetGasTransactionListEvent(list));
+                                    break;
+                            }
+                        }
                     }
                 });
     }

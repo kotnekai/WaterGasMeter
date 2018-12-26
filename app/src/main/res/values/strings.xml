@@ -38,7 +38,11 @@
     <string name="modify_language">切换语言</string>
 
     <string name="mine_per_storage_list">预存明细</string>
-    <string name="mine_pay_list">费用明细</string>
+    <string name="mine_pay_list">缴费明细</string>
+    <string name="mine_transaction_list">费用明细</string>
+    <string name="monthly_list">月度明细</string>
+
+
     <string name="mine_person_info">个人资料</string>
     <string name="mine_scan_bill_info">扫码充值明细</string>
 
@@ -80,8 +84,11 @@
     <string name="elect_meter_reading">电表读数</string>
     <string name="gas_meter_reading">燃气表读数</string>
 
-    <string name="last_meter_value">上次表值</string>
-    <string name="current_meter_value">即时表值</string>
+    <string name="start_month_reading">月初读数</string>
+
+
+    <string name="last_meter_value">本月用量</string>
+    <string name="current_meter_value">即时数值</string>
 
     <string name="water_meter_balance">水表余额</string>
     <string name="elect_meter_balance">电表余额</string>
@@ -90,6 +97,8 @@
     <string name="immediately_save">立即预存</string>
     <string name="storage_detail" formatted="true">预存明细>></string>
     <string name="payment_detail" formatted="true">费用明细>></string>
+    <string name="monthly_detail" formatted="true">月度明细>></string>
+
     <string name="unit_yuan">美金</string>
 
     <string name="cancel_binding">取消绑定</string>
@@ -107,6 +116,17 @@
     <string name="payment_time">缴费时间：%s</string>
     <string name="storage_time">预存时间：%s</string>
     <string name="recharge_time">充值时间：%s</string>
+
+
+
+    <string name="payment_details">缴费明细：%s</string>
+    <string name="pre_payment_balance">缴费前余额：%s</string>
+    <string name="balance_after_payment">缴费后余额：%s</string>
+
+    <string name="pre_charge_balance">充值前余额：%s</string>
+    <string name="recharged_balance">充值后余额：%s</string>
+
+
 
 
     <string name="payed">已扣除</string>

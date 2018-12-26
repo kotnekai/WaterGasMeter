@@ -9,13 +9,6 @@ import android.widget.ImageView;
 
 import com.app.watermeter.R;
 import com.app.watermeter.common.CommonParams;
-import com.app.watermeter.eventBus.GetElectReChargeListEvent;
-import com.app.watermeter.eventBus.GetElectReadListEvent;
-import com.app.watermeter.eventBus.GetGasReChargeListEvent;
-import com.app.watermeter.eventBus.GetGasReadListEvent;
-import com.app.watermeter.eventBus.GetWaterReChargeListEvent;
-import com.app.watermeter.eventBus.GetWaterReadListEvent;
-import com.app.watermeter.model.MeterReChargeModel;
 import com.app.watermeter.model.MeterTypeModel;
 import com.app.watermeter.utils.PreferencesUtils;
 import com.app.watermeter.view.adapter.PerStorageFragmentAdapter;
@@ -23,12 +16,9 @@ import com.app.watermeter.view.base.BaseActivity;
 import com.app.watermeter.view.base.BaseFragment;
 import com.app.watermeter.view.fragment.ElectReadAndReChargeFragment;
 import com.app.watermeter.view.fragment.GasReadAndReChargeFragment;
-import com.app.watermeter.view.fragment.ReadAndReChargeFragment;
 import com.app.watermeter.view.fragment.WaterReadAndReChargeFragment;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,19 +76,20 @@ public class PreStorageSaveActivity extends BaseActivity {
         pageType = intent.getIntExtra("pageType", 1);
         if (pageType == CommonParams.PAGE_TYPE_RECHARGE) {
             setHeaderTitle(getString(R.string.mine_per_storage_list));
-        } else {
+        } else if (pageType == CommonParams.PAGE_TYPE_READ) {
             setHeaderTitle(getString(R.string.mine_pay_list));
+        } else {
+            setHeaderTitle(getString(R.string.mine_transaction_list));
         }
 
-       String typeJsonStr =  PreferencesUtils.getString(CommonParams.METTER_TYPE_JSON);
+        String typeJsonStr = PreferencesUtils.getString(CommonParams.METTER_TYPE_JSON);
 
         List<MeterTypeModel> list = new Gson().fromJson(typeJsonStr, new TypeToken<List<MeterTypeModel>>() {
         }.getType());
 
-        if (list.size()>0) {
+        if (list.size() > 0) {
             for (MeterTypeModel model : list) {
-                switch (model.getId())
-                {
+                switch (model.getId()) {
                     case CommonParams.TYPE_WATER:
                         mViewPagerFragments.add(WaterReadAndReChargeFragment.newInstance(model.getId(), model.getName_zh(), pageType));
                         mTitles.add(model.getName_zh());
@@ -111,11 +102,9 @@ public class PreStorageSaveActivity extends BaseActivity {
                         mViewPagerFragments.add(GasReadAndReChargeFragment.newInstance(model.getId(), model.getName_zh(), pageType));
                         mTitles.add(model.getName_zh());
                         break;
-                  }
+                }
             }
-        }
-        else
-        {
+        } else {
 
         }
         adapter = new PerStorageFragmentAdapter(getSupportFragmentManager(), pageType, mViewPagerFragments);

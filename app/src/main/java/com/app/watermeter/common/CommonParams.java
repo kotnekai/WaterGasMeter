@@ -30,6 +30,7 @@ public class CommonParams {
 
     public static final int PAGE_TYPE_RECHARGE = 1;//预存明细
     public static final int PAGE_TYPE_READ = 2;//缴费明细
+    public static final int PAGE_TYPE_TRANSACTION = 0;//交易明细
 
     public static final String METTER_TYPE_JSON = "meterTypeJson";
 

@@ -31,6 +31,8 @@ public class MeterInfoModel {
     String updated_at;
     int status;
     int is_opened;
+    float start_month_degree;
+    float this_month_degree;
 
     public int getId() {
         return id;
@@ -222,5 +224,21 @@ public class MeterInfoModel {
 
     public void setIs_opened(int is_opened) {
         this.is_opened = is_opened;
+    }
+
+    public float getStart_month_degree() {
+        return start_month_degree;
+    }
+
+    public void setStart_month_degree(float start_month_degree) {
+        this.start_month_degree = start_month_degree;
+    }
+
+    public float getThis_month_degree() {
+        return this_month_degree;
+    }
+
+    public void setThis_month_degree(float this_month_degree) {
+        this.this_month_degree = this_month_degree;
     }
 }

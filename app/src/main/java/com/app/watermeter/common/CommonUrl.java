@@ -25,5 +25,7 @@ public class CommonUrl {
     public static final String METER_RECHARGE_LIST_FROM_SCAN_URL = BASE_URL + "/record/recharge_from_scan";
     public static final String DEVICE_UPLOAD_URL = BASE_URL + "/device/update";
 
-   public static final String PAY_URL = "https://api.asiaweiluy.com/gateway.php?method=ace.trade.pay";
+    public static final String METER_TRANSACTION_LIST_URL = BASE_URL + "/record/machine_track";
+
+    public static final String PAY_URL = "https://api.asiaweiluy.com/gateway.php?method=ace.trade.pay";
 }
