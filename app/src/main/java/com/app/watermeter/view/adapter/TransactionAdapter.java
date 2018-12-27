@@ -75,9 +75,9 @@ public class TransactionAdapter extends Adapter<TransactionAdapter.MyViewHolder>
             holder.tvMoney.setText("-" + transactionModel.getFee() + " " + context.getString(R.string.unit_yuan));
         } else {
             holder.tvPaymentDetail.setVisibility(View.GONE);
-            holder.tvAfter.setText(String.format(context.getString(R.string.pre_payment_balance), transactionModel.getAfter() + ""));
-            holder.tvBefore.setText(String.format(context.getString(R.string.balance_after_payment), transactionModel.getBefore() + ""));
-            holder.tvDate.setText(String.format(context.getString(R.string.payment_time), transactionModel.getCreated_at()));
+            holder.tvAfter.setText(String.format(context.getString(R.string.pre_charge_balance), transactionModel.getAfter() + ""));
+            holder.tvBefore.setText(String.format(context.getString(R.string.recharged_balance), transactionModel.getBefore() + ""));
+            holder.tvDate.setText(String.format(context.getString(R.string.recharge_time), transactionModel.getCreated_at()));
             holder.tvMoney.setText("+" + transactionModel.getFee() + " " + context.getString(R.string.unit_yuan));
         }
     }

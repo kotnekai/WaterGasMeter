@@ -10,14 +10,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <TextView
             style="@style/text_Item_style"
             android:drawableStart="@mipmap/yucun"
             android:drawablePadding="10dp"
-            android:text="@string/mine_per_storage_list"
-            android:visibility="gone" />
+            android:text="@string/mine_per_storage_list" />
     </RelativeLayout>
 
 
@@ -26,14 +26,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <TextView
             style="@style/text_Item_style"
             android:drawableStart="@mipmap/jiaofei"
             android:drawablePadding="10dp"
-            android:text="@string/mine_pay_list"
-            android:visibility="gone" />
+            android:text="@string/mine_pay_list" />
     </RelativeLayout>
 
     <RelativeLayout
