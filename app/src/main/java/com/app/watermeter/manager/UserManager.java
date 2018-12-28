@@ -12,6 +12,7 @@ import com.app.watermeter.eventBus.CheckSmsCodeEvent;
 import com.app.watermeter.eventBus.LoginEvent;
 import com.app.watermeter.eventBus.PersonInfoEvent;
 import com.app.watermeter.eventBus.RegisterInfoEvent;
+import com.app.watermeter.eventBus.ResetPwdEvent;
 import com.app.watermeter.eventBus.SuccessEvent;
 import com.app.watermeter.model.AccountExtraModel;
 import com.app.watermeter.model.ApkInfoModel;
@@ -250,12 +251,12 @@ public class UserManager {
     }
 
     /**
-     * 重置密码
+     * 修改密码
      *
      * @param password
      * @param confirmPassword
      */
-    public void resetPassword(String password, String confirmPassword) {
+    public void updatePassword(String password, String confirmPassword) {
         JSONObject params = new JSONObject();
         try {
             params.put("passwd", password);
@@ -280,6 +281,42 @@ public class UserManager {
 
 //                        ComResponseModel model = (ComResponseModel) result.getData();
                         EventBus.getDefault().post(new SuccessEvent(result));
+                    }
+                });
+    }
+
+    /**
+     * 重置密码
+     *
+     * @param password
+     * @param confirmPassword
+     */
+    public void resetPassword(String contact,String password, String confirmPassword) {
+        JSONObject params = new JSONObject();
+        try {
+            params.put("contact", contact);
+            params.put("passwd", password);
+            params.put("passwd_confirmation", confirmPassword);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        dataInstance.sendPostRequestData(CommonUrl.UPDATE_PASSWORD, params)
+                .execute(new GenericsCallback<Result>(new JsonGenericsSerializator()) {
+                    @Override
+                    public void onError(Response response, Call call, Exception e, int id) {
+
+                    }
+
+                    @Override
+                    public void onNetWorkError(Response response, String errorMsg, int NetWorkCode) {
+
+                    }
+
+                    @Override
+                    public void onResponse(Result result, int id) {
+
+//                        ComResponseModel model = (ComResponseModel) result.getData();
+                        EventBus.getDefault().post(new ResetPwdEvent(result));
                     }
                 });
     }

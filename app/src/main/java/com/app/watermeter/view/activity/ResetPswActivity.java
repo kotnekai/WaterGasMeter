@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import com.app.okhttputils.Model.Result;
 import com.app.watermeter.R;
+import com.app.watermeter.common.CommonParams;
+import com.app.watermeter.eventBus.ResetPwdEvent;
 import com.app.watermeter.eventBus.SuccessEvent;
 import com.app.watermeter.manager.UserManager;
 import com.app.watermeter.utils.AccountValidatorUtil;
@@ -27,11 +29,13 @@ import butterknife.OnClick;
 public class ResetPswActivity extends BaseActivity {
 
     public final static String Pwd_TYPE = "pwdType";
+    public final static String PHONE_NUMBER = "phoneNumber";
 
     public final static int TYPE_MODIFY = 101;
     public final static int TYPE_RESET = 102;
 
     private int type;
+    private String phoneNumber;
 
     @BindView(R.id.edtPassword)
     EditText edtPassword;
@@ -53,6 +57,13 @@ public class ResetPswActivity extends BaseActivity {
         return intent;
     }
 
+    public static Intent makeIntent(Context context, int type, String phoneNumber) {
+        Intent intent = new Intent(context, ResetPswActivity.class);
+        intent.putExtra(Pwd_TYPE, type);
+        intent.putExtra(PHONE_NUMBER, phoneNumber);
+        return intent;
+    }
+
     @Override
     protected void initHeader() {
 
@@ -68,6 +79,7 @@ public class ResetPswActivity extends BaseActivity {
     private void initData() {
         Intent intent = getIntent();
         type = intent.getIntExtra(Pwd_TYPE, 0);
+        phoneNumber = intent.getStringExtra(PHONE_NUMBER);
         if (type == TYPE_MODIFY) {
             setHeaderTitle(getString(R.string.reset_modify_title));
         } else if (type == TYPE_RESET) {
@@ -89,7 +101,13 @@ public class ResetPswActivity extends BaseActivity {
             ToastUtil.showShort(getString(R.string.password_no_match));
             return;
         }
-        UserManager.getInstance().resetPassword(password, confirmPsw);
+
+        if (type == TYPE_MODIFY) {
+            UserManager.getInstance().updatePassword(password, confirmPsw);
+        } else if (type == TYPE_RESET) {
+            UserManager.getInstance().resetPassword(phoneNumber, password, confirmPsw);
+        }
+
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -104,6 +122,23 @@ public class ResetPswActivity extends BaseActivity {
         String message = result.getMessage();
         ToastUtil.showShort(message);
         if (err_code == 0 && status_code == 200) {
+            finish();
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onResetSetPwdEvent(ResetPwdEvent event) {
+        Result result = event.getResult();
+        if (result == null) {
+            ToastUtil.showShort(getString(R.string.request_data_error));
+            return;
+        }
+        int status_code = result.getStatus_code();
+        int err_code = result.getErr_code();
+        String message = result.getMessage();
+        ToastUtil.showShort(message);
+        if (err_code == 0 && status_code == 200) {
+            setResult(CommonParams.FINISH_CODE);
             finish();
         }
     }

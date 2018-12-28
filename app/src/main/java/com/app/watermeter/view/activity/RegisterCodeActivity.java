@@ -4,17 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.app.okhttputils.Model.Result;
 import com.app.watermeter.R;
 import com.app.watermeter.common.CommonParams;
-import com.app.watermeter.common.UserCache;
 import com.app.watermeter.eventBus.CheckSmsCodeEvent;
 import com.app.watermeter.eventBus.SuccessEvent;
 import com.app.watermeter.manager.UserManager;
@@ -84,33 +79,30 @@ public class RegisterCodeActivity extends BaseActivity {
         countTimer.start();///开启倒计时
         scvEditText.setDefaultCount(MAX_CODE_LENGTH);
         scvEditText.setInputCompleteListener(new SecurityCodeView.InputCompleteListener() {
-                 @Override
-                 public void inputComplete() {
+            @Override
+            public void inputComplete() {
 
-                     InputMethodManager imm = (InputMethodManager) scvEditText.getContext()
-                             .getSystemService(Context.INPUT_METHOD_SERVICE);
-                     if (imm.isActive()) {
-                         imm.hideSoftInputFromWindow(scvEditText.getApplicationWindowToken(), 0);
-                     }
+                InputMethodManager imm = (InputMethodManager) scvEditText.getContext()
+                        .getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (imm.isActive()) {
+                    imm.hideSoftInputFromWindow(scvEditText.getApplicationWindowToken(), 0);
+                }
 
-                     String code = scvEditText.getEditContent();
-                     ProgressUtils.getIntance().setProgressDialog(getString(R.string.com_loading_tips), RegisterCodeActivity.this);
+                String code = scvEditText.getEditContent();
+                ProgressUtils.getIntance().setProgressDialog(getString(R.string.com_loading_tips), RegisterCodeActivity.this);
 
-                     if (fromType==1)
-                     {
-                         UserManager.getInstance().checkSmsCode(countryCode+phoneNumber, CommonParams.BUSS_REGISTER_TYPE, code);
-                     }
-                     else
-                     {
-                         UserManager.getInstance().checkSmsCode(countryCode+phoneNumber, CommonParams.BUSS_RESET_TYPE, code);
-                     }
-                 }
+                if (fromType == 1) {
+                    UserManager.getInstance().checkSmsCode(countryCode + phoneNumber, CommonParams.BUSS_REGISTER_TYPE, code);
+                } else {
+                    UserManager.getInstance().checkSmsCode(countryCode + phoneNumber, CommonParams.BUSS_RESET_TYPE, code);
+                }
+            }
 
-                 @Override
-                 public void deleteContent(boolean isDelete) {
+            @Override
+            public void deleteContent(boolean isDelete) {
 
-                 }
-           });
+            }
+        });
 
     }
 
@@ -128,9 +120,9 @@ public class RegisterCodeActivity extends BaseActivity {
         ToastUtil.showShort(message);
         if (status_code == 200 && errCode == 0) {
             if (fromType == CommonParams.fromTypeRegister) {
-                startActivity(RegisterInfoActivity.makeIntent(this, countryCode+phoneNumber));
+                startActivity(RegisterInfoActivity.makeIntent(this, countryCode + phoneNumber));
             } else if (fromType == CommonParams.fromTypeReset) {
-                startActivity(ResetPswActivity.makeIntent(this, ResetPswActivity.TYPE_MODIFY));
+                startActivityForResult(ResetPswActivity.makeIntent(this, ResetPswActivity.TYPE_RESET, countryCode + phoneNumber), CommonParams.FINISH_CODE);
             }
             scvEditText.clearEditText();
         }
@@ -200,6 +192,18 @@ public class RegisterCodeActivity extends BaseActivity {
         public void onFinish() {
             tvGoNext.setEnabled(true);
             tvGoNext.setText(getString(R.string.re_send_code));
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == CommonParams.FINISH_CODE) {
+            if (resultCode == CommonParams.FINISH_CODE && fromType == 2) {
+                //重置密码成功，要finish
+                setResult(CommonParams.FINISH_CODE);
+                finish();
+            }
         }
     }
 }

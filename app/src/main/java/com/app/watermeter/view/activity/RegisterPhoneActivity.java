@@ -130,7 +130,20 @@ public class RegisterPhoneActivity extends BaseActivity {
             String phoneNumber = edtPhoneNumber.getText().toString();
             String countryCode = tvCountryCode.getText().toString();
             UserCache.getInstance().setPhoneNumber(phoneNumber);
-            startActivity(RegisterCodeActivity.makeIntent(this, countryCode, phoneNumber, fromType));
+            startActivityForResult(RegisterCodeActivity.makeIntent(this, countryCode, phoneNumber, fromType),CommonParams.FINISH_CODE);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==CommonParams.FINISH_CODE)
+        {
+            if (resultCode==CommonParams.FINISH_CODE && fromType==2) {
+                //重置密码成功，要finish
+                setResult(CommonParams.FINISH_CODE);
+                finish();
+            }
         }
     }
 
