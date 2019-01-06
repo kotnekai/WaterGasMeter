@@ -69,14 +69,14 @@ public class TransactionAdapter extends Adapter<TransactionAdapter.MyViewHolder>
         if (transactionModel.getType().equals("read")) {
             holder.tvPaymentDetail.setVisibility(View.VISIBLE);
             holder.tvPaymentDetail.setText(String.format(context.getString(R.string.payment_details), transactionModel.getRvalue() + " " + unitStr));
-            holder.tvAfter.setText(String.format(context.getString(R.string.pre_payment_balance), transactionModel.getAfter() + ""));
-            holder.tvBefore.setText(String.format(context.getString(R.string.balance_after_payment), transactionModel.getBefore() + ""));
+            holder.tvAfter.setText(String.format(context.getString(R.string.pre_payment_balance), transactionModel.getBefore() + ""));
+            holder.tvBefore.setText(String.format(context.getString(R.string.balance_after_payment), transactionModel.getAfter() + ""));
             holder.tvDate.setText(String.format(context.getString(R.string.payment_time), transactionModel.getCreated_at()));
             holder.tvMoney.setText("-" + transactionModel.getFee() + " " + context.getString(R.string.unit_yuan));
         } else {
             holder.tvPaymentDetail.setVisibility(View.GONE);
-            holder.tvAfter.setText(String.format(context.getString(R.string.pre_charge_balance), transactionModel.getAfter() + ""));
-            holder.tvBefore.setText(String.format(context.getString(R.string.recharged_balance), transactionModel.getBefore() + ""));
+            holder.tvAfter.setText(String.format(context.getString(R.string.pre_charge_balance), transactionModel.getBefore() + ""));
+            holder.tvBefore.setText(String.format(context.getString(R.string.recharged_balance), transactionModel.getAfter() + ""));
             holder.tvDate.setText(String.format(context.getString(R.string.recharge_time), transactionModel.getCreated_at()));
             holder.tvMoney.setText("+" + transactionModel.getFee() + " " + context.getString(R.string.unit_yuan));
         }

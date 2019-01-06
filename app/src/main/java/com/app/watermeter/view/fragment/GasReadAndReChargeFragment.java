@@ -152,7 +152,6 @@ public class GasReadAndReChargeFragment extends BaseFragment {
                     currentPageSize += dataSize;
                     initListData(meterType, fromPage);
                 } else {
-                    currentPageSize += dataSize;
                     initListData(meterType, fromPage);
                 }
                 refreshLayout.finishLoadMore();

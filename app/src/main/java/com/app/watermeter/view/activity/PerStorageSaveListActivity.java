@@ -162,10 +162,8 @@ public class PerStorageSaveListActivity extends BaseActivity {
 
 
                 if (fromPage == CommonParams.PAGE_TYPE_RECHARGE) {
-                    currentPageSize += dataSize;
                     addListData(fromPage);
                 } else {
-                    currentPageSize += dataSize;
                     addListData(fromPage);
                 }
                 refreshLayout.finishLoadMore();

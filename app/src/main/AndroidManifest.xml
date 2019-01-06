@@ -261,6 +261,38 @@
             </intent-filter>
         </receiver>
         <!-- V3.0.9及以上版本需配置 -->
+
+        <!-- 小米华为云推送上服务 -->
+        <receiver
+            android:name="com.google.firebase.iid.FirebaseInstanceIdReceiver"
+            android:exported="true"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+                <category android:name="com.taobao.taobao" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="com.google.firebase.iid.FirebaseInstanceIdInternalReceiver"
+            android:exported="false" />
+        <service
+            android:name="com.alibaba.sdk.android.push.AgooFirebaseInstanceIDService"
+            android:exported="true" >
+            <intent-filter android:priority="-500" >
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+        <service
+            android:name="com.alibaba.sdk.android.push.AgooFirebaseMessagingService"
+            android:exported="true" >
+            <intent-filter android:priority="-500" >
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+
+
         <activity
             android:name="com.alibaba.sdk.android.push.keeplive.PushExtActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|navigation|keyboard"

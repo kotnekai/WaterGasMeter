@@ -136,7 +136,7 @@ public class MyMessageReceiver extends MessageReceiver {
                     String meterId = js.optString("meterId");
                     if (!TextUtils.isEmpty(meterId)) {
                         //跳到支付页
-                        context.startActivity(PayActionActivity.makeIntent(context, Integer.valueOf(meterId),false,null));
+                        context.startActivity(PayActionActivity.makeIntent(context, Integer.valueOf(meterId),false,null,null));
                     }
                 }
             }

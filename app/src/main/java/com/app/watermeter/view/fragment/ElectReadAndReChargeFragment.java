@@ -149,10 +149,8 @@ public class ElectReadAndReChargeFragment extends BaseFragment {
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
 
                 if (fromPage == CommonParams.PAGE_TYPE_RECHARGE) {
-                    currentPageSize += dataSize;
                     initListData(meterType, fromPage);
                 } else {
-                    currentPageSize += dataSize;
                     initListData(meterType, fromPage);
                 }
                 refreshLayout.finishLoadMore();

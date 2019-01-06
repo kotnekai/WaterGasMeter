@@ -108,7 +108,6 @@ public class ScanBillListActivity extends BaseActivity {
         refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                currentPageSize += dataSize;
                 addListData();
                 refreshLayout.finishLoadMore();
             }

@@ -47,9 +47,9 @@ public class LanguageUtils {
             case Constants.LANGUAGE_DEFAULT:
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                     //解决了获取系统默认错误的问题
-                    return Resources.getSystem().getConfiguration().getLocales().get(1);
+                    return Resources.getSystem().getConfiguration().getLocales().get(0);
                 } else {
-                    return Locale.ENGLISH;
+                    return Locale.getDefault();
                 }
             case Constants.LANGUAGE_CHINA:
                 return Locale.CHINA;

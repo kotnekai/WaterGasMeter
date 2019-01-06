@@ -137,8 +137,8 @@ public class DateUtils {
         Date date = null;
         try {
             date = simpleDateFormat.parse(dateTime);
-            long ts = date.getTime()/1000;
-            String timestamp =  String.format("%010d", ts);
+            long ts = date.getTime() / 1000;
+            String timestamp = String.format("%010d", ts);
             return Long.valueOf(timestamp);
         } catch (ParseException e) {
             e.printStackTrace();
@@ -512,13 +512,14 @@ public class DateUtils {
         return timeStr;
     }
 
-
-    public static String getTimeStr(long time) {
-        if (time == 0) {
-            return "";
+    public static String getTimeStr(String str_num) {
+        SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT_YEAR2);
+        if (str_num.length() == 13) {
+            String date = sdf.format(new Date(Long.parseLong(str_num)));
+            return date;
+        } else {
+            String date = sdf.format(new Date(Integer.parseInt(str_num) * 1000L));
+            return date;
         }
-        SimpleDateFormat format = new SimpleDateFormat(DATE_FORMAT_YEAR);
-        Date date = new Date(time);
-        return format.format(date);
     }
 }

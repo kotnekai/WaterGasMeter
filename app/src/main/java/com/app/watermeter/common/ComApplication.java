@@ -96,6 +96,7 @@ public class ComApplication extends Application {
     private void initCloudChannel(final Context applicationContext) {
         // 创建notificaiton channel
         this.createNotificationChannel();
+
         PushServiceFactory.init(applicationContext);
         final CloudPushService pushService = PushServiceFactory.getCloudPushService();
         pushService.register(applicationContext, new CommonCallback() {

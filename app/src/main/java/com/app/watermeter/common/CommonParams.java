@@ -41,6 +41,7 @@ public class CommonParams {
     public static final String METER_SN = "meterSN";
     public static final String METER_ID = "meterId";
     public static final String METER_TIME = "meterTime";
+    public static final String METER_INFO = "meterInfo";
 
     public static final String FROM_SCAN = "fromScan";
 

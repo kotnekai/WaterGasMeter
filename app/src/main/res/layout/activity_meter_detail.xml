@@ -25,6 +25,7 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:id="@+id/tvMeterCode"
                     style="@style/detail_normal_text"
                     android:text="@string/pay_sn" />
 
@@ -265,7 +266,9 @@
                 android:id="@+id/tvGotoMonthBill"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/tvGotoMonthBill"
                 android:layout_alignParentLeft="true"
+                android:layout_marginTop="0dp"
                 android:text="@string/monthly_detail"
                 android:textColor="@color/normal_text_item_color"
                 android:textSize="16dp" />

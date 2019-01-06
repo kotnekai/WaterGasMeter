@@ -3,6 +3,7 @@ package com.app.watermeter.view.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -17,11 +18,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.app.watermeter.R;
+import com.app.watermeter.common.ComApplication;
 import com.app.watermeter.common.CommonParams;
 import com.app.watermeter.common.CommonUrl;
+import com.app.watermeter.common.Constants;
 import com.app.watermeter.eventBus.GetPayResultEvent;
 import com.app.watermeter.eventBus.GetPerPayEvent;
 import com.app.watermeter.manager.MeterManager;
+import com.app.watermeter.model.MeterInfoModel;
 import com.app.watermeter.utils.DataUtils;
 import com.app.watermeter.utils.DateUtils;
 import com.app.watermeter.utils.PreferencesUtils;
@@ -62,23 +66,31 @@ public class PayActionActivity extends BaseActivity {
     @BindView(R.id.ivQR)
     ImageView ivQR;
 
+    @BindView(R.id.QRBalance)
+    TextView QRBalance;
+    @BindView(R.id.QRId)
+    TextView QRId;
+    @BindView(R.id.QRRoomNumber)
+    TextView QRRoomNumber;
+
 
     private Context mContext;
     private int meterId;
     private boolean fromScen = false;
     private String meterSn;
+    private MeterInfoModel meterInfoModel;
 
     @Override
     protected int getCenterView() {
         return R.layout.activity_pay_action;
     }
 
-    public static Intent makeIntent(Context context, int meterId, boolean isFromScan, String meterSn) {
+    public static Intent makeIntent(Context context, int meterId, boolean isFromScan, String meterSn, MeterInfoModel meterInfo) {
         Intent intent = new Intent(context, PayActionActivity.class);
         intent.putExtra(CommonParams.METER_ID, meterId);
         intent.putExtra(CommonParams.FROM_SCAN, isFromScan);
         intent.putExtra(CommonParams.METER_SN, meterSn);
-
+        intent.putExtra(CommonParams.METER_INFO, meterInfo);
         return intent;
     }
 
@@ -111,6 +123,25 @@ public class PayActionActivity extends BaseActivity {
         } else {
             tvSn.setVisibility(View.GONE);
         }
+        meterInfoModel = (MeterInfoModel) intent.getSerializableExtra(CommonParams.METER_INFO);
+
+        if (meterInfoModel != null) {
+            switch (ComApplication.currentLanguage) {
+                case Constants.LANGUAGE_CHINA:
+                    QRRoomNumber.setText(String.format(getString(R.string.recharge_room), meterInfoModel.getPosition_zh()));
+                    break;
+                case Constants.LANGUAGE_ENGLISH:
+                    QRRoomNumber.setText(String.format(getString(R.string.recharge_room), meterInfoModel.getPosition_en()));
+                    break;
+                case Constants.LANGUAGE_KH:
+                    QRRoomNumber.setText(String.format(getString(R.string.recharge_room), meterInfoModel.getPosition_kh()));
+                    break;
+                default:
+                    QRRoomNumber.setText(String.format(getString(R.string.recharge_room), meterInfoModel.getPosition_zh()));
+            }
+            QRBalance.setText(String.format(getString(R.string.recharge_balance), meterInfoModel.getBalance()+""));
+            QRId.setText(String.format(getString(R.string.recharge_id), meterSn));
+        }
     }
 
 
@@ -126,7 +157,7 @@ public class PayActionActivity extends BaseActivity {
                     public void run() {
                         final File outputPic = makeTempFile(mContext, Environment.getExternalStorageDirectory().getPath() + "/SHR AMR/QRImage/", "qr_", ".jpg");
 
-                        boolean success = ZxingUtils.createQRImage(meterSn, ivQR.getWidth(), ivQR.getWidth(), null, outputPic.getAbsolutePath());
+                        boolean success = ZxingUtils.createQRImage("SHRAMR-waterSn-" + meterSn, ivQR.getWidth(), ivQR.getWidth(), null, outputPic.getAbsolutePath());
 
                         if (success) {
                             runOnUiThread(new Runnable() {
@@ -137,13 +168,8 @@ public class PayActionActivity extends BaseActivity {
                             });
                         }
                     }
-                },500);
-//                new Thread().ponew Runnable() {
-//                    @Override
-//                    public void run() {
-//
-//                    }
-//                }).start();
+                }, 500);
+
             }
         });
 
@@ -203,7 +229,7 @@ public class PayActionActivity extends BaseActivity {
             PreferencesUtils.putString("orderNo", orderNo);
 
 //            String callTime = DateUtils.getGMT7PayTime();
-            String callTime = DateUtils.getTimeStr(timestamp);
+            String callTime = DateUtils.getTimeStr(String.valueOf(timestamp));
 
             String security = DataUtils.getRandomStr() + DataUtils.MD5(CommonParams.PARTNER + CommonParams.SECURITY_KEY + tradeId + callTime) + DataUtils.getRandomStr();
 

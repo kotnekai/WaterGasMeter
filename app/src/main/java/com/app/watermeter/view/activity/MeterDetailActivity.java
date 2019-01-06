@@ -100,6 +100,9 @@ public class MeterDetailActivity extends BaseActivity {
     TextView tvNoData;
     @BindView(R.id.tvStartMonth)
     TextView tvStartMonth;
+    @BindView(R.id.tvMeterCode)
+    TextView tvMeterCode;
+
 
     public int requestIndex = 0;
     public final int MAX_REQUEST_COUNT = 6;
@@ -135,7 +138,7 @@ public class MeterDetailActivity extends BaseActivity {
         setHeader_RightTextClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DialogUtils.showUnBindingHints(MeterDetailActivity.this,model.getMachine_sn());
+                DialogUtils.showUnBindingHints(MeterDetailActivity.this, model.getMachine_sn());
             }
         });
     }
@@ -288,27 +291,30 @@ public class MeterDetailActivity extends BaseActivity {
         switch (meterType) {
             case CommonParams.TYPE_WATER:
                 setHeaderTitle(getString(R.string.water_meter_detail_title));
+                tvMeterCode.setText(getString(R.string.water_meter_code));
                 tvMeterName.setText(getString(R.string.water_meter_reading));
                 tvBalance.setText(getString(R.string.water_meter_balance));
                 break;
             case CommonParams.TYPE_ELECT:
                 setHeaderTitle(getString(R.string.elect_meter_detail_title));
+                tvMeterCode.setText(getString(R.string.elect_meter_code));
                 tvMeterName.setText(getString(R.string.elect_meter_reading));
                 tvBalance.setText(getString(R.string.elect_meter_balance));
                 break;
             case CommonParams.TYPE_GAS:
                 setHeaderTitle(getString(R.string.gas_meter_detail_title));
+                tvMeterCode.setText(getString(R.string.gas_meter_code));
                 tvMeterName.setText(getString(R.string.gas_meter_reading));
                 tvBalance.setText(getString(R.string.gas_meter_balance));
                 break;
         }
-        MeterManager.getInstance().getMeterDetail(meterSn,false);
+        MeterManager.getInstance().getMeterDetail(meterSn, false);
     }
 
     /**
      * 图表数据
      */
-    private void initChartData(int meterType, int meterId,String mTimeStamp) {
+    private void initChartData(int meterType, int meterId, String mTimeStamp) {
         MeterManager.getInstance().getRePayList(0, 24, meterType, meterId, mTimeStamp);
     }
 
@@ -322,9 +328,7 @@ public class MeterDetailActivity extends BaseActivity {
 
             if (!TextUtils.isEmpty(model.getFinal_read_at())) {
                 mTimeStamp = DateUtils.getDateByDateTime(model.getFinal_read_at());
-            }
-            else
-            {
+            } else {
                 tvNoData.setVisibility(View.VISIBLE);
                 mChart.setVisibility(View.GONE);
             }
@@ -332,41 +336,38 @@ public class MeterDetailActivity extends BaseActivity {
             meterId = model.getId();
 
             //读取表数据
-            initChartData(meterType,model.getId(),mTimeStamp);
+            initChartData(meterType, model.getId(), mTimeStamp);
 
             tvSn.setText(model.getMachine_sn());
 
             switch (ComApplication.currentLanguage) {
                 case Constants.LANGUAGE_CHINA:
-                    tvAddress.setText(model.getLocation_zh() + model.getPosition_zh());
+                    tvAddress.setText(model.getLocation_zh() + " " + model.getPosition_zh());
                     break;
                 case Constants.LANGUAGE_ENGLISH:
-                    tvAddress.setText(model.getLocation_en() + model.getPosition_en());
+                    tvAddress.setText(model.getLocation_en() + " " + model.getPosition_en());
                     break;
                 case Constants.LANGUAGE_KH:
-                    tvAddress.setText(model.getLocation_kh() + model.getPosition_kh());
+                    tvAddress.setText(model.getLocation_kh() + " " + model.getPosition_kh());
                     break;
                 default:
-                    tvAddress.setText(model.getLocation_zh() + model.getPosition_zh());
+                    tvAddress.setText(model.getLocation_zh() + " " + model.getPosition_zh());
             }
 
 
             tvUnit.setText(String.format(mContext.getString(R.string.square_detail), model.getUnit() + ""));
             tvLastValue.setText(model.getThis_month_degree() + "");
-            tvStartMonth.setText(model.getStart_month_degree()+"");
+            tvStartMonth.setText(model.getStart_month_degree() + "");
             tvLastDate.setText(model.getOld_read_at());
             tvCurrentValue.setText(model.getDegree() + "");
             tvCurrentDate.setText(model.getFinal_read_at());
             tvMoney.setText(model.getBalance() + "");
 
-            if (model.getStatus()==1)
-            {
+            if (model.getStatus() == 1) {
                 //激活，可以点击充值
                 tvCharge.setEnabled(true);
                 tvCharge.setBackground(getResources().getDrawable(R.mipmap.anniu));
-            }
-            else
-            {
+            } else {
                 //禁用
                 tvCharge.setEnabled(false);
                 tvCharge.setBackground(getResources().getDrawable(R.mipmap.anniu_gray));
@@ -382,9 +383,7 @@ public class MeterDetailActivity extends BaseActivity {
         if (event.getList() != null) {
             chartList = event.getList();
             setChartData(chartList);
-        }
-        else
-        {
+        } else {
             tvNoData.setVisibility(View.VISIBLE);
             mChart.setVisibility(View.GONE);
         }
@@ -514,7 +513,6 @@ public class MeterDetailActivity extends BaseActivity {
             // set data
 
 
-
             mChart.setData(data);
             mChart.invalidate();
         }
@@ -571,12 +569,12 @@ public class MeterDetailActivity extends BaseActivity {
 //            case R.id.tvGotoPerStorage:
 //                startActivity(PerStorageSaveListActivity.makeIntent(mContext, model.getId(), meterType, CommonParams.PAGE_TYPE_RECHARGE));
 //                break;
-              // 月度明细
+            // 月度明细
             case R.id.tvGotoMonthBill:
                 startActivity(PerStorageSaveListActivity.makeIntent(mContext, model.getId(), meterType, CommonParams.PAGE_TYPE_TRANSACTION));
                 break;
             case R.id.tvCharge:
-                startActivityForResult(PayActionActivity.makeIntent(mContext, meterId,false,model.getMachine_sn()), CommonParams.PAY_RESULT);
+                startActivityForResult(PayActionActivity.makeIntent(mContext, meterId, false, model.getMachine_sn(),model), CommonParams.PAY_RESULT);
                 break;
 
         }
@@ -611,7 +609,7 @@ public class MeterDetailActivity extends BaseActivity {
                 case CommonParams.PAY_RESULT_SUCCESS:
                     //todo 支付成功，刷新数据
                     PreferencesUtils.putString("orderNo", "");
-                    MeterManager.getInstance().getMeterDetail(meterSn,false);
+                    MeterManager.getInstance().getMeterDetail(meterSn, false);
                     break;
                 case CommonParams.PAY_RESULT_CANCEL:
                     //todo 支付取消

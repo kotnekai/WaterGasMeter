@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">WaterMeter</string>
+    <string name="app_name">SHRAMR</string>
 
     <string name="main_home">ទំព័រដើម</string>
     <string name="water_meter">ទឹក</string>
@@ -81,6 +81,11 @@
     <string name="water_meter_reading">ការអានម៉ែត្រទឹក</string>
     <string name="elect_meter_reading">ការអានម៉ែត្រ</string>
     <string name="gas_meter_reading">ការអានម៉ែត្រឧស្ម័ន</string>
+
+    <string name="water_meter_code">ម៉ែត្រទឹកសរសេរកូដ</string>
+    <string name="elect_meter_code">ការអានម៉ែត្រ</string>
+    <string name="gas_meter_code">ការអានម៉ែត្រឧស្ម័ន</string>
+
 
     <string name="start_month_reading">ការអានឆាប់ៗ</string>
 
@@ -179,4 +184,11 @@
     <string name="reg_hints">ខ្ទង់ទីមួយនៃលេខទូរស័ព្ទគឺ "0" សូមដក "0"</string>
     <string name="meter_open">បើក</string>
     <string name="meter_close">បិទ</string>
+
+    <string name="auto_recharge">បញ្ចូលទឹកប្រាក់ដោយស្វ័យប្រវត្តិ</string>
+    <string name="recharge_hints">ឬប្រគល់លេខកូដ QR ទៅខាងក្រោមដើម្បីបញ្ចូលប្រតិកម្ម</string>
+    <string name="recharge_id">id：%s</string>
+    <string name="recharge_room">លេខបន្ទប់：%s</string>
+    <string name="recharge_balance">តុល្យភាព：%s USD</string>
+
 </resources>

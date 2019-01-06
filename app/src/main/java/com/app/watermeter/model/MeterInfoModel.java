@@ -1,11 +1,13 @@
 package com.app.watermeter.model;
 
 
+import java.io.Serializable;
+
 /**
  * @author admin
  *         https://www.showdoc.cc/web/#/137924192608060?page_id=789809581022573
  */
-public class MeterInfoModel {
+public class MeterInfoModel implements Serializable {
 
     int id;
     String machine_sn;

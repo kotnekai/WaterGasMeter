@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">WaterMeter</string>
+    <string name="app_name">SHRAMR</string>
 
     <string name="main_home">main</string>
     <string name="water_meter">Water Meter</string>
@@ -82,11 +82,16 @@
     <string name="elect_meter_detail_title">Meter details</string>
     <string name="gas_meter_detail_title">Gas meter details</string>
 
-    <string name="water_meter_reading">Water meter reading</string>
-    <string name="elect_meter_reading">Meter reading</string>
-    <string name="gas_meter_reading">Gas meter reading</string>
+    <string name="water_meter_reading">Water meter recording</string>
+    <string name="elect_meter_reading">Electric meter recording</string>
+    <string name="gas_meter_reading">Gas meter recording</string>
 
-    <string name="start_month_reading">Early month reading</string>
+
+    <string name="water_meter_code">Water meter code：</string>
+    <string name="elect_meter_code">Electric meter code：</string>
+    <string name="gas_meter_code">Gas meter code：</string>
+
+    <string name="start_month_reading">Early month recording</string>
 
 
     <string name="last_meter_value">Dosage this month</string>
@@ -99,7 +104,7 @@
     <string name="immediately_save">TOP UP</string>
     <string name="storage_detail" formatted="true">Pre-stored details>></string>
     <string name="payment_detail" formatted="true">Charge Details>></string>
-    <string name="monthly_detail" formatted="true">Monthly details>></string>
+    <string name="monthly_detail" formatted="true">Transactions>></string>
 
 
     <string name="unit_yuan">USD</string>
@@ -175,7 +180,7 @@
     <string name="scan_scan">Top-up</string>
     <string name="scan_meter_sn" formatted="false">Meter Coding：%s</string>
     <string name="scan_meter_disabled">The meter has been deactivated and cannot be recharged</string>
-    <string name="scan_meter_fail">The meter does not exist, please contact the administrator</string>
+    <string name="scan_meter_fail">The meter exception, please contact the administrator</string>
     <string name="scan_recharge">Scan code recharge</string>
     <string name="dialog_cancel">cancel</string>
     <string name="dialog_yes">yes</string>
@@ -183,4 +188,11 @@
     <string name="reg_hints">The first digit of the phone number is "0", \n please remove "0"</string>
     <string name="meter_open">open</string>
     <string name="meter_close">close</string>
+
+    <string name="auto_recharge">Auto recharge</string>
+    <string name="recharge_hints">Or hand the QR code below to the counter recharger</string>
+    <string name="recharge_id">id：%s</string>
+    <string name="recharge_room">Room No：%s</string>
+    <string name="recharge_balance">Balance：%s USD</string>
+
 </resources>

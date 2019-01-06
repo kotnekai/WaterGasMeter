@@ -151,7 +151,6 @@ public class WaterReadAndReChargeFragment extends BaseFragment {
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
 
                 if (fromPage == CommonParams.PAGE_TYPE_RECHARGE) {
-                    currentPageSize += dataSize;
                     initListData(meterType, fromPage);
                 } else {
                     currentPageSize += dataSize;

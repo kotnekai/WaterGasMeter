@@ -83,7 +83,7 @@ public class ScanFragment extends BaseFragment {
             switch (model.getStatus())
             {
                 case 1:
-                    getActivity().startActivity(PayActionActivity.makeIntent(getContext(), model.getId(),true,model.getMachine_sn()));
+                    getActivity().startActivity(PayActionActivity.makeIntent(getContext(), model.getId(),true,model.getMachine_sn(),model));
                     break;
                 case 0:
                     //表已被停用，不能进行充值

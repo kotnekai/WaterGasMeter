@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SHR AMR</string>
+    <string name="app_name">SHRAMR</string>
 
     <string name="main_home">首页</string>
     <string name="water_meter">水表</string>
@@ -83,6 +83,10 @@
     <string name="water_meter_reading">水表读数</string>
     <string name="elect_meter_reading">电表读数</string>
     <string name="gas_meter_reading">燃气表读数</string>
+
+    <string name="water_meter_code">水表编码：</string>
+    <string name="elect_meter_code">电表编码：</string>
+    <string name="gas_meter_code">燃气表编码：</string>
 
     <string name="start_month_reading">月初读数</string>
 
@@ -177,7 +181,7 @@
     <string name="scan_meter_sn" formatted="false">表编码：%s</string>
 
     <string name="scan_meter_disabled">表已被停用，不能进行充值</string>
-    <string name="scan_meter_fail">表不存在，请联系管理员</string>
+    <string name="scan_meter_fail">表异常，请联系管理员</string>
     <string name="scan_recharge">扫码充值</string>
     <string name="dialog_cancel">取消</string>
     <string name="dialog_yes">确定</string>
@@ -186,5 +190,10 @@
     <string name="reg_hints">电话号码首位是”0“的电话号码，去掉”0“</string>
     <string name="meter_open">开</string>
     <string name="meter_close">关</string>
+    <string name="auto_recharge">自助充值</string>
+    <string name="recharge_hints">或者将下面二维码交给柜台充值人员</string>
 
+    <string name="recharge_id">id：%s</string>
+    <string name="recharge_room">房号：%s</string>
+    <string name="recharge_balance">余额：%s 美金</string>
 </resources>
