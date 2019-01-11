@@ -123,12 +123,13 @@ public class BindingFragment extends BaseFragment {
                     String result = bundle.getString(CodeUtils.RESULT_STRING);
 
                     if (result != null) {
-                        String[] res = result.split("-");
-                        if (res.length > 2) {
-                            MeterManager.getInstance().bindMeter(res[2]);
-                        } else {
-                            DialogUtils.showScanMeterFailHints(getActivity());
-                        }
+//                        String[] res = result.split("-");
+//                        if (res.length > 2) {
+//                            MeterManager.getInstance().bindMeter(res[2]);
+//                        } else {
+//                            DialogUtils.showScanMeterFailHints(getActivity());
+//                        }
+                        MeterManager.getInstance().bindMeter(result);
                     }
                 } else if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_FAILED) {
                     ToastUtil.showShort(UIUtils.getValueString(R.string.scan_code));

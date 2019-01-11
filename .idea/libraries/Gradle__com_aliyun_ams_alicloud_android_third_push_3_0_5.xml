@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Gradle: com.aliyun.ams:alicloud-android-third-push-3.0.5">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/alicloud-android-third-push-3.0.5.aar/52bb8f55f687d00a85aa0083e49a1bfd/jars/classes.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/alicloud-android-third-push-3.0.5.aar/52bb8f55f687d00a85aa0083e49a1bfd/jars/libs/third-push-support-release.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/alicloud-android-third-push-3.0.5.aar/52bb8f55f687d00a85aa0083e49a1bfd/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/alicloud-android-third-push-3.0.5.aar/52bb8f55f687d00a85aa0083e49a1bfd/jars/libs/mipush-2.2.22.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/alicloud-android-third-push-3.0.5.aar/52bb8f55f687d00a85aa0083e49a1bfd/jars/libs/huawei-push-1.1.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
