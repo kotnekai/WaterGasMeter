@@ -157,7 +157,8 @@ public class PayActionActivity extends BaseActivity {
                     public void run() {
                         final File outputPic = makeTempFile(mContext, Environment.getExternalStorageDirectory().getPath() + "/SHR AMR/QRImage/", "qr_", ".jpg");
 
-                        boolean success = ZxingUtils.createQRImage("SHRAMR-waterSn-" + meterSn, ivQR.getWidth(), ivQR.getWidth(), null, outputPic.getAbsolutePath());
+//                        boolean success = ZxingUtils.createQRImage("SHRAMR-waterSn-" + meterSn, ivQR.getWidth(), ivQR.getWidth(), null, outputPic.getAbsolutePath());
+                        boolean success = ZxingUtils.createQRImage(meterSn, ivQR.getWidth(), ivQR.getWidth(), null, outputPic.getAbsolutePath());
 
                         if (success) {
                             runOnUiThread(new Runnable() {
