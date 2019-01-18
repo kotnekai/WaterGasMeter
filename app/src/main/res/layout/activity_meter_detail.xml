@@ -274,7 +274,7 @@
                 android:textSize="16dp" />
 
             <TextView
-                android:id="@+id/tvGotoPayment"
+                android:id="@+id/tvGotoPayment" android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
